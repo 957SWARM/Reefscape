@@ -26,7 +26,7 @@ public final class Constants {
     // Driving Parameters - Note that these are not the maximum capable speeds of
     // the robot, rather the allowed maximum speeds
     public static final double kMaxSpeedMetersPerSecond = 1.2;  // default: 4.8
-    public static final double kMaxAngularSpeed = .5 * Math.PI; // default: 2*pi. radians per second
+    public static final double kMaxAngularSpeed = 2 * Math.PI; // default: 2*pi. radians per second
 
     // Chassis configuration
     public static final double kTrackWidth = Units.inchesToMeters(20);
@@ -40,10 +40,10 @@ public final class Constants {
         new Translation2d(-kWheelBase / 2, -kTrackWidth / 2));
 
     // Angular offsets of the modules relative to the chassis in radians
-    public static final double kFrontLeftChassisAngularOffset = Math.PI / 2;
+    public static final double kFrontLeftChassisAngularOffset = 0;
     public static final double kFrontRightChassisAngularOffset = 0;
     public static final double kBackLeftChassisAngularOffset = 0;
-    public static final double kBackRightChassisAngularOffset = Math.PI / 2;
+    public static final double kBackRightChassisAngularOffset = 0;
 
     // SPARK MAX CAN IDs
     public static final int kFrontLeftDrivingCanId = 7;
@@ -59,7 +59,7 @@ public final class Constants {
     public static final boolean kGyroReversed = false;
 
     // Gyro (Pigeon2) ID
-    public static final int pigeonID = 0;
+    public static final int pigeonID = 32;
 
     // Location constants
     public static final int FRONT_LEFT = 0;

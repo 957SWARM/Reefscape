@@ -6,7 +6,9 @@ package frc.robot.subsystems.Drive;
 
 import com.ctre.phoenix6.hardware.Pigeon2;
 
+import edu.wpi.first.epilogue.EpilogueConfiguration;
 import edu.wpi.first.epilogue.Logged;
+import edu.wpi.first.epilogue.logging.EpilogueBackend;
 import edu.wpi.first.hal.FRCNetComm.tInstances;
 import edu.wpi.first.hal.FRCNetComm.tResourceType;
 import edu.wpi.first.hal.HAL;
@@ -17,6 +19,7 @@ import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.kinematics.SwerveDriveOdometry;
 import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
+import edu.wpi.first.wpilibj.DataLogManager;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 import frc.robot.Constants.DriveConstants;
@@ -64,6 +67,7 @@ public class DriveSubsystem extends SubsystemBase {
     // Usage reporting for MAXSwerve template
     HAL.report(tResourceType.kResourceType_RobotDrive, tInstances.kRobotDriveSwerve_MaxSwerve);
 
+    
     // resets gyro
     zeroHeading();
   }
@@ -79,13 +83,17 @@ public class DriveSubsystem extends SubsystemBase {
             m_rearLeft.getPosition(),
             m_rearRight.getPosition()
         });
+
+      System.out.print("X: " + getPose().getX() + ", ");
+      System.out.print("Y: " + getPose().getY() + ", ");
+      System.out.print("Z: " + getHeading() + "\n");
   }
 
-  /**
-   * Returns the currently-estimated pose of the robot.
+  /*   * Returns the currently-estimated pose of the robot.
    *
    * @return The pose.
    */
+  //@Logged
   public Pose2d getPose() {
     return m_odometry.getPoseMeters();
   }
@@ -177,6 +185,7 @@ public class DriveSubsystem extends SubsystemBase {
    *
    * @return the robot's heading in degrees, from -180 to 180
    */
+  //@Logged
   public double getHeading() {
     return m_gyro.getRotation2d().getDegrees();
   }
