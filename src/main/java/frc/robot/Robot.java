@@ -4,6 +4,7 @@
 
 package frc.robot;
 
+import edu.wpi.first.epilogue.Epilogue;
 import edu.wpi.first.epilogue.Logged;
 import edu.wpi.first.epilogue.logging.EpilogueBackend;
 import edu.wpi.first.wpilibj.DataLogManager;
@@ -30,6 +31,7 @@ public class Robot extends TimedRobot {
 
    public Robot() {
     DataLogManager.start(); // Optional to mirror the NetworkTables-logged data to a file on disk
+    Epilogue.bind(this);
   }
 
   @Override

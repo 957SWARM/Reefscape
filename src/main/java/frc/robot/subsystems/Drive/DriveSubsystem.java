@@ -84,16 +84,12 @@ public class DriveSubsystem extends SubsystemBase {
             m_rearRight.getPosition()
         });
 
-      System.out.print("X: " + getPose().getX() + ", ");
-      System.out.print("Y: " + getPose().getY() + ", ");
-      System.out.print("Z: " + getHeading() + "\n");
   }
 
   /*   * Returns the currently-estimated pose of the robot.
    *
    * @return The pose.
    */
-  //@Logged
   public Pose2d getPose() {
     return m_odometry.getPoseMeters();
   }
@@ -185,7 +181,6 @@ public class DriveSubsystem extends SubsystemBase {
    *
    * @return the robot's heading in degrees, from -180 to 180
    */
-  //@Logged
   public double getHeading() {
     return m_gyro.getRotation2d().getDegrees();
   }
@@ -200,4 +195,5 @@ public class DriveSubsystem extends SubsystemBase {
     return m_gyro.getAngularVelocityZWorld().getValueAsDouble() * (DriveConstants.kGyroReversed ? -1.0 : 1.0);
 
   }
+
 }
