@@ -22,6 +22,7 @@ import edu.wpi.first.wpilibj.PS4Controller.Button;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.SwerveControllerCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
@@ -29,6 +30,7 @@ import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.Constants.AutoConstants;
 import frc.robot.Constants.DriveConstants;
 import frc.robot.Constants.OIConstants;
+import frc.robot.subsystems.WristSubsystem;
 import frc.robot.subsystems.Drive.DriveSubsystem;
 
 /*
@@ -41,12 +43,10 @@ import frc.robot.subsystems.Drive.DriveSubsystem;
 public class RobotContainer {
   // The robot's subsystems
   private final DriveSubsystem m_robotDrive = new DriveSubsystem();
+  private final WristSubsystem m_wrist = new WristSubsystem();
 
   // The driver's controller
   XboxController m_driverController = new XboxController(OIConstants.kDriverControllerPort);
-
-  // Triggers
-  Trigger resetGyro = new Trigger(() -> m_driverController.getRawButton(8));
 
   /**
    * The container for the robot. Contains subsystems, OI devices, and commands.
@@ -68,7 +68,6 @@ public class RobotContainer {
                 true),
             m_robotDrive));
 
-    resetGyro.onTrue(Commands.runOnce(() -> m_robotDrive.zeroHeading()));
   }
 
   /**
@@ -81,10 +80,24 @@ public class RobotContainer {
    * {@link JoystickButton}.
    */
   private void configureButtonBindings() {
+    // setX button
     new JoystickButton(m_driverController, Button.kR1.value)
-        .whileTrue(new RunCommand(
-            () -> m_robotDrive.setX(),
-            m_robotDrive));
+      .whileTrue(new RunCommand(
+          () -> m_robotDrive.setX(),
+          m_robotDrive));
+
+    // reset gyro (right start button)
+    new Trigger(() -> m_driverController.getRawButton(8))
+      .onTrue(Commands.runOnce(() -> m_robotDrive.zeroHeading()));
+
+    // manual wrist rise (up on D-pad)
+    new Trigger(() -> m_driverController.getPOV() == 0)
+      .whileTrue(m_wrist.slowRise());
+
+    // manual wrist fall (down on D-pad)
+    new Trigger(() -> m_driverController.getPOV() == 180)
+      .whileTrue(m_wrist.slowFall());
+
   }
 
   /**
