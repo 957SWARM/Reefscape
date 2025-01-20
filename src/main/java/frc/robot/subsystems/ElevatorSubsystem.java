@@ -1,33 +1,51 @@
 package frc.robot.subsystems;
 
-import com.revrobotics.RelativeEncoder;
-import com.revrobotics.spark.SparkMax;
-import com.revrobotics.spark.config.SparkMaxConfig;
-import com.revrobotics.spark.SparkBase.PersistMode;
-import com.revrobotics.spark.SparkBase.ResetMode;
-import com.revrobotics.spark.SparkLowLevel.MotorType;
+import com.ctre.phoenix6.configs.MotionMagicConfigs;
+import com.ctre.phoenix6.configs.Slot0Configs;
+import com.ctre.phoenix6.configs.TalonFXConfiguration;
+import com.ctre.phoenix6.controls.MotionMagicVoltage;
+import com.ctre.phoenix6.hardware.TalonFX;
 
+import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.ElevatorConstants;
 
 public class ElevatorSubsystem extends SubsystemBase{
-    SparkMax left;
-    SparkMax right;
-    RelativeEncoder encoder;
+    TalonFX kraken;
+    final MotionMagicVoltage request;
 
     public ElevatorSubsystem(){
-        left = new SparkMax(ElevatorConstants.LEFT_MOTOR_ID, MotorType.kBrushless);
-        right = new SparkMax(ElevatorConstants.RIGHT_MOTOR_ID, MotorType.kBrushless);
+        kraken = new TalonFX(ElevatorConstants.MOTOR_ID);
         
-        SparkMaxConfig globalConfig = new SparkMaxConfig();
-        SparkMaxConfig rightConfig = new SparkMaxConfig();
+        TalonFXConfiguration configs = new TalonFXConfiguration();
 
-        rightConfig.apply(globalConfig).follow(left);
-        rightConfig.apply(rightConfig).inverted(true);
+        Slot0Configs slot0 = configs.Slot0;
+        slot0.kS = ElevatorConstants.kS;
+        slot0.kV = ElevatorConstants.kV; 
+        slot0.kA = ElevatorConstants.kA;
+        slot0.kP = ElevatorConstants.kP; 
+        slot0.kI = ElevatorConstants.kI; 
+        slot0.kD = ElevatorConstants.kD;
 
-        left.configure(globalConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
-        right.configure(rightConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
+        MotionMagicConfigs mmConfigs = configs.MotionMagic;
+        mmConfigs.MotionMagicCruiseVelocity = 80; // Target cruise velocity of 80 rps
+        mmConfigs.MotionMagicAcceleration = 160; // Target acceleration of 160 rps/s (0.5 seconds)
+        mmConfigs.MotionMagicJerk = 1600; // Target jerk of 1600 rps/s/s (0.1 seconds)
 
-        encoder = left.getAlternateEncoder();
+        kraken.getConfigurator().apply(configs);
+
+        request = new MotionMagicVoltage(ElevatorConstants.kG);
     }
+
+    public static double getAsRotations(double meters){
+        double rotations = meters;
+        return rotations;
+    }
+
+    public Command setPositionCommand(double meters){
+        return this.run(() -> {
+            kraken.setControl(request.withPosition(getAsRotations(meters)));
+        });
+    }
+
 }
