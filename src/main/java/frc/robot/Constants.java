@@ -108,4 +108,26 @@ public final class Constants {
   public static final class NeoMotorConstants {
     public static final double kFreeSpeedRpm = 5676;
   }
+
+  public static final class ElevatorConstants {
+    public static final int MOTOR_ID = 0;
+    public static final int kS = 0; // Add output to overcome static friction
+    public static final int kV = 0; // A velocity target of 1 rps results in output
+    public static final int kA = 0; // An acceleration of 1 rps/s requires output
+    public static final int kP = 0; // A position error of 0.2 rotations results in output
+    public static final int kI = 0; // No output for integrated error
+    public static final int kD = 0; // A velocity error of 1 rps results in output
+    public static final int kG = 0; // A velocity error of 1 rps results in output
+
+    public static final int MOTIONMAGIC_VELOCITY = 5; 
+    public static final int MOTIONMAGIC_ACCELERATION = 10; 
+    public static final int MOTIONMAGIC_JERK = 100;
+
+    public static final double POSITION_GROUND = 0;
+    public static final double POSITION_L1 = 4;
+    public static final double POSITION_L2 = 5;
+    public static final double POSITION_L3 = 6;
+    public static final double POSITION_L4 = 7;
+
+  }
 }

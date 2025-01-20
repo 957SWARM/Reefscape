@@ -18,7 +18,7 @@ import edu.wpi.first.math.trajectory.Trajectory;
 import edu.wpi.first.math.trajectory.TrajectoryConfig;
 import edu.wpi.first.math.trajectory.TrajectoryGenerator;
 import edu.wpi.first.wpilibj.DataLogManager;
-import edu.wpi.first.wpilibj.PS4Controller.Button;
+import edu.wpi.first.wpilibj.XboxController.Button;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
@@ -28,7 +28,9 @@ import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.Constants.AutoConstants;
 import frc.robot.Constants.DriveConstants;
+import frc.robot.Constants.ElevatorConstants;
 import frc.robot.Constants.OIConstants;
+import frc.robot.subsystems.ElevatorSubsystem;
 import frc.robot.subsystems.Drive.DriveSubsystem;
 
 /*
@@ -47,6 +49,8 @@ public class RobotContainer {
 
   // Triggers
   Trigger resetGyro = new Trigger(() -> m_driverController.getRawButton(8));
+
+  ElevatorSubsystem elevator = new ElevatorSubsystem();
 
   /**
    * The container for the robot. Contains subsystems, OI devices, and commands.
@@ -81,10 +85,25 @@ public class RobotContainer {
    * {@link JoystickButton}.
    */
   private void configureButtonBindings() {
-    new JoystickButton(m_driverController, Button.kR1.value)
+    new JoystickButton(m_driverController, Button.kLeftBumper.value)
         .whileTrue(new RunCommand(
             () -> m_robotDrive.setX(),
             m_robotDrive));
+
+    new JoystickButton(m_driverController, Button.kRightBumper.value)
+        .whileTrue(elevator.setPositionCommand(ElevatorConstants.POSITION_GROUND));
+  
+    new JoystickButton(m_driverController, Button.kA.value)
+      .whileTrue(elevator.setPositionCommand(ElevatorConstants.POSITION_L1));
+
+    new JoystickButton(m_driverController, Button.kB.value)
+      .whileTrue(elevator.setPositionCommand(ElevatorConstants.POSITION_L2));
+    
+    new JoystickButton(m_driverController, Button.kX.value)
+      .whileTrue(elevator.setPositionCommand(ElevatorConstants.POSITION_L3));
+      
+    new JoystickButton(m_driverController, Button.kY.value)
+      .whileTrue(elevator.setPositionCommand(ElevatorConstants.POSITION_L4));
   }
 
   /**
