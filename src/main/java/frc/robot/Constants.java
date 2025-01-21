@@ -130,4 +130,16 @@ public final class Constants {
     public static final double POSITION_L4 = 7;
 
   }
+
+  public static final class IntakeConstants {
+    public static final int MOTOR_ID = 0;
+    public static final int SENSOR_ID = 1;
+
+    public static final double TOF_TIMING_BUDGET = 0.003;
+    public static final double TOF_THRESHOLD = 10;
+
+    public static final double IDLE_SPEED = 5;
+    public static final double INTAKE_SPEED = 5;
+    public static final double EJECT_SPEED = 5;
+  }
 }
