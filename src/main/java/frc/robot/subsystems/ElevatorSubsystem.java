@@ -47,45 +47,54 @@ public class ElevatorSubsystem extends SubsystemBase{
         return rotations;
     }
 
+    private void assignSetpoint(double assignSetpoint){
+        // make sure setpoint is within safe range
+        targetSetpoint = MathUtil.clamp(
+            assignSetpoint, 
+            ElevatorConstants.MIN_HEIGHT, 
+            ElevatorConstants.MAX_HEIGHT
+        );
+    }
+
     public Command toL1(){
         Commands.runOnce(() -> {
-            targetSetpoint = ElevatorConstants.POSITION_L1;
+            assignSetpoint(ElevatorConstants.POSITION_L1);
         });
     }
     
     public Command toL2(){
         Commands.runOnce(() -> {
-            targetSetpoint = ElevatorConstants.POSITION_L2;
+            assignSetpoint(ElevatorConstants.POSITION_L2);
         });
     }
 
     public Command toL3(){
         Commands.runOnce(() -> {
-            targetSetpoint = ElevatorConstants.POSITION_L3;
+            assignSetpoint(ElevatorConstants.POSITION_L3);
         });
     }
 
     public Command toL4(){
         Commands.runOnce(() -> {
-            targetSetpoint = ElevatorConstants.POSITION_L4;
+            assignSetpoint(ElevatorConstants.POSITION_L4);
         });
     }
 
     public Command toIntake(){
         Commands.runOnce(() -> {
-            targetSetpoint = ElevatorConstants.POSITION_INTAKE;
+            assignSepoint(ElevatorConstants.POSITION_INTAKE);
         });
     }
 
     public Command slowRise(){
         Commands.run(() -> {
-            targetSetpoint += ElevatorConstants.SETPOINT_INCREMENT;
+            assignSetpoint(targetSetpoint += ElevatorConstants.SETPOINT_INCREMENT);
         });
     }
 
     public Command slowFall(){
         Commands.run(() -> {
-            targetSetpoint -= ElevatorConstants.SETPOINT_INCREMENT;
+            assignSetpoint(targetSetpoint -= ElevatorConstants.SETPOINT_INCREMENT);
         });
     }
 

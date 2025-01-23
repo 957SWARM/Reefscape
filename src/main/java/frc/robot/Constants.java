@@ -136,5 +136,10 @@ public final class Constants {
     // CONVERSIONS
     public static final double metersToRotations = 1;
 
+    // MAXIMUMs/MINIMUMs
+    public static final double MAX_HEIGHT = 3;
+    public static final double MIN_HEIGHT = 1;
+
   }
+
 }
