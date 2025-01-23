@@ -128,6 +128,13 @@ public final class Constants {
     public static final double POSITION_L2 = 5;
     public static final double POSITION_L3 = 6;
     public static final double POSITION_L4 = 7;
+    public static final double POSITION_INTAKE = 4;
+
+    // SLOW RISE/FALL
+    public static final double SETPOINT_INCREMENT = .01; // how much the setpoint changes per robot loop in manual control
+
+    // CONVERSIONS
+    public static final double metersToRotations = 1;
 
   }
 }

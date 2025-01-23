@@ -13,6 +13,7 @@ import frc.robot.Constants.ElevatorConstants;
 public class ElevatorSubsystem extends SubsystemBase{
     TalonFX kraken;
     final MotionMagicVoltage request;
+    double targetSetpoint;
 
     public ElevatorSubsystem(){
         kraken = new TalonFX(ElevatorConstants.MOTOR_ID);
@@ -37,14 +38,54 @@ public class ElevatorSubsystem extends SubsystemBase{
         request = new MotionMagicVoltage(ElevatorConstants.kG);
     }
 
+    public void periodic(){
+        kraken.setControl(request.withPosition(getAsRotations(targetSetpoint)));
+    }
+
     public static double getAsRotations(double meters){
-        double rotations = meters;
+        double rotations = meters * ElevatorConstants.metersToRotations;
         return rotations;
     }
 
-    public Command setPositionCommand(double meters){
-        return this.run(() -> {
-            kraken.setControl(request.withPosition(getAsRotations(meters)));
+    public Command toL1(){
+        Commands.runOnce(() -> {
+            targetSetpoint = ElevatorConstants.POSITION_L1;
+        });
+    }
+    
+    public Command toL2(){
+        Commands.runOnce(() -> {
+            targetSetpoint = ElevatorConstants.POSITION_L2;
+        });
+    }
+
+    public Command toL3(){
+        Commands.runOnce(() -> {
+            targetSetpoint = ElevatorConstants.POSITION_L3;
+        });
+    }
+
+    public Command toL4(){
+        Commands.runOnce(() -> {
+            targetSetpoint = ElevatorConstants.POSITION_L4;
+        });
+    }
+
+    public Command toIntake(){
+        Commands.runOnce(() -> {
+            targetSetpoint = ElevatorConstants.POSITION_INTAKE;
+        });
+    }
+
+    public Command slowRise(){
+        Commands.run(() -> {
+            targetSetpoint += ElevatorConstants.SETPOINT_INCREMENT;
+        });
+    }
+
+    public Command slowFall(){
+        Commands.run(() -> {
+            targetSetpoint -= ElevatorConstants.SETPOINT_INCREMENT;
         });
     }
 
