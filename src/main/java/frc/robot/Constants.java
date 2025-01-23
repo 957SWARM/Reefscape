@@ -138,8 +138,8 @@ public final class Constants {
     public static final double TOF_TIMING_BUDGET = 0.003;
     public static final double TOF_THRESHOLD = 10;
 
-    public static final double IDLE_SPEED = 5;
+    public static final double IDLE_SPEED = 0;
     public static final double INTAKE_SPEED = 5;
-    public static final double EJECT_SPEED = 5;
+    public static final double EJECT_SPEED = -5;
   }
 }
