@@ -6,7 +6,9 @@ import com.ctre.phoenix6.configs.TalonFXConfiguration;
 import com.ctre.phoenix6.controls.MotionMagicVoltage;
 import com.ctre.phoenix6.hardware.TalonFX;
 
+import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.ElevatorConstants;
 
@@ -47,45 +49,54 @@ public class ElevatorSubsystem extends SubsystemBase{
         return rotations;
     }
 
+    private void assignSetpoint(double assignSetpoint){
+        // make sure setpoint is within safe range
+        targetSetpoint = MathUtil.clamp(
+            assignSetpoint, 
+            ElevatorConstants.MIN_HEIGHT, 
+            ElevatorConstants.MAX_HEIGHT
+        );
+    }
+
     public Command toL1(){
-        Commands.runOnce(() -> {
-            targetSetpoint = ElevatorConstants.POSITION_L1;
+        return Commands.runOnce(() -> {
+            assignSetpoint(ElevatorConstants.POSITION_L1);
         });
     }
     
     public Command toL2(){
-        Commands.runOnce(() -> {
-            targetSetpoint = ElevatorConstants.POSITION_L2;
+        return Commands.runOnce(() -> {
+            assignSetpoint(ElevatorConstants.POSITION_L2);
         });
     }
 
     public Command toL3(){
-        Commands.runOnce(() -> {
-            targetSetpoint = ElevatorConstants.POSITION_L3;
+        return Commands.runOnce(() -> {
+            assignSetpoint(ElevatorConstants.POSITION_L3);
         });
     }
 
     public Command toL4(){
-        Commands.runOnce(() -> {
-            targetSetpoint = ElevatorConstants.POSITION_L4;
+        return Commands.runOnce(() -> {
+            assignSetpoint(ElevatorConstants.POSITION_L4);
         });
     }
 
     public Command toIntake(){
-        Commands.runOnce(() -> {
-            targetSetpoint = ElevatorConstants.POSITION_INTAKE;
+        return Commands.runOnce(() -> {
+            assignSetpoint(ElevatorConstants.POSITION_INTAKE);
         });
     }
 
     public Command slowRise(){
-        Commands.run(() -> {
-            targetSetpoint += ElevatorConstants.SETPOINT_INCREMENT;
+        return Commands.run(() -> {
+            assignSetpoint(targetSetpoint += ElevatorConstants.SETPOINT_INCREMENT);
         });
     }
 
     public Command slowFall(){
-        Commands.run(() -> {
-            targetSetpoint -= ElevatorConstants.SETPOINT_INCREMENT;
+        return Commands.run(() -> {
+            assignSetpoint(targetSetpoint -= ElevatorConstants.SETPOINT_INCREMENT);
         });
     }
 
