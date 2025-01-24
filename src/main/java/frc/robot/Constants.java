@@ -195,4 +195,17 @@ public final class Constants {
 
     public static final double APPLIED_VOLTAGE = 10;
   }
+
+  public static final class IOConstants {
+
+    // Ports
+    public static final int DRIVER_PORT = 0;
+    public static final int OPERATOR_PORT = 1;
+
+    // Thresholds
+    public static final double TRIGGER_THRESHOLD = .8;
+
+    // BUTTON PORTS
+    public static final int LEFT_CENTER_BUTTON = 6;
+  }
 }
