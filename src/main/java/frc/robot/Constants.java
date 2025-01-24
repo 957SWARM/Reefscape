@@ -181,4 +181,18 @@ public final class Constants {
     public static final int FULL_GREEN_RGB = 0;
     public static final int FULL_BLUE_RGB = 0;
   }
+
+  public static final class IntakeConstants {
+    public static final int MOTOR_ID = 0;
+    public static final int SENSOR_ID = 1;
+
+    public static final double TOF_TIMING_BUDGET = 0.003;
+    public static final double TOF_THRESHOLD = 10;
+
+    public static final double IDLE_SPEED = 0;
+    public static final double INTAKE_SPEED = 5;
+    public static final double EJECT_SPEED = -5;
+
+    public static final double APPLIED_VOLTAGE = 10;
+  }
 }
