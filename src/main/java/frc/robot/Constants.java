@@ -141,5 +141,7 @@ public final class Constants {
     public static final double IDLE_SPEED = 0;
     public static final double INTAKE_SPEED = 5;
     public static final double EJECT_SPEED = -5;
+
+    public static final double APPLIED_VOLTAGE = 10;
   }
 }
