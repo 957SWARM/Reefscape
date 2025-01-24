@@ -128,7 +128,58 @@ public final class Constants {
     public static final double POSITION_L2 = 5;
     public static final double POSITION_L3 = 6;
     public static final double POSITION_L4 = 7;
+    public static final double POSITION_INTAKE = 4;
 
+    // SLOW RISE/FALL
+    public static final double SETPOINT_INCREMENT = .01; // how much the setpoint changes per robot loop in manual control
+
+    // CONVERSIONS
+    public static final double metersToRotations = 1;
+
+    // MAXIMUMs/MINIMUMs
+    public static final double MAX_HEIGHT = 3;
+    public static final double MIN_HEIGHT = 1;
+
+  }
+
+  public static final class WristConstants {
+    // CAN IDs & Ports
+    public static final int MOTOR_CAN_ID = 0;
+    public static final int ENCODER_CAN_ID  = 0;
+
+    // Maximums and Minimums Allowed
+    public static final double MAXIMUM_VOLTAGE = 3;
+    public static final double MINIMUM_VOLTAGE = -MAXIMUM_VOLTAGE;
+
+    public static final double MAXIMUM_ANGLE = .6;
+    public static final double MINIMUM_ANGLE = 0.1;
+
+    // angle setpoints for scoring, intake, stowing
+    public static final double L1_ANGLE = 0.125;
+    public static final double L2_ANGLE = .2;
+    public static final double L3_ANGLE = L2_ANGLE;
+    public static final double L4_ANGLE = .4;
+    public static final double STOW_ANGLE = .5;
+    public static final double INTAKE_ANGLE = .3;
+
+    // PID + Feedforward
+    public static final double kG = .5;  // constant multiplied by angle of arm to maintain position
+    public static final double kP = 0;
+    public static final double kI = 0;
+    public static final double kD = 0;
+
+    // SLOW FALL/RISE VOLTAGE. Voltage that slowly moves the motor intended for manual adjustment
+    public static final double SLOW_RISE_VOLTAGE = .5;
+    public static final double SLOW_FALL_VOLTAGE = -SLOW_RISE_VOLTAGE;
+
+  }
+
+  public static final class LEDConstants {
+    public static final int TOTAL_PIXELS = 60;
+
+    public static final int FULL_RED_RGB = 0;
+    public static final int FULL_GREEN_RGB = 0;
+    public static final int FULL_BLUE_RGB = 0;
   }
 
   public static final class IntakeConstants {
