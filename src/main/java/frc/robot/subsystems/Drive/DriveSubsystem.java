@@ -127,6 +127,7 @@ public class DriveSubsystem extends SubsystemBase {
     // Convert the commanded speeds into the correct units for the drivetrain
     double xSpeedDelivered = xSpeed * DriveConstants.kMaxSpeedMetersPerSecond;
     double ySpeedDelivered = ySpeed * DriveConstants.kMaxSpeedMetersPerSecond;
+    System.out.println("X Speed: " + xSpeedDelivered);
     double rotDelivered = rot * DriveConstants.kMaxAngularSpeed;
 
     var swerveModuleStates = DriveConstants.kDriveKinematics.toSwerveModuleStates(
@@ -147,7 +148,7 @@ public class DriveSubsystem extends SubsystemBase {
   public void autoDrive(ChassisSpeeds speeds) {
 
     var swerveModuleStates = DriveConstants.kDriveKinematics
-      .toSwerveModuleStates(discretize(speeds));
+      .toSwerveModuleStates(speeds);
 
     SwerveDriveKinematics.desaturateWheelSpeeds(
         swerveModuleStates, DriveConstants.kMaxSpeedMetersPerSecond);
@@ -204,6 +205,17 @@ public class DriveSubsystem extends SubsystemBase {
     };
 
     return DriveConstants.kDriveKinematics.toChassisSpeeds(states);
+  }
+
+  public double getXSpeed(){
+    SwerveModuleState[] states = {
+      m_frontLeft.getState(),
+      m_frontRight.getState(),
+      m_rearLeft.getState(),
+      m_rearRight.getState()
+    };
+
+    return DriveConstants.kDriveKinematics.toChassisSpeeds(states).vxMetersPerSecond;
   }
 
   /**
