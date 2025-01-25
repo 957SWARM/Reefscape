@@ -85,11 +85,6 @@ public final class Constants {
         / kDrivingMotorReduction;
   }
 
-  public static final class OIConstants {
-    public static final int kDriverControllerPort = 0;
-    public static final double kDriveDeadband = 0.05;
-  }
-
   public static final class AutoConstants {
     public static final double kMaxSpeedMetersPerSecond = 3;
     public static final double kMaxAccelerationMetersPerSecondSquared = 3;
@@ -204,6 +199,7 @@ public final class Constants {
 
     // Thresholds
     public static final double TRIGGER_THRESHOLD = .8;
+    public static final double DRIVE_DEADBAND = 0.05;
 
     // BUTTON PORTS
     public static final int LEFT_CENTER_BUTTON = 6;

@@ -15,7 +15,7 @@ import frc.robot.Constants.ElevatorConstants;
 public class ElevatorSubsystem extends SubsystemBase{
     TalonFX kraken;
     final MotionMagicVoltage request;
-    double targetSetpoint;
+    double targetSetpoint = ElevatorConstants.POSITION_GROUND;
 
     public ElevatorSubsystem(){
         kraken = new TalonFX(ElevatorConstants.MOTOR_ID);
