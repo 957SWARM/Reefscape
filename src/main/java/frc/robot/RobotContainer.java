@@ -45,9 +45,9 @@ import frc.robot.subsystems.Drive.DriveSubsystem;
 public class RobotContainer {
   // The robot's subsystems
   private final DriveSubsystem m_robotDrive = new DriveSubsystem();
-  ElevatorSubsystem m_elevator = new ElevatorSubsystem();
-  WristSubsystem  m_wrist = new WristSubsystem();
-  IntakeSubsystem m_intake = new IntakeSubsystem();
+  // ElevatorSubsystem m_elevator = new ElevatorSubsystem();
+  // WristSubsystem  m_wrist = new WristSubsystem();
+  // IntakeSubsystem m_intake = new IntakeSubsystem();
 
   // Controllers
   DriverInput m_driver = new DriverInput();
@@ -71,7 +71,7 @@ public class RobotContainer {
                 true),
             m_robotDrive));
 
-    m_wrist.setDefaultCommand(m_wrist.toStow());
+    //m_wrist.setDefaultCommand(m_wrist.toStow());
 
   }
 
@@ -93,6 +93,7 @@ public class RobotContainer {
     new Trigger(() -> m_driver.resetGyro())
       .onTrue(Commands.runOnce(() -> m_robotDrive.zeroHeading()));
 
+      /*
     // sends elevator, wrist, and intake ready to take in coral from loading station
     new Trigger(() -> m_driver.intake())
       .onTrue(Sequencing.intake(m_elevator, m_wrist, m_intake));
@@ -128,7 +129,7 @@ public class RobotContainer {
     // manual control for slowly descending elevator
     new Trigger(() -> m_driver.slowFall())
       .whileTrue(m_elevator.slowFall());
-
+    */
     // OPERATOR CONTROLS (implement once climber is implemented)
   }
 
