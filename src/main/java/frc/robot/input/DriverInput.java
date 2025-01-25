@@ -54,4 +54,12 @@ public class DriverInput {
         return controller.getLeftTriggerAxis() > IOConstants.TRIGGER_THRESHOLD;
     }
 
+    public boolean slowRise(){
+        return controller.getPOV() == 0;
+    }
+
+    public boolean slowFall(){
+        return controller.getPOV() == 180;
+    }
+
 }

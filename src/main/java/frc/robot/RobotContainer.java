@@ -87,6 +87,7 @@ public class RobotContainer {
   // default drive command defined in RobotContainer constructor
   private void configureButtonBindings() {
 
+    
     // DRIVER CONTROLS
     // zeroes the pigeon gyro
     new Trigger(() -> m_driver.resetGyro())
@@ -120,8 +121,15 @@ public class RobotContainer {
     new Trigger(() -> m_driver.stow())
       .onTrue(Sequencing.stow(m_elevator, m_wrist));
 
-    // OPERATOR CONTROLS (implement once climber is implemented)
+    // manual control for slowly lifting elevator
+    new Trigger(() -> m_driver.slowRise())
+      .whileTrue(m_elevator.slowRise());
 
+    // manual control for slowly descending elevator
+    new Trigger(() -> m_driver.slowFall())
+      .whileTrue(m_elevator.slowFall());
+
+    // OPERATOR CONTROLS (implement once climber is implemented)
   }
 
   /**

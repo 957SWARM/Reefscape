@@ -25,7 +25,7 @@ public final class Constants {
   public static final class DriveConstants {
     // Driving Parameters - Note that these are not the maximum capable speeds of
     // the robot, rather the allowed maximum speeds
-    public static final double kMaxSpeedMetersPerSecond = 1.2;  // default: 4.8
+    public static final double kMaxSpeedMetersPerSecond = 2.4;  // default: 4.8
     public static final double kMaxAngularSpeed = 2 * Math.PI; // default: 2*pi. radians per second
 
     // Chassis configuration
@@ -202,6 +202,6 @@ public final class Constants {
     public static final double DRIVE_DEADBAND = 0.05;
 
     // BUTTON PORTS
-    public static final int LEFT_CENTER_BUTTON = 6;
+    public static final int LEFT_CENTER_BUTTON = 7;
   }
 }
