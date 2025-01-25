@@ -5,6 +5,9 @@
 package frc.robot.subsystems.Drive;
 
 import com.ctre.phoenix6.hardware.Pigeon2;
+import com.pathplanner.lib.auto.AutoBuilder;
+import com.pathplanner.lib.config.RobotConfig;
+import com.pathplanner.lib.controllers.PPLTVController;
 
 import edu.wpi.first.epilogue.Logged;
 import edu.wpi.first.hal.FRCNetComm.tInstances;
@@ -17,6 +20,7 @@ import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.kinematics.SwerveDriveOdometry;
 import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 import frc.robot.Constants.DriveConstants;
@@ -61,9 +65,11 @@ public class DriveSubsystem extends SubsystemBase {
 
   /** Creates a new DriveSubsystem. */
   public DriveSubsystem() {
+    // sets up AutoBuilder for PathPlanner
+    initializeAuto();
+
     // Usage reporting for MAXSwerve template
     HAL.report(tResourceType.kResourceType_RobotDrive, tInstances.kRobotDriveSwerve_MaxSwerve);
-
     
     // resets gyro
     zeroHeading();
@@ -136,6 +142,21 @@ public class DriveSubsystem extends SubsystemBase {
     m_rearRight.setDesiredState(swerveModuleStates[3]);
   }
 
+  // like drive, but for auto. Accepts ChassisSpeed directly instead of generating it from other arguments
+  // Always robot relative
+  public void autoDrive(ChassisSpeeds speeds) {
+
+    var swerveModuleStates = DriveConstants.kDriveKinematics
+      .toSwerveModuleStates(discretize(speeds));
+
+    SwerveDriveKinematics.desaturateWheelSpeeds(
+        swerveModuleStates, DriveConstants.kMaxSpeedMetersPerSecond);
+    m_frontLeft.setDesiredState(swerveModuleStates[0]);
+    m_frontRight.setDesiredState(swerveModuleStates[1]);
+    m_rearLeft.setDesiredState(swerveModuleStates[2]);
+    m_rearRight.setDesiredState(swerveModuleStates[3]);
+  }
+
   /**
    * Sets the wheels into an X formation to prevent movement.
    */
@@ -173,6 +194,18 @@ public class DriveSubsystem extends SubsystemBase {
     m_gyro.reset();
   }
 
+  // used for PathPlanner
+  public ChassisSpeeds getRobotRelativeSpeeds(){
+    SwerveModuleState[] states = {
+      m_frontLeft.getState(),
+      m_frontRight.getState(),
+      m_rearLeft.getState(),
+      m_rearRight.getState()
+    };
+
+    return DriveConstants.kDriveKinematics.toChassisSpeeds(states);
+  }
+
   /**
    * Returns the heading of the robot.
    *
@@ -203,6 +236,39 @@ public class DriveSubsystem extends SubsystemBase {
     var twist = new Pose2d().log(desiredDeltaPose);
 
     return new ChassisSpeeds((twist.dx / dt), (twist.dy / dt), (speeds.omegaRadiansPerSecond));
+  }
+
+  // helper function to set up autobuilder for PathPlanner
+  private void initializeAuto(){
+    RobotConfig config = null;
+    try{
+      config = RobotConfig.fromGUISettings();
+    } catch (Exception e) {
+      // Handle exception as needed
+      e.printStackTrace();
+    }
+
+    // Configure AutoBuilder last
+    AutoBuilder.configure(
+            this::getPose, // Robot pose supplier
+            this::resetOdometry, // Method to reset odometry (will be called if your auto has a starting pose)
+            this::getRobotRelativeSpeeds, // ChassisSpeeds supplier. MUST BE ROBOT RELATIVE
+            (speeds, feedforwards) -> autoDrive(speeds), // Method that will drive the robot given ROBOT RELATIVE ChassisSpeeds. Also optionally outputs individual module feedforwards
+            new PPLTVController(0.02), // PPLTVController is the built in path following controller for differential drive trains
+            config, // The robot configuration
+            () -> {
+              // Boolean supplier that controls when the path will be mirrored for the red alliance
+              // This will flip the path being followed to the red side of the field.
+              // THE ORIGIN WILL REMAIN ON THE BLUE SIDE
+
+              var alliance = DriverStation.getAlliance();
+              if (alliance.isPresent()) {
+                return alliance.get() == DriverStation.Alliance.Red;
+              }
+              return false;
+            },
+            this // Reference to this subsystem to set requirements
+    );
   }
 
 }
