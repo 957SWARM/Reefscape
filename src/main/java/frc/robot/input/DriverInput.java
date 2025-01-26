@@ -9,17 +9,17 @@ public class DriverInput {
 
     // input cubed to improve fine movement at slow speeds
     public double driveX(){
-        return Math.pow(controller.getLeftY(), 3);
+        return controller.getLeftY();
     }
 
     //input cubed to improve fine movement at slow speeds
     public double driveY(){
-        return Math.pow(controller.getLeftX(), 3);
+        return controller.getLeftX();
     }
 
     //input cubed to improve fine movement at slow speeds
     public double driveTurn(){
-        return Math.pow(controller.getRightX(), 3);
+        return controller.getRightX();
     }
 
     public boolean resetGyro(){

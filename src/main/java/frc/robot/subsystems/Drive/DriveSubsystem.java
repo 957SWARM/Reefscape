@@ -6,10 +6,13 @@ package frc.robot.subsystems.Drive;
 
 import com.ctre.phoenix6.hardware.Pigeon2;
 import com.pathplanner.lib.auto.AutoBuilder;
+import com.pathplanner.lib.config.PIDConstants;
 import com.pathplanner.lib.config.RobotConfig;
-import com.pathplanner.lib.controllers.PPLTVController;
+import com.pathplanner.lib.controllers.PPHolonomicDriveController;
 
+import edu.wpi.first.epilogue.EpilogueConfiguration;
 import edu.wpi.first.epilogue.Logged;
+import edu.wpi.first.epilogue.logging.EpilogueBackend;
 import edu.wpi.first.hal.FRCNetComm.tInstances;
 import edu.wpi.first.hal.FRCNetComm.tResourceType;
 import edu.wpi.first.hal.HAL;
@@ -20,6 +23,7 @@ import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.kinematics.SwerveDriveOdometry;
 import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
+import edu.wpi.first.wpilibj.DataLogManager;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
@@ -51,7 +55,6 @@ public class DriveSubsystem extends SubsystemBase {
   // The gyro sensor (replaced ADIS16470_IMU with Pigeon2)
   private final Pigeon2 m_gyro = new Pigeon2(Constants.DriveConstants.pigeonID);
 
-
   // Odometry class for tracking robot pose
   SwerveDriveOdometry m_odometry = new SwerveDriveOdometry(
       DriveConstants.kDriveKinematics,
@@ -65,14 +68,16 @@ public class DriveSubsystem extends SubsystemBase {
 
   /** Creates a new DriveSubsystem. */
   public DriveSubsystem() {
-    // sets up AutoBuilder for PathPlanner
+
+    // sets up AutoBuilder for Path Planner
     initializeAuto();
 
     // Usage reporting for MAXSwerve template
     HAL.report(tResourceType.kResourceType_RobotDrive, tInstances.kRobotDriveSwerve_MaxSwerve);
-    
+
     // resets gyro
     zeroHeading();
+
   }
 
   @Override
@@ -127,14 +132,13 @@ public class DriveSubsystem extends SubsystemBase {
     // Convert the commanded speeds into the correct units for the drivetrain
     double xSpeedDelivered = xSpeed * DriveConstants.kMaxSpeedMetersPerSecond;
     double ySpeedDelivered = ySpeed * DriveConstants.kMaxSpeedMetersPerSecond;
-    System.out.println("X Speed: " + xSpeedDelivered);
     double rotDelivered = rot * DriveConstants.kMaxAngularSpeed;
 
     var swerveModuleStates = DriveConstants.kDriveKinematics.toSwerveModuleStates(
         fieldRelative
-            ? discretize(ChassisSpeeds.fromFieldRelativeSpeeds(xSpeedDelivered, ySpeedDelivered, rotDelivered,
-                m_gyro.getRotation2d()))
-            : discretize(new ChassisSpeeds(xSpeedDelivered, ySpeedDelivered, rotDelivered)));
+            ? ChassisSpeeds.fromFieldRelativeSpeeds(xSpeedDelivered, ySpeedDelivered, rotDelivered,
+                m_gyro.getRotation2d())
+            : new ChassisSpeeds(xSpeedDelivered, ySpeedDelivered, rotDelivered));
     SwerveDriveKinematics.desaturateWheelSpeeds(
         swerveModuleStates, DriveConstants.kMaxSpeedMetersPerSecond);
     m_frontLeft.setDesiredState(swerveModuleStates[0]);
@@ -143,12 +147,16 @@ public class DriveSubsystem extends SubsystemBase {
     m_rearRight.setDesiredState(swerveModuleStates[3]);
   }
 
-  // like drive, but for auto. Accepts ChassisSpeed directly instead of generating it from other arguments
-  // Always robot relative
-  public void autoDrive(ChassisSpeeds speeds) {
+  // the solution
+  public ChassisSpeeds getRobotRelativeSpeeds(){
+    SwerveModuleState[] swerveStates = {m_frontLeft.getState(), m_frontRight.getState(), m_rearLeft.getState(), m_rearRight.getState()};
+    return DriveConstants.kDriveKinematics.toChassisSpeeds(swerveStates);
+  }
 
-    var swerveModuleStates = DriveConstants.kDriveKinematics
-      .toSwerveModuleStates(speeds);
+  //Same as drive function but for auto. Accepts chassisSpeeds directly instead of generating it from other arguments
+  //Always robot relative
+  public void autoDrive(ChassisSpeeds speeds) {
+    var swerveModuleStates = DriveConstants.kDriveKinematics.toSwerveModuleStates(speeds);
 
     SwerveDriveKinematics.desaturateWheelSpeeds(
         swerveModuleStates, DriveConstants.kMaxSpeedMetersPerSecond);
@@ -195,29 +203,6 @@ public class DriveSubsystem extends SubsystemBase {
     m_gyro.reset();
   }
 
-  // used for PathPlanner
-  public ChassisSpeeds getRobotRelativeSpeeds(){
-    SwerveModuleState[] states = {
-      m_frontLeft.getState(),
-      m_frontRight.getState(),
-      m_rearLeft.getState(),
-      m_rearRight.getState()
-    };
-
-    return DriveConstants.kDriveKinematics.toChassisSpeeds(states);
-  }
-
-  public double getXSpeed(){
-    SwerveModuleState[] states = {
-      m_frontLeft.getState(),
-      m_frontRight.getState(),
-      m_rearLeft.getState(),
-      m_rearRight.getState()
-    };
-
-    return DriveConstants.kDriveKinematics.toChassisSpeeds(states).vxMetersPerSecond;
-  }
-
   /**
    * Returns the heading of the robot.
    *
@@ -238,25 +223,13 @@ public class DriveSubsystem extends SubsystemBase {
 
   }
 
-  public ChassisSpeeds discretize(ChassisSpeeds speeds) {
-    double dt = 0.02;
-    var desiredDeltaPose = new Pose2d(
-      speeds.vxMetersPerSecond * dt, 
-      speeds.vyMetersPerSecond * dt, 
-      new Rotation2d(speeds.omegaRadiansPerSecond * dt * 4)
-    );
-    var twist = new Pose2d().log(desiredDeltaPose);
-
-    return new ChassisSpeeds((twist.dx / dt), (twist.dy / dt), (speeds.omegaRadiansPerSecond));
-  }
-
-  // helper function to set up autobuilder for PathPlanner
+  // Helper Function for setting up AutoBuilder for Path Planner. Mostly copied code from Path Planner
   private void initializeAuto(){
+    // configs for auto
     RobotConfig config = null;
     try{
       config = RobotConfig.fromGUISettings();
     } catch (Exception e) {
-      // Handle exception as needed
       e.printStackTrace();
     }
 
@@ -266,7 +239,10 @@ public class DriveSubsystem extends SubsystemBase {
             this::resetOdometry, // Method to reset odometry (will be called if your auto has a starting pose)
             this::getRobotRelativeSpeeds, // ChassisSpeeds supplier. MUST BE ROBOT RELATIVE
             (speeds, feedforwards) -> autoDrive(speeds), // Method that will drive the robot given ROBOT RELATIVE ChassisSpeeds. Also optionally outputs individual module feedforwards
-            new PPLTVController(0.02), // PPLTVController is the built in path following controller for differential drive trains
+            new PPHolonomicDriveController( // PPHolonomicController is the built in path following controller for holonomic drive trains
+                    new PIDConstants(5.0, 0.0, 0.0), // Translation PID constants
+                    new PIDConstants(5.0, 0.0, 0.0) // Rotation PID constants
+            ),
             config, // The robot configuration
             () -> {
               // Boolean supplier that controls when the path will be mirrored for the red alliance
