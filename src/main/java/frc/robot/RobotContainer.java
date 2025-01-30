@@ -6,7 +6,6 @@ package frc.robot;
 
 import java.util.List;
 
-import edu.wpi.first.epilogue.Epilogue;
 import edu.wpi.first.epilogue.Logged;
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.controller.PIDController;
@@ -17,8 +16,6 @@ import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.trajectory.Trajectory;
 import edu.wpi.first.math.trajectory.TrajectoryConfig;
 import edu.wpi.first.math.trajectory.TrajectoryGenerator;
-import edu.wpi.first.wpilibj.DataLogManager;
-import edu.wpi.first.wpilibj.XboxController.Button;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
@@ -29,9 +26,13 @@ import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.Constants.AutoConstants;
 import frc.robot.Constants.DriveConstants;
-import frc.robot.Constants.ElevatorConstants;
-import frc.robot.Constants.OIConstants;
+import frc.robot.Constants.IOConstants;
+import frc.robot.Constants.IntakeConstants;
+import frc.robot.commands.Sequencing;
+import frc.robot.input.DriverInput;
+import frc.robot.input.OperatorInput;
 import frc.robot.subsystems.ElevatorSubsystem;
+import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.subsystems.WristSubsystem;
 import frc.robot.subsystems.Drive.DriveSubsystem;
 
@@ -45,15 +46,13 @@ import frc.robot.subsystems.Drive.DriveSubsystem;
 public class RobotContainer {
   // The robot's subsystems
   private final DriveSubsystem m_robotDrive = new DriveSubsystem();
-  private final WristSubsystem m_wrist = new WristSubsystem();
+  // ElevatorSubsystem m_elevator = new ElevatorSubsystem();
+  // WristSubsystem  m_wrist = new WristSubsystem();
+  // IntakeSubsystem m_intake = new IntakeSubsystem();
 
-  // The driver's controller
-  XboxController m_driverController = new XboxController(OIConstants.kDriverControllerPort);
-
-  // Triggers
-  Trigger resetGyro = new Trigger(() -> m_driverController.getRawButton(8));
-
-  ElevatorSubsystem elevator = new ElevatorSubsystem();
+  // Controllers
+  DriverInput m_driver = new DriverInput();
+  OperatorInput m_operator = new OperatorInput();
 
   /**
    * The container for the robot. Contains subsystems, OI devices, and commands.
@@ -65,15 +64,15 @@ public class RobotContainer {
 
     // Configure default commands
     m_robotDrive.setDefaultCommand(
-        // The left stick controls translation of the robot.
-        // Turning is controlled by the X axis of the right stick.
         new RunCommand(
             () -> m_robotDrive.drive(
-                -MathUtil.applyDeadband(m_driverController.getLeftY(), OIConstants.kDriveDeadband),
-                -MathUtil.applyDeadband(m_driverController.getLeftX(), OIConstants.kDriveDeadband),
-                -MathUtil.applyDeadband(m_driverController.getRightX(), OIConstants.kDriveDeadband),
+                -MathUtil.applyDeadband(m_driver.driveX(), IOConstants.DRIVE_DEADBAND),
+                -MathUtil.applyDeadband(m_driver.driveY(), IOConstants.DRIVE_DEADBAND),
+                -MathUtil.applyDeadband(m_driver.driveTurn(), IOConstants.DRIVE_DEADBAND),
                 true),
             m_robotDrive));
+
+    //m_wrist.setDefaultCommand(m_wrist.toStow());
 
   }
 
@@ -86,44 +85,53 @@ public class RobotContainer {
    * passing it to a
    * {@link JoystickButton}.
    */
+  // default drive command defined in RobotContainer constructor
   private void configureButtonBindings() {
-    // setX button
-    new JoystickButton(m_driverController, Button.kR1.value)
-      .whileTrue(new RunCommand(
-          () -> m_robotDrive.setX(),
-          m_robotDrive));
 
-    // reset gyro (right start button)
-    new Trigger(() -> m_driverController.getRawButton(8))
+    
+    // DRIVER CONTROLS
+    // zeroes the pigeon gyro
+    new Trigger(() -> m_driver.resetGyro())
       .onTrue(Commands.runOnce(() -> m_robotDrive.zeroHeading()));
 
-    // manual wrist rise (up on D-pad)
-    new Trigger(() -> m_driverController.getPOV() == 0)
-      .whileTrue(m_wrist.slowRise());
+      /*
+    // sends elevator, wrist, and intake ready to take in coral from loading station
+    new Trigger(() -> m_driver.intake())
+      .onTrue(Sequencing.intake(m_elevator, m_wrist, m_intake));
 
-    // manual wrist fall (down on D-pad)
-    new Trigger(() -> m_driverController.getPOV() == 180)
-      .whileTrue(m_wrist.slowFall());
+    // sends elevator and wrist to L1 position
+    new Trigger(() -> m_driver.L1())
+      .onTrue(Sequencing.L1(m_elevator, m_wrist));
 
-    new JoystickButton(m_driverController, Button.kLeftBumper.value)
-        .whileTrue(new RunCommand(
-            () -> m_robotDrive.setX(),
-            m_robotDrive));
+    // sends elevator and wrist to L2 position
+    new Trigger(() -> m_driver.L2())
+      .onTrue(Sequencing.L2(m_elevator, m_wrist));
 
-    new JoystickButton(m_driverController, Button.kRightBumper.value)
-        .whileTrue(elevator.setPositionCommand(ElevatorConstants.POSITION_GROUND));
-  
-    new JoystickButton(m_driverController, Button.kA.value)
-      .whileTrue(elevator.setPositionCommand(ElevatorConstants.POSITION_L1));
+    // sends elevator and wrist to L3 position
+    new Trigger(() -> m_driver.L3())
+      .onTrue(Sequencing.L3(m_elevator, m_wrist));
 
-    new JoystickButton(m_driverController, Button.kB.value)
-      .whileTrue(elevator.setPositionCommand(ElevatorConstants.POSITION_L2));
-    
-    new JoystickButton(m_driverController, Button.kX.value)
-      .whileTrue(elevator.setPositionCommand(ElevatorConstants.POSITION_L3));
-      
-    new JoystickButton(m_driverController, Button.kY.value)
-      .whileTrue(elevator.setPositionCommand(ElevatorConstants.POSITION_L4));
+    // sends elevator and wrist to L4 position
+    new Trigger(() -> m_driver.L4())
+      .onTrue(Sequencing.L4(m_elevator, m_wrist));
+
+    // while holding trigger, runs intake backwards for scoring
+    new Trigger(() -> m_driver.score())
+      .whileTrue(m_intake.ejectCommand(IntakeConstants.EJECT_SPEED));
+
+    // sends elevator and wrist to stow position
+    new Trigger(() -> m_driver.stow())
+      .onTrue(Sequencing.stow(m_elevator, m_wrist));
+
+    // manual control for slowly lifting elevator
+    new Trigger(() -> m_driver.slowRise())
+      .whileTrue(m_elevator.slowRise());
+
+    // manual control for slowly descending elevator
+    new Trigger(() -> m_driver.slowFall())
+      .whileTrue(m_elevator.slowFall());
+    */
+    // OPERATOR CONTROLS (implement once climber is implemented)
   }
 
   /**

@@ -25,7 +25,7 @@ public final class Constants {
   public static final class DriveConstants {
     // Driving Parameters - Note that these are not the maximum capable speeds of
     // the robot, rather the allowed maximum speeds
-    public static final double kMaxSpeedMetersPerSecond = 1.2;  // default: 4.8
+    public static final double kMaxSpeedMetersPerSecond = 2.4;  // default: 4.8
     public static final double kMaxAngularSpeed = 2 * Math.PI; // default: 2*pi. radians per second
 
     // Chassis configuration
@@ -85,11 +85,6 @@ public final class Constants {
         / kDrivingMotorReduction;
   }
 
-  public static final class OIConstants {
-    public static final int kDriverControllerPort = 0;
-    public static final double kDriveDeadband = 0.05;
-  }
-
   public static final class AutoConstants {
     public static final double kMaxSpeedMetersPerSecond = 3;
     public static final double kMaxAccelerationMetersPerSecondSquared = 3;
@@ -127,11 +122,20 @@ public final class Constants {
     public static final double POSITION_L1 = 4;
     public static final double POSITION_L2 = 5;
     public static final double POSITION_L3 = 6;
-    public static final double POSITION_L4 = 7;
+    public static final double POSITION_INTAKE = 4;
+
+    // SLOW RISE/FALL
+    public static final double SETPOINT_INCREMENT = .01; // how much the setpoint changes per robot loop in manual control
+
+    // CONVERSIONS
+    public static final double metersToRotations = 1;
+
+    // MAXIMUMs/MINIMUMs
+    public static final double MAX_HEIGHT = 3;
+    public static final double MIN_HEIGHT = 1;
 
   }
 
-  // all angles given in rotations
   public static final class WristConstants {
     // CAN IDs & Ports
     public static final int MOTOR_CAN_ID = 0;
@@ -162,6 +166,42 @@ public final class Constants {
     public static final double SLOW_RISE_VOLTAGE = .5;
     public static final double SLOW_FALL_VOLTAGE = -SLOW_RISE_VOLTAGE;
 
+  }
+
+  public static final class LEDConstants {
+    public static final int TOTAL_PIXELS = 60;
+
+    public static final int FULL_RED_RGB = 0;
+    public static final int FULL_GREEN_RGB = 0;
+    public static final int FULL_BLUE_RGB = 0;
+  }
+
+  public static final class IntakeConstants {
+    public static final int MOTOR_ID = 0;
+    public static final int SENSOR_ID = 1;
+
+    public static final double TOF_TIMING_BUDGET = 0.003;
+    public static final double TOF_THRESHOLD = 10;
+
+    public static final double IDLE_SPEED = 0;
+    public static final double INTAKE_SPEED = 5;
+    public static final double EJECT_SPEED = -5;
+
+    public static final double APPLIED_VOLTAGE = 10;
+  }
+
+  public static final class IOConstants {
+
+    // Ports
+    public static final int DRIVER_PORT = 0;
+    public static final int OPERATOR_PORT = 1;
+
+    // Thresholds
+    public static final double TRIGGER_THRESHOLD = .8;
+    public static final double DRIVE_DEADBAND = 0.05;
+
+    // BUTTON PORTS
+    public static final int LEFT_CENTER_BUTTON = 7;
   }
 
 }

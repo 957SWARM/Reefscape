@@ -81,43 +81,6 @@ public class WristSubsystem extends SubsystemBase{
         return goToSetpoint(WristConstants.STOW_ANGLE);
     }
 
-    // schedules a goToSetpoint command once (to avoid drift)
-    // when something interrupts this command, nothing happens
-    public Command maintainPosition(){
-        return startEnd(
-            () -> goToSetpoint(getPosition()),
-            () -> new InstantCommand()
-        );
-    }
-
-    // slowly rotates the wrist backwards (up). Intended for manual use
-    public Command slowRise(){
-        // rises if not yet at max angle. Otherwise maintains current angle
-        if(getPosition() < WristConstants.MAXIMUM_ANGLE){
-            return run(() -> {
-                double feedforward = getFeedForward();
-                motor.set(feedforward + WristConstants.SLOW_RISE_VOLTAGE);
-            });
-        }else{
-            return runOnce(() -> maintainPosition());
-        }
-        
-    }
-
-    // slowly rotates the wrist forward (down). Intended for manual use
-    public Command slowFall(){
-        // falls if not yet at min angle. Otherwise maintains current angle
-        if(getPosition() > WristConstants.MINIMUM_ANGLE){
-            return run(() -> {
-                double feedforward = getFeedForward();
-                motor.set(feedforward + WristConstants.SLOW_FALL_VOLTAGE);
-            });
-        }else{
-            return runOnce(() -> maintainPosition());
-        }
-        
-    }
-
     // gets encoder position
     public double getPosition(){
         return encoder.getAbsPosition();
