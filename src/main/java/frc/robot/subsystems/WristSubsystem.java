@@ -24,9 +24,9 @@ public class WristSubsystem extends SubsystemBase{
         WristConstants.kD
     );
 
+    // wrist is hardware zeroed at the backstop (~35 degrees from straight down)
     public WristSubsystem(){
-        // assumes wrist starts out straight up. Zero point is defined as straight down
-        encoder.setAbsPosition(.5);
+
     }
 
     // angle measured in rotations
@@ -90,7 +90,9 @@ public class WristSubsystem extends SubsystemBase{
     private double getFeedForward(){
         // angle measured between straight down and current position
         // converted to radians for sine function
-        double angle = Units.rotationsToRadians(encoder.getAbsPosition());
+        double angle = Units.rotationsToRadians(
+            encoder.getAbsPosition() - WristConstants.OFFSET
+        );
         return Math.sin(angle) * WristConstants.kG;
     }
 
