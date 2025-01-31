@@ -25,8 +25,8 @@ public final class Constants {
   public static final class DriveConstants {
     // Driving Parameters - Note that these are not the maximum capable speeds of
     // the robot, rather the allowed maximum speeds
-    public static final double kMaxSpeedMetersPerSecond = 2;  // default: 4.8
-    public static final double kMaxAngularSpeed = 3 * Math.PI; // default: 2*pi. radians per second
+    public static final double kMaxSpeedMetersPerSecond = 2.4;  // default: 4.8
+    public static final double kMaxAngularSpeed = 2 * Math.PI; // default: 2*pi. radians per second
 
     // Chassis configuration
     public static final double kTrackWidth = Units.inchesToMeters(20);
@@ -149,6 +149,11 @@ public final class Constants {
     public static final double MAXIMUM_ANGLE = .6;
     public static final double MINIMUM_ANGLE = 0.1;
 
+    // THE OFFSET
+    // the angle between where the wrist is zeroed (backstop)
+    // and straight down
+    public static final double OFFSET = Units.degreesToRadians(35);
+
     // angle setpoints for scoring, intake, stowing
     public static final double L1_ANGLE = 0.125;
     public static final double L2_ANGLE = .2;
@@ -204,4 +209,5 @@ public final class Constants {
     // BUTTON PORTS
     public static final int LEFT_CENTER_BUTTON = 7;
   }
+
 }
