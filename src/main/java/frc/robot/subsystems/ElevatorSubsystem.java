@@ -7,13 +7,19 @@ import com.ctre.phoenix6.controls.MotionMagicVoltage;
 import com.ctre.phoenix6.hardware.TalonFX;
 
 import edu.wpi.first.math.MathUtil;
+import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.ElevatorConstants;
 
 public class ElevatorSubsystem extends SubsystemBase{
+
+    // Hardware
     TalonFX kraken;
+    DigitalInput topLimitSwitch = new DigitalInput(0);
+    DigitalInput bottomLimitSwitch = new DigitalInput(1);
+
     final MotionMagicVoltage request;
     double targetSetpoint = ElevatorConstants.POSITION_GROUND;
 
@@ -41,7 +47,12 @@ public class ElevatorSubsystem extends SubsystemBase{
     }
 
     public void periodic(){
-        kraken.setControl(request.withPosition(getAsRotations(targetSetpoint)));
+        // if one of the limit switches is activated, elevator stays put
+        if(topLimitSwitch.get() || bottomLimitSwitch.get()){
+            kraken.setVoltage(ElevatorConstants.kG);
+        }else{
+            kraken.setControl(request.withPosition(getAsRotations(targetSetpoint)));
+        }
     }
 
     public static double getAsRotations(double meters){
