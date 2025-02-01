@@ -46,22 +46,23 @@ public final class Constants {
     public static final double kBackRightChassisAngularOffset = 0;
 
     // SPARK MAX CAN IDs
-    public static final int kFrontLeftDrivingCanId = 7;
-    public static final int kRearLeftDrivingCanId = 5;
-    public static final int kFrontRightDrivingCanId = 1;
-    public static final int kRearRightDrivingCanId = 3;
+    public static final int kFrontLeftDrivingCanId = 7; // New bot: 3, B#: 7
+    public static final int kRearLeftDrivingCanId = 5; // New bot: 7, B#: 5
+    public static final int kFrontRightDrivingCanId = 1; // New bot: 1, B#: 1
+    public static final int kRearRightDrivingCanId = 3; // New bot: 5, B#: 3
 
-    public static final int kFrontLeftTurningCanId = 8;
-    public static final int kRearLeftTurningCanId = 6;
-    public static final int kFrontRightTurningCanId = 2;
-    public static final int kRearRightTurningCanId = 4;
+    public static final int kFrontLeftTurningCanId = 8; // New bot: 4, B#: 8
+    public static final int kRearLeftTurningCanId = 6; // New bot: 8, B#: 6
+    public static final int kFrontRightTurningCanId = 2; // New bot: 2, B#: 2
+    public static final int kRearRightTurningCanId = 4; // New bot: 6, B#: 4
 
     public static final boolean kGyroReversed = false;
 
     // Gyro (Pigeon2) ID
-    public static final int pigeonID = 32;
+    public static final int pigeonID = 32;  // New bot: 30, B#: 32
 
     // Location constants
+    // Unused right now
     public static final int FRONT_LEFT = 0;
     public static final int FRONT_RIGHT = 0;
     public static final int BACK_LEFT = 0;
@@ -105,7 +106,7 @@ public final class Constants {
   }
 
   public static final class ElevatorConstants {
-    public static final int MOTOR_ID = 0;
+    public static final int MOTOR_ID = 13;
     public static final int kS = 0; // Add output to overcome static friction
     public static final int kV = 0; // A velocity target of 1 rps results in output
     public static final int kA = 0; // An acceleration of 1 rps/s requires output
@@ -139,7 +140,7 @@ public final class Constants {
 
   public static final class WristConstants {
     // CAN IDs & Ports
-    public static final int MOTOR_CAN_ID = 0;
+    public static final int MOTOR_CAN_ID = 9;
     public static final int ENCODER_CAN_ID  = 0;
 
     // Maximums and Minimums Allowed
@@ -183,7 +184,7 @@ public final class Constants {
   }
 
   public static final class IntakeConstants {
-    public static final int MOTOR_ID = 0;
+    public static final int MOTOR_ID = 10;
     public static final int SENSOR_ID = 1;
 
     public static final double TOF_TIMING_BUDGET = 0.003;
