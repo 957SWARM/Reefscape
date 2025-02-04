@@ -3,6 +3,7 @@ package frc.robot.subsystems;
 import edu.wpi.first.wpilibj.AddressableLED;
 import edu.wpi.first.wpilibj.AddressableLEDBuffer;
 import edu.wpi.first.wpilibj2.command.Subsystem;
+import frc.robot.Constants.LEDConstants;
 
 public class LED implements Subsystem {
 
@@ -16,7 +17,7 @@ public class LED implements Subsystem {
 
         this.totalPixels = totalPixels;
 
-        led = new AddressableLED(0);
+        led = new AddressableLED(LEDConstants.LED_PORT);
 
         ledBuffer = new AddressableLEDBuffer(totalPixels);
         led.setLength(totalPixels);
