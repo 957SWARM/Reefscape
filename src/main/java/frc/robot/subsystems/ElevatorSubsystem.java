@@ -47,12 +47,9 @@ public class ElevatorSubsystem extends SubsystemBase{
     }
 
     public void periodic(){
-        // if one of the limit switches is activated, elevator stays put
-        if(topLimitSwitch.get() || bottomLimitSwitch.get()){
-            kraken.setVoltage(ElevatorConstants.kG);
-        }else{
-            kraken.setControl(request.withPosition(getAsRotations(targetSetpoint)));
-        }
+        kraken.setControl(request.withPosition(getAsRotations(targetSetpoint)));
+        System.out.println(kraken.getPosition());
+        
     }
 
     public static double getAsRotations(double meters){
