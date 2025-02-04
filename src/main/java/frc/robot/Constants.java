@@ -115,9 +115,9 @@ public final class Constants {
     public static final int kD = 0; // A velocity error of 1 rps results in output
     public static final int kG = 0; // A velocity error of 1 rps results in output
 
-    public static final int MOTIONMAGIC_VELOCITY = 5; 
-    public static final int MOTIONMAGIC_ACCELERATION = 10; 
-    public static final int MOTIONMAGIC_JERK = 100;
+    public static final int MOTIONMAGIC_VELOCITY = 80; // Target cruise velocity of 80 rps
+    public static final int MOTIONMAGIC_ACCELERATION = 160; // Target acceleration of 160 rps/s (0.5 seconds)
+    public static final int MOTIONMAGIC_JERK = 1600; // Target jerk of 1600 rps/s/s (0.1 seconds)
 
     public static final double POSITION_GROUND = 0;
     public static final double POSITION_L1 = 4;

@@ -37,9 +37,9 @@ public class ElevatorSubsystem extends SubsystemBase{
         slot0.kD = ElevatorConstants.kD;
 
         MotionMagicConfigs mmConfigs = configs.MotionMagic;
-        mmConfigs.MotionMagicCruiseVelocity = 80; // Target cruise velocity of 80 rps
-        mmConfigs.MotionMagicAcceleration = 160; // Target acceleration of 160 rps/s (0.5 seconds)
-        mmConfigs.MotionMagicJerk = 1600; // Target jerk of 1600 rps/s/s (0.1 seconds)
+        mmConfigs.MotionMagicCruiseVelocity = ElevatorConstants.MOTIONMAGIC_VELOCITY; 
+        mmConfigs.MotionMagicAcceleration = ElevatorConstants.MOTIONMAGIC_ACCELERATION;
+        mmConfigs.MotionMagicJerk = ElevatorConstants.MOTIONMAGIC_JERK; 
 
         kraken.getConfigurator().apply(configs);
 
