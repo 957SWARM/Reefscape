@@ -48,7 +48,7 @@ public class ElevatorSubsystem extends SubsystemBase{
 
     public void periodic(){
         kraken.setControl(request.withPosition(getAsRotations(targetSetpoint)));
-        System.out.println(kraken.getPosition());
+        // System.out.println(kraken.getPosition());
         
     }
 
