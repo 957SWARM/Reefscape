@@ -187,8 +187,11 @@ public final class Constants {
     public static final int MOTOR_ID = 10;
     public static final int SENSOR_ID = 1;
 
-    public static final double TOF_TIMING_BUDGET = 0.003;
+
+    // TOF RELATED
+    public static final double TOF_TIMING_BUDGET = 30;
     public static final double TOF_THRESHOLD = 10;
+    public static final double FILTER_TIME_CONSTANT = .1; // decrease for faster response, increase for less noise
 
     public static final double IDLE_SPEED = 0;
     public static final double INTAKE_SPEED = 5;
