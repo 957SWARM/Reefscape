@@ -211,4 +211,10 @@ public final class Constants {
     public static final int LEFT_CENTER_BUTTON = 7;
   }
 
+  public static final class ClimberConstants {
+
+    public static final double CLIMB_PULL_STRENGTH_VOLTS = 10;
+    public static final int MOTOR_CAN_ID = 11;
+    
+  }
 }
