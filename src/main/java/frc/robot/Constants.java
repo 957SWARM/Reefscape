@@ -130,7 +130,7 @@ public final class Constants {
     public static final double SETPOINT_INCREMENT = .01; // how much the setpoint changes per robot loop in manual control
 
     // CONVERSIONS
-    public static final double metersToRotations = 1;
+    public static final double metersToRotations = 178.95;
 
     // MAXIMUMs/MINIMUMs
     public static final double MAX_HEIGHT = 3;
