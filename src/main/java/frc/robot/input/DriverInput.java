@@ -1,5 +1,6 @@
 package frc.robot.input;
 
+import edu.wpi.first.math.filter.SlewRateLimiter;
 import edu.wpi.first.wpilibj.XboxController;
 import frc.robot.Constants.IOConstants;
 
@@ -7,19 +8,24 @@ public class DriverInput {
 
     XboxController controller = new XboxController(IOConstants.DRIVER_PORT);
 
+    // Slew Rate Limiters. limit how fast joystick values can change
+    SlewRateLimiter xLimiter = new SlewRateLimiter(20);
+    SlewRateLimiter yLimiter = new SlewRateLimiter(20);
+    SlewRateLimiter turnLimiter = new SlewRateLimiter(20);
+
     // input cubed to improve fine movement at slow speeds
     public double driveX(){
-        return Math.pow(controller.getLeftY(), 3);
+        return xLimiter.calculate(controller.getLeftY());
     }
 
     //input cubed to improve fine movement at slow speeds
     public double driveY(){
-        return Math.pow(controller.getLeftX(), 3);
+        return yLimiter.calculate(controller.getLeftX());
     }
 
     //input cubed to improve fine movement at slow speeds
     public double driveTurn(){
-        return Math.pow(controller.getRightX(), 3);
+        return turnLimiter.calculate(controller.getRightX());
     }
 
     public boolean resetGyro(){

@@ -7,13 +7,19 @@ import com.ctre.phoenix6.controls.MotionMagicVoltage;
 import com.ctre.phoenix6.hardware.TalonFX;
 
 import edu.wpi.first.math.MathUtil;
+import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.ElevatorConstants;
 
 public class ElevatorSubsystem extends SubsystemBase{
+
+    // Hardware
     TalonFX kraken;
+    DigitalInput topLimitSwitch = new DigitalInput(0);
+    DigitalInput bottomLimitSwitch = new DigitalInput(1);
+
     final MotionMagicVoltage request;
     double targetSetpoint = ElevatorConstants.POSITION_GROUND;
 
@@ -31,9 +37,9 @@ public class ElevatorSubsystem extends SubsystemBase{
         slot0.kD = ElevatorConstants.kD;
 
         MotionMagicConfigs mmConfigs = configs.MotionMagic;
-        mmConfigs.MotionMagicCruiseVelocity = 80; // Target cruise velocity of 80 rps
-        mmConfigs.MotionMagicAcceleration = 160; // Target acceleration of 160 rps/s (0.5 seconds)
-        mmConfigs.MotionMagicJerk = 1600; // Target jerk of 1600 rps/s/s (0.1 seconds)
+        mmConfigs.MotionMagicCruiseVelocity = ElevatorConstants.MOTIONMAGIC_VELOCITY; 
+        mmConfigs.MotionMagicAcceleration = ElevatorConstants.MOTIONMAGIC_ACCELERATION;
+        mmConfigs.MotionMagicJerk = ElevatorConstants.MOTIONMAGIC_JERK; 
 
         kraken.getConfigurator().apply(configs);
 
@@ -42,6 +48,8 @@ public class ElevatorSubsystem extends SubsystemBase{
 
     public void periodic(){
         kraken.setControl(request.withPosition(getAsRotations(targetSetpoint)));
+        // System.out.println(kraken.getPosition());
+        
     }
 
     public static double getAsRotations(double meters){
