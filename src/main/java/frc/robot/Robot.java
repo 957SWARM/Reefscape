@@ -6,6 +6,7 @@ package frc.robot;
 
 import com.pathplanner.lib.commands.FollowPathCommand;
 
+import edu.wpi.first.cameraserver.CameraServer;
 import edu.wpi.first.epilogue.Epilogue;
 import edu.wpi.first.epilogue.Logged;
 import edu.wpi.first.wpilibj.DataLogManager;
@@ -41,7 +42,9 @@ public class Robot extends TimedRobot {
     // autonomous chooser on the dashboard.
     m_robotContainer = new RobotContainer();
 
-    FollowPathCommand.warmupCommand().schedule();
+    FollowPathCommand.warmupCommand().schedule(); // For Path Planner. Supposedly speeds up followings paths
+
+    CameraServer.startAutomaticCapture().setResolution(480, 360); // For end-effector camera
     
   }
 
