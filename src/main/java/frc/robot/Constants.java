@@ -46,15 +46,15 @@ public final class Constants {
     public static final double kBackRightChassisAngularOffset = 0;
 
     // SPARK MAX CAN IDs
-    public static final int kFrontLeftDrivingCanId = 7; // New bot: 3, B#: 7
-    public static final int kRearLeftDrivingCanId = 5; // New bot: 7, B#: 5
-    public static final int kFrontRightDrivingCanId = 1; // New bot: 1, B#: 1
-    public static final int kRearRightDrivingCanId = 3; // New bot: 5, B#: 3
+    public static final int kFrontLeftDrivingCanId = 1; // New bot: 1, B#: 7
+    public static final int kFrontRightDrivingCanId = 3; // New bot: 3, B#: 1
+    public static final int kRearLeftDrivingCanId = 5; // New bot: 5, B#: 5
+    public static final int kRearRightDrivingCanId = 7; // New bot: 7, B#: 3
 
-    public static final int kFrontLeftTurningCanId = 8; // New bot: 4, B#: 8
-    public static final int kRearLeftTurningCanId = 6; // New bot: 8, B#: 6
-    public static final int kFrontRightTurningCanId = 2; // New bot: 2, B#: 2
-    public static final int kRearRightTurningCanId = 4; // New bot: 6, B#: 4
+    public static final int kFrontLeftTurningCanId = 2; // New bot: 2, B#: 8
+    public static final int kFrontRightTurningCanId = 4; // New bot: 4, B#: 2
+    public static final int kRearLeftTurningCanId = 6; // New bot: 6, B#: 6
+    public static final int kRearRightTurningCanId = 8; // New bot: 8, B#: 4
 
     public static final boolean kGyroReversed = false;
 
