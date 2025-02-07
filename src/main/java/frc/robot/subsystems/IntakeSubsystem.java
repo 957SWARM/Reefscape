@@ -51,6 +51,10 @@ public class IntakeSubsystem extends SubsystemBase{
         return (tofFilter.calculate(toFRange) <= IntakeConstants.TOF_THRESHOLD);
     }
 
+    public double readToF(){
+        return toF.getRange();
+    }
+
     public Command stopIntakeCommand(){
         return runOnce(() -> {
             appliedVoltage = 0;

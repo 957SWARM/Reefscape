@@ -29,9 +29,9 @@ public final class Constants {
     public static final double kMaxAngularSpeed = 2 * Math.PI; // default: 2*pi. radians per second
 
     // Chassis configuration
-    public static final double kTrackWidth = Units.inchesToMeters(20);
+    public static final double kTrackWidth = Units.inchesToMeters(24.5);
     // Distance between centers of right and left wheels on robot ^^^
-    public static final double kWheelBase = Units.inchesToMeters(26);
+    public static final double kWheelBase = Units.inchesToMeters(24.5);
     // Distance between front and back wheels on robot ^^^
     public static final SwerveDriveKinematics kDriveKinematics = new SwerveDriveKinematics(
         new Translation2d(kWheelBase / 2, kTrackWidth / 2),
@@ -59,7 +59,7 @@ public final class Constants {
     public static final boolean kGyroReversed = false;
 
     // Gyro (Pigeon2) ID
-    public static final int pigeonID = 32;  // New bot: 30, B#: 32
+    public static final int pigeonID = 30;  // New bot: 30, B#: 32
 
     // Location constants
     // Unused right now
