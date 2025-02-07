@@ -15,28 +15,33 @@ public class Sequencing {
         .alongWith(intake.intakeCommand(IntakeConstants.INTAKE_SPEED));
     }
 
-    public static Command L1(ElevatorSubsystem elevator, WristSubsystem wrist){
+    public static Command L1(ElevatorSubsystem elevator, WristSubsystem wrist, IntakeSubsystem intake){
         return elevator.toL1()
-        .alongWith(wrist.toL1());
+        .alongWith(wrist.toL1())
+        .alongWith(intake.stopIntakeCommand());
     }
 
-    public static Command L2(ElevatorSubsystem elevator, WristSubsystem wrist){
+    public static Command L2(ElevatorSubsystem elevator, WristSubsystem wrist, IntakeSubsystem intake){
         return elevator.toL2()
-        .alongWith(wrist.toL2());
+        .alongWith(wrist.toL2()).
+        alongWith(intake.stopIntakeCommand());
     }
 
-    public static Command L3(ElevatorSubsystem elevator, WristSubsystem wrist){
+    public static Command L3(ElevatorSubsystem elevator, WristSubsystem wrist, IntakeSubsystem intake){
         return elevator.toL3()
-        .alongWith(wrist.toL3());
+        .alongWith(wrist.toL3())
+        .alongWith(intake.stopIntakeCommand());
     }
 
-    public static Command L4(ElevatorSubsystem elevator, WristSubsystem wrist){
+    public static Command L4(ElevatorSubsystem elevator, WristSubsystem wrist, IntakeSubsystem intake){
         return elevator.toL4()
-        .alongWith(wrist.toL4());
+        .alongWith(wrist.toL4())
+        .alongWith(intake.stopIntakeCommand());
     }
 
-    public static Command stow(ElevatorSubsystem elevator, WristSubsystem wrist){
+    public static Command stow(ElevatorSubsystem elevator, WristSubsystem wrist, IntakeSubsystem intake){
         return elevator.toL2()
-        .alongWith(wrist.toStow());
+        .alongWith(wrist.toStow())
+        .alongWith(intake.stopIntakeCommand());
     }
 }

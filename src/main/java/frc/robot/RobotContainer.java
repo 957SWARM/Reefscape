@@ -19,8 +19,13 @@ import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.Constants.IOConstants;
+import frc.robot.Constants.IntakeConstants;
+import frc.robot.commands.Sequencing;
 import frc.robot.input.DriverInput;
 import frc.robot.input.OperatorInput;
+import frc.robot.subsystems.ElevatorSubsystem;
+import frc.robot.subsystems.IntakeSubsystem;
+import frc.robot.subsystems.WristSubsystem;
 import frc.robot.subsystems.Drive.DriveSubsystem;
 
 /*
@@ -89,26 +94,26 @@ public class RobotContainer {
     new Trigger(() -> m_driver.resetGyro())
       .onTrue(Commands.runOnce(() -> m_robotDrive.zeroHeading()));
 
-      /*
+    /*
     // sends elevator, wrist, and intake ready to take in coral from loading station
     new Trigger(() -> m_driver.intake())
       .onTrue(Sequencing.intake(m_elevator, m_wrist, m_intake));
 
     // sends elevator and wrist to L1 position
     new Trigger(() -> m_driver.L1())
-      .onTrue(Sequencing.L1(m_elevator, m_wrist));
+      .onTrue(Sequencing.L1(m_elevator, m_wrist, m_intake));
 
     // sends elevator and wrist to L2 position
     new Trigger(() -> m_driver.L2())
-      .onTrue(Sequencing.L2(m_elevator, m_wrist));
+      .onTrue(Sequencing.L2(m_elevator, m_wrist, m_intake));
 
     // sends elevator and wrist to L3 position
     new Trigger(() -> m_driver.L3())
-      .onTrue(Sequencing.L3(m_elevator, m_wrist));
+      .onTrue(Sequencing.L3(m_elevator, m_wrist, m_intake));
 
     // sends elevator and wrist to L4 position
     new Trigger(() -> m_driver.L4())
-      .onTrue(Sequencing.L4(m_elevator, m_wrist));
+      .onTrue(Sequencing.L4(m_elevator, m_wrist, m_intake));
 
     // while holding trigger, runs intake backwards for scoring
     new Trigger(() -> m_driver.score())
@@ -116,7 +121,7 @@ public class RobotContainer {
 
     // sends elevator and wrist to stow position
     new Trigger(() -> m_driver.stow())
-      .onTrue(Sequencing.stow(m_elevator, m_wrist));
+      .onTrue(Sequencing.stow(m_elevator, m_wrist, m_intake));
 
     // manual control for slowly lifting elevator
     new Trigger(() -> m_driver.slowRise())
@@ -126,6 +131,7 @@ public class RobotContainer {
     new Trigger(() -> m_driver.slowFall())
       .whileTrue(m_elevator.slowFall());
     */
+    
     // OPERATOR CONTROLS (implement once climber is implemented)
   }
 
