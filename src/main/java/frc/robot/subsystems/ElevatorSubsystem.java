@@ -19,8 +19,7 @@ public class ElevatorSubsystem extends SubsystemBase{
 
     // Hardware
     TalonFX kraken;
-    DigitalInput topLimitSwitch = new DigitalInput(0);
-    DigitalInput bottomLimitSwitch = new DigitalInput(1);
+    DigitalInput bottomLimitSwitch = new DigitalInput(0);
 
     final MotionMagicVoltage request;
     double targetSetpoint = ElevatorConstants.POSITION_GROUND;
@@ -49,6 +48,9 @@ public class ElevatorSubsystem extends SubsystemBase{
     }
 
     public void periodic(){
+        if (bottomLimitSwitch.get())
+            kraken.setPosition(0);
+    
         kraken.setControl(request.withPosition(getAsRotations(targetSetpoint)));
         // System.out.println(kraken.getPosition());
         
