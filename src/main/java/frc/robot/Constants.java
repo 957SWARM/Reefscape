@@ -115,16 +115,16 @@ public final class Constants {
     public static final int kD = 0; // A velocity error of 1 rps results in output
     public static final int kG = 0; // A velocity error of 1 rps results in output
 
-    public static final int MOTIONMAGIC_VELOCITY = 80; // Target cruise velocity of 80 rps
-    public static final int MOTIONMAGIC_ACCELERATION = 160; // Target acceleration of 160 rps/s (0.5 seconds)
-    public static final int MOTIONMAGIC_JERK = 1600; // Target jerk of 1600 rps/s/s (0.1 seconds)
+    public static final int MOTIONMAGIC_VELOCITY = 40; // Target cruise velocity of 80 rps
+    public static final int MOTIONMAGIC_ACCELERATION = 80; // Target acceleration of 160 rps/s (0.5 seconds)
+    public static final int MOTIONMAGIC_JERK = 800; // Target jerk of 1600 rps/s/s (0.1 seconds)
 
     public static final double POSITION_GROUND = 0;
-    public static final double POSITION_L1 = 4;
-    public static final double POSITION_L2 = 5;
-    public static final double POSITION_L3 = 6;
-    public static final double POSITION_L4 = 7;
-    public static final double POSITION_INTAKE = 4;
+    public static final double POSITION_L1 = 0.1;
+    public static final double POSITION_L2 = 0.2;
+    public static final double POSITION_L3 = 0.3;
+    public static final double POSITION_L4 = 0.4;
+    public static final double POSITION_INTAKE = 0.25;
 
     // SLOW RISE/FALL
     public static final double SETPOINT_INCREMENT = .01; // how much the setpoint changes per robot loop in manual control
@@ -132,16 +132,16 @@ public final class Constants {
     // CONVERSIONS
     public static final double metersToRotations = 178.95;
 
-    // MAXIMUMs/MINIMUMs
-    public static final double MAX_HEIGHT = 3;
-    public static final double MIN_HEIGHT = 1;
+    // MAXIMUMs/MINIMUMs (meters)
+    public static final double MAX_HEIGHT = .53;
+    public static final double MIN_HEIGHT = 0;
 
   }
 
   public static final class WristConstants {
     // CAN IDs & Ports
     public static final int MOTOR_CAN_ID = 9;
-    public static final int ENCODER_CAN_ID  = 0;
+    public static final int ENCODER_CAN_ID  = 50;
 
     // Maximums and Minimums Allowed
     public static final double MAXIMUM_VOLTAGE = 3;
