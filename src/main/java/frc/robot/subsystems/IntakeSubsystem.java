@@ -2,8 +2,11 @@ package frc.robot.subsystems;
 
 import com.playingwithfusion.TimeOfFlight;
 import com.playingwithfusion.TimeOfFlight.RangingMode;
+import com.revrobotics.spark.SparkBase.PersistMode;
+import com.revrobotics.spark.SparkBase.ResetMode;
 import com.revrobotics.spark.SparkLowLevel.MotorType;
 import com.revrobotics.spark.SparkMax;
+import com.revrobotics.spark.config.SparkMaxConfig;
 
 import edu.wpi.first.epilogue.Logged;
 import edu.wpi.first.math.filter.LinearFilter;
@@ -16,11 +19,12 @@ import frc.robot.Constants.IntakeConstants;
 public class IntakeSubsystem extends SubsystemBase{
 
     // Hardware
-    SparkMax neo;
-    TimeOfFlight toF;
+    private SparkMax neo;
+    private TimeOfFlight toF;
+    public final SparkMaxConfig motorConfig = new SparkMaxConfig();
 
-    double toFRange;
-    double appliedVoltage;
+    private double toFRange;
+    private double appliedVoltage;
 
     // helps reduce noise in the tof sensor
     LinearFilter tofFilter = LinearFilter.singlePoleIIR(
@@ -35,6 +39,10 @@ public class IntakeSubsystem extends SubsystemBase{
         toF.setRangingMode(RangingMode.Short, IntakeConstants.TOF_TIMING_BUDGET);
 
         appliedVoltage = 0;
+
+        // Current Limit
+        motorConfig.smartCurrentLimit(IntakeConstants.CURRENT_LIMIT);
+        neo.configure(motorConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
     }
 
     public void periodic(){

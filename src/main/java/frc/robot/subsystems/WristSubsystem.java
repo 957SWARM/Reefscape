@@ -1,5 +1,6 @@
 package frc.robot.subsystems;
 
+import com.ctre.phoenix6.configs.CurrentLimitsConfigs;
 import com.ctre.phoenix6.hardware.TalonFX;
 import com.reduxrobotics.sensors.canandmag.Canandmag;
 import com.revrobotics.spark.SparkLowLevel.MotorType;
@@ -15,16 +16,22 @@ import frc.robot.Constants.WristConstants;
 @Logged
 public class WristSubsystem extends SubsystemBase{
 
-    TalonFX motor = new TalonFX(WristConstants.MOTOR_CAN_ID);
-    Canandmag encoder = new Canandmag(WristConstants.ENCODER_CAN_ID);
-    PIDController pid = new PIDController(
+    // Hardware
+    private TalonFX motor = new TalonFX(WristConstants.MOTOR_CAN_ID);
+    private Canandmag encoder = new Canandmag(WristConstants.ENCODER_CAN_ID);
+    
+    private PIDController pid = new PIDController(
         WristConstants.kP, 
         WristConstants.kI, 
         WristConstants.kD
     );
-    double targetSetpoint = WristConstants.STOW_ANGLE;
+    private double targetSetpoint = WristConstants.STOW_ANGLE;
 
     public WristSubsystem(){ 
+        // Current Limit
+        var limitConfigs = new CurrentLimitsConfigs();
+        limitConfigs.SupplyCurrentLimit = WristConstants.CURRENT_LIMIT;
+        motor.getConfigurator().apply(limitConfigs);
     }
 
     public void periodic(){

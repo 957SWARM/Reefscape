@@ -1,5 +1,6 @@
 package frc.robot.subsystems;
 
+import com.ctre.phoenix6.configs.CurrentLimitsConfigs;
 import com.ctre.phoenix6.configs.MotionMagicConfigs;
 import com.ctre.phoenix6.configs.Slot0Configs;
 import com.ctre.phoenix6.configs.TalonFXConfiguration;
@@ -18,11 +19,11 @@ import frc.robot.Constants.ElevatorConstants;
 public class ElevatorSubsystem extends SubsystemBase{
 
     // Hardware
-    TalonFX kraken;
-    DigitalInput bottomLimitSwitch = new DigitalInput(0);
+    private TalonFX kraken;
+    private DigitalInput bottomLimitSwitch = new DigitalInput(0);
 
-    final MotionMagicVoltage request;
-    double targetSetpoint = ElevatorConstants.POSITION_GROUND;
+    private final MotionMagicVoltage request;
+    private double targetSetpoint = ElevatorConstants.POSITION_GROUND;
 
     public ElevatorSubsystem(){
         kraken = new TalonFX(ElevatorConstants.MOTOR_ID);
@@ -43,6 +44,11 @@ public class ElevatorSubsystem extends SubsystemBase{
         mmConfigs.MotionMagicJerk = ElevatorConstants.MOTIONMAGIC_JERK; 
 
         kraken.getConfigurator().apply(configs);
+
+        // Current Limit to 30 A
+        var limitConfigs = new CurrentLimitsConfigs();
+        limitConfigs.SupplyCurrentLimit = ElevatorConstants.CURRENT_LIMIT;
+        kraken.getConfigurator().apply(limitConfigs);
 
         request = new MotionMagicVoltage(ElevatorConstants.kG);
     }

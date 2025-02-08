@@ -135,6 +135,7 @@ public final class Constants {
     // MAXIMUMs/MINIMUMs (meters)
     public static final double MAX_HEIGHT = .53;
     public static final double MIN_HEIGHT = 0;
+    public static final int CURRENT_LIMIT = 30;
 
   }
 
@@ -149,6 +150,8 @@ public final class Constants {
 
     public static final double MAXIMUM_ANGLE = .6;
     public static final double MINIMUM_ANGLE = 0.1;
+
+    public static final int CURRENT_LIMIT = 30;
 
     // THE OFFSET
     // the angle between where the wrist is zeroed (backstop)
@@ -187,12 +190,14 @@ public final class Constants {
     public static final int MOTOR_ID = 10;
     public static final int SENSOR_ID = 1;
 
+    public static final int CURRENT_LIMIT = 30;
 
     // TOF RELATED
     public static final double TOF_TIMING_BUDGET = 30;
     public static final double TOF_THRESHOLD = 10;
     public static final double FILTER_TIME_CONSTANT = .1; // decrease for faster response, increase for less noise
 
+    // SPEEDS
     public static final double IDLE_SPEED = 0;
     public static final double INTAKE_SPEED = 5;
     public static final double EJECT_SPEED = -5;
@@ -218,6 +223,8 @@ public final class Constants {
 
     public static final double CLIMB_PULL_STRENGTH_VOLTS = 10;
     public static final int MOTOR_CAN_ID = 11;
+
+    public static final int CURRENT_LIMIT = 30;
     
   }
 }
