@@ -1,7 +1,10 @@
 package frc.robot.subsystems;
 
+import com.revrobotics.spark.SparkBase.PersistMode;
+import com.revrobotics.spark.SparkBase.ResetMode;
 import com.revrobotics.spark.SparkLowLevel.MotorType;
 import com.revrobotics.spark.SparkMax;
+import com.revrobotics.spark.config.SparkMaxConfig;
 
 import edu.wpi.first.epilogue.Logged;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -12,11 +15,17 @@ import frc.robot.Constants.ClimberConstants;
 @Logged
 public class ClimbSubsystem extends SubsystemBase{
 
-    SparkMax neo;
-    double appliedVoltage;
+    private SparkMax neo;
+    private double appliedVoltage;
+    public final SparkMaxConfig motorConfig = new SparkMaxConfig();
 
     public ClimbSubsystem(){
         neo = new SparkMax(ClimberConstants.MOTOR_CAN_ID, MotorType.kBrushless);
+
+        // Current Limit
+        motorConfig.smartCurrentLimit(ClimberConstants.CURRENT_LIMIT);
+        neo.configure(motorConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
+
         appliedVoltage = 0;
     }
 

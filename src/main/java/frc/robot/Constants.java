@@ -46,15 +46,15 @@ public final class Constants {
     public static final double kBackRightChassisAngularOffset = 0;
 
     // SPARK MAX CAN IDs
-    public static final int kFrontLeftDrivingCanId = 7; // New bot: 3, B#: 7
-    public static final int kRearLeftDrivingCanId = 5; // New bot: 7, B#: 5
-    public static final int kFrontRightDrivingCanId = 1; // New bot: 1, B#: 1
-    public static final int kRearRightDrivingCanId = 3; // New bot: 5, B#: 3
+    public static final int kFrontLeftDrivingCanId = 1; // New bot: 1, B#: 7
+    public static final int kFrontRightDrivingCanId = 3; // New bot: 3, B#: 1
+    public static final int kRearLeftDrivingCanId = 5; // New bot: 5, B#: 5
+    public static final int kRearRightDrivingCanId = 7; // New bot: 7, B#: 3
 
-    public static final int kFrontLeftTurningCanId = 8; // New bot: 4, B#: 8
-    public static final int kRearLeftTurningCanId = 6; // New bot: 8, B#: 6
-    public static final int kFrontRightTurningCanId = 2; // New bot: 2, B#: 2
-    public static final int kRearRightTurningCanId = 4; // New bot: 6, B#: 4
+    public static final int kFrontLeftTurningCanId = 2; // New bot: 2, B#: 8
+    public static final int kFrontRightTurningCanId = 4; // New bot: 4, B#: 2
+    public static final int kRearLeftTurningCanId = 6; // New bot: 6, B#: 6
+    public static final int kRearRightTurningCanId = 8; // New bot: 8, B#: 4
 
     public static final boolean kGyroReversed = false;
 
@@ -115,16 +115,16 @@ public final class Constants {
     public static final int kD = 0; // A velocity error of 1 rps results in output
     public static final int kG = 0; // A velocity error of 1 rps results in output
 
-    public static final int MOTIONMAGIC_VELOCITY = 80; // Target cruise velocity of 80 rps
-    public static final int MOTIONMAGIC_ACCELERATION = 160; // Target acceleration of 160 rps/s (0.5 seconds)
-    public static final int MOTIONMAGIC_JERK = 1600; // Target jerk of 1600 rps/s/s (0.1 seconds)
+    public static final int MOTIONMAGIC_VELOCITY = 40; // Target cruise velocity of 80 rps
+    public static final int MOTIONMAGIC_ACCELERATION = 80; // Target acceleration of 160 rps/s (0.5 seconds)
+    public static final int MOTIONMAGIC_JERK = 800; // Target jerk of 1600 rps/s/s (0.1 seconds)
 
     public static final double POSITION_GROUND = 0;
-    public static final double POSITION_L1 = 4;
-    public static final double POSITION_L2 = 5;
-    public static final double POSITION_L3 = 6;
-    public static final double POSITION_L4 = 7;
-    public static final double POSITION_INTAKE = 4;
+    public static final double POSITION_L1 = 0.1;
+    public static final double POSITION_L2 = 0.2;
+    public static final double POSITION_L3 = 0.3;
+    public static final double POSITION_L4 = 0.4;
+    public static final double POSITION_INTAKE = 0.25;
 
     // SLOW RISE/FALL
     public static final double SETPOINT_INCREMENT = .01; // how much the setpoint changes per robot loop in manual control
@@ -132,9 +132,10 @@ public final class Constants {
     // CONVERSIONS
     public static final double metersToRotations = 178.95;
 
-    // MAXIMUMs/MINIMUMs
-    public static final double MAX_HEIGHT = 3;
-    public static final double MIN_HEIGHT = 1;
+    // MAXIMUMs/MINIMUMs (meters)
+    public static final double MAX_HEIGHT = .53;
+    public static final double MIN_HEIGHT = 0;
+    public static final int CURRENT_LIMIT = 30;
 
   }
 
@@ -149,6 +150,8 @@ public final class Constants {
 
     public static final double MAXIMUM_ANGLE = .6;
     public static final double MINIMUM_ANGLE = 0.1;
+
+    public static final int CURRENT_LIMIT = 30;
 
     // THE OFFSET
     // the angle between where the wrist is zeroed (backstop)
@@ -187,12 +190,14 @@ public final class Constants {
     public static final int MOTOR_ID = 10;
     public static final int SENSOR_ID = 1;
 
+    public static final int CURRENT_LIMIT = 30;
 
     // TOF RELATED
     public static final double TOF_TIMING_BUDGET = 30;
     public static final double TOF_THRESHOLD = 10;
     public static final double FILTER_TIME_CONSTANT = .1; // decrease for faster response, increase for less noise
 
+    // SPEEDS
     public static final double IDLE_SPEED = 0;
     public static final double INTAKE_SPEED = 5;
     public static final double EJECT_SPEED = -5;
@@ -218,6 +223,8 @@ public final class Constants {
 
     public static final double CLIMB_PULL_STRENGTH_VOLTS = 10;
     public static final int MOTOR_CAN_ID = 11;
+
+    public static final int CURRENT_LIMIT = 30;
     
   }
 }
