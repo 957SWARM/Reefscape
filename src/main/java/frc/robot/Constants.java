@@ -120,11 +120,11 @@ public final class Constants {
     public static final int MOTIONMAGIC_JERK = 800; // Target jerk of 1600 rps/s/s (0.1 seconds)
 
     public static final double POSITION_GROUND = 0;
-    public static final double POSITION_L1 = 0.1;
-    public static final double POSITION_L2 = 0.2;
-    public static final double POSITION_L3 = 0.3;
-    public static final double POSITION_L4 = 0.4;
-    public static final double POSITION_INTAKE = 0.25;
+    public static final double POSITION_L1 = 0.1; // Theoretical: 0.189
+    public static final double POSITION_L2 = 0.2; // Theoretical: 0.541
+    public static final double POSITION_L3 = 0.3; // Theoretical: 0.941
+    public static final double POSITION_L4 = 0.4; // Theoretical: 1.63 (MAKE SURE THIS IS WITHIN EXTENSION LIMITS)
+    public static final double POSITION_INTAKE = 0.25;  // Theoretical: 0.304
 
     // SLOW RISE/FALL
     public static final double SETPOINT_INCREMENT = .01; // how much the setpoint changes per robot loop in manual control
@@ -140,6 +140,7 @@ public final class Constants {
 
   }
 
+  // angles measured in rotations. 0 defined as straight out from robot
   public static final class WristConstants {
     // CAN IDs & Ports
     public static final int MOTOR_CAN_ID = 9;
@@ -149,23 +150,18 @@ public final class Constants {
     public static final double MAXIMUM_VOLTAGE = 3;
     public static final double MINIMUM_VOLTAGE = -MAXIMUM_VOLTAGE;
 
-    public static final double MAXIMUM_ANGLE = .6;
-    public static final double MINIMUM_ANGLE = 0.1;
+    public static final double MAXIMUM_ANGLE = 0.25;
+    public static final double MINIMUM_ANGLE = -0.125;
 
     public static final int CURRENT_LIMIT = 30;
 
-    // THE OFFSET
-    // the angle between where the wrist is zeroed (backstop)
-    // and straight down
-    public static final double OFFSET = Units.degreesToRadians(35);
-
     // angle setpoints for scoring, intake, stowing
-    public static final double L1_ANGLE = 0.125;
-    public static final double L2_ANGLE = .2;
+    public static final double L1_ANGLE = -0.1;
+    public static final double L2_ANGLE = -0.1;
     public static final double L3_ANGLE = L2_ANGLE;
-    public static final double L4_ANGLE = .4;
-    public static final double STOW_ANGLE = .5;
-    public static final double INTAKE_ANGLE = .3;
+    public static final double L4_ANGLE = -0.12;
+    public static final double STOW_ANGLE = 0.083;
+    public static final double INTAKE_ANGLE = 0.1;
 
     // PID + Feedforward
     public static final double kG = .5;  // constant multiplied by angle of arm to maintain position

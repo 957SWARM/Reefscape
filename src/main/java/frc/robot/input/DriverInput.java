@@ -13,17 +13,20 @@ public class DriverInput {
     SlewRateLimiter yLimiter = new SlewRateLimiter(20);
     SlewRateLimiter turnLimiter = new SlewRateLimiter(20);
 
-    // input cubed to improve fine movement at slow speeds
+    // input squared to improve fine movement at slow speeds
     public double driveX(){
-        return xLimiter.calculate(controller.getLeftY());
+        return xLimiter.calculate(
+            Math.signum(controller.getLeftY()) * Math.pow(controller.getLeftY(), 2)
+        );
     }
 
-    //input cubed to improve fine movement at slow speeds
+    //input squared to improve fine movement at slow speeds
     public double driveY(){
-        return yLimiter.calculate(controller.getLeftX());
+        return yLimiter.calculate(
+            Math.signum(controller.getLeftX()) * Math.pow(controller.getLeftX(), 2)
+        );
     }
 
-    //input cubed to improve fine movement at slow speeds
     public double driveTurn(){
         return turnLimiter.calculate(controller.getRightX());
     }
