@@ -231,7 +231,8 @@ public class DriveSubsystem extends SubsystemBase {
   // returns speed mulitiplier based on height of elevator (higher up, drive slower)
   public double adjustSpeed(double elevatorHeight){
     double fractionOfHeight = elevatorHeight / ElevatorConstants.MAX_HEIGHT;
-    double fractionOfSpeed = MathUtil.clamp(1 - fractionOfHeight, .3, 1);
+    double fractionOfSpeed = 0.4 + (0.6 * (1 - fractionOfHeight));
+    fractionOfSpeed = MathUtil.clamp(fractionOfSpeed, 0.4, 1);
     return fractionOfSpeed;
   }
 
