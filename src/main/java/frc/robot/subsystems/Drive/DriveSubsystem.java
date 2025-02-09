@@ -131,13 +131,11 @@ public class DriveSubsystem extends SubsystemBase {
    *                      field.
    */
   public void drive(double xSpeed, double ySpeed, double rot, boolean fieldRelative, double elevatorHeight) {
-    // adjust speed based elevator height
-    double speedMultiplier = adjustSpeed(elevatorHeight);
 
     // Convert the commanded speeds into the correct units for the drivetrain
-    double xSpeedDelivered = xSpeed * DriveConstants.kMaxSpeedMetersPerSecond * speedMultiplier;
-    double ySpeedDelivered = ySpeed * DriveConstants.kMaxSpeedMetersPerSecond * speedMultiplier;
-    double rotDelivered = rot * DriveConstants.kMaxAngularSpeed * speedMultiplier;
+    double xSpeedDelivered = adjustSpeed(xSpeed * DriveConstants.kMaxSpeedMetersPerSecond, elevatorHeight);
+    double ySpeedDelivered = adjustSpeed(ySpeed * DriveConstants.kMaxSpeedMetersPerSecond, elevatorHeight);
+    double rotDelivered = adjustSpeed(rot * DriveConstants.kMaxAngularSpeed, elevatorHeight);
 
     var swerveModuleStates = DriveConstants.kDriveKinematics.toSwerveModuleStates(
         fieldRelative
@@ -228,12 +226,12 @@ public class DriveSubsystem extends SubsystemBase {
 
   }
 
-  // returns speed mulitiplier based on height of elevator (higher up, drive slower)
-  public double adjustSpeed(double elevatorHeight){
+  // returns new speed based on elevator height (higher elevator = slower speed)
+  public double adjustSpeed(double speed, double elevatorHeight){
     double fractionOfHeight = elevatorHeight / ElevatorConstants.MAX_HEIGHT;
     double fractionOfSpeed = 0.4 + (0.6 * (1 - fractionOfHeight));
     fractionOfSpeed = MathUtil.clamp(fractionOfSpeed, 0.4, 1);
-    return fractionOfSpeed;
+    return fractionOfSpeed * speed;
   }
 
   // Helper Function for setting up AutoBuilder for Path Planner. Mostly copied code from Path Planner
