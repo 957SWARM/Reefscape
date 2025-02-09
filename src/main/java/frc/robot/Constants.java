@@ -143,7 +143,7 @@ public final class Constants {
   public static final class WristConstants {
     // CAN IDs & Ports
     public static final int MOTOR_CAN_ID = 9;
-    public static final int ENCODER_CAN_ID  = 50;
+    public static final int ENCODER_CAN_ID  = 12;
 
     // Maximums and Minimums Allowed
     public static final double MAXIMUM_VOLTAGE = 3;
