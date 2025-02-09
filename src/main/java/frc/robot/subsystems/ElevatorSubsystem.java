@@ -67,6 +67,11 @@ public class ElevatorSubsystem extends SubsystemBase{
         return rotations;
     }
 
+    // height of elevator in meters
+    public double getHeight(){
+        return kraken.getPosition().getValueAsDouble() * ElevatorConstants.RotationsToMeters;
+    }
+
     private void assignSetpoint(double assignSetpoint){
         // make sure setpoint is within safe range
         targetSetpoint = MathUtil.clamp(

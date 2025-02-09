@@ -41,9 +41,9 @@ public class RobotContainer {
 
   // The robot's subsystems
   private final DriveSubsystem m_robotDrive = new DriveSubsystem();
-  // ElevatorSubsystem m_elevator = new ElevatorSubsystem();
-  // WristSubsystem  m_wrist = new WristSubsystem();
-  // IntakeSubsystem m_intake = new IntakeSubsystem();
+  ElevatorSubsystem m_elevator = new ElevatorSubsystem();
+  WristSubsystem  m_wrist = new WristSubsystem();
+  IntakeSubsystem m_intake = new IntakeSubsystem();
 
   // Controllers
   DriverInput m_driver = new DriverInput();
@@ -69,7 +69,8 @@ public class RobotContainer {
                 -MathUtil.applyDeadband(m_driver.driveX(), IOConstants.DRIVE_DEADBAND),
                 -MathUtil.applyDeadband(m_driver.driveY(), IOConstants.DRIVE_DEADBAND),
                 -MathUtil.applyDeadband(m_driver.driveTurn(), IOConstants.DRIVE_DEADBAND),
-                true),
+                true,
+                m_elevator.getHeight()),
             m_robotDrive));
 
     //m_wrist.setDefaultCommand(m_wrist.toStow());

@@ -131,6 +131,7 @@ public final class Constants {
 
     // CONVERSIONS
     public static final double metersToRotations = 178.95;
+    public static final double RotationsToMeters = 1.0 / metersToRotations;
 
     // MAXIMUMs/MINIMUMs (meters)
     public static final double MAX_HEIGHT = .53;
