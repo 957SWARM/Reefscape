@@ -67,7 +67,7 @@ public class ElevatorSubsystem extends SubsystemBase{
         return rotations;
     }
 
-    // height of elevator in meters
+    // height of elevator from bottom position in meters
     public double getHeight(){
         return kraken.getPosition().getValueAsDouble() * ElevatorConstants.RotationsToMeters;
     }
