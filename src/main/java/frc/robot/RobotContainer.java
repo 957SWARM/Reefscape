@@ -102,7 +102,6 @@ public class RobotContainer {
     new Trigger(() -> m_driver.resetGyro())
       .onTrue(Commands.runOnce(() -> m_robotDrive.zeroHeading()));
 
-    /*
     // sends elevator, wrist, and intake ready to take in coral from loading station
     new Trigger(() -> m_driver.intake())
       .onTrue(Sequencing.intake(m_elevator, m_wrist, m_intake));
@@ -138,7 +137,6 @@ public class RobotContainer {
     // manual control for slowly descending elevator
     new Trigger(() -> m_driver.slowFall())
       .whileTrue(m_elevator.slowFall());
-    */
     
     // OPERATOR CONTROLS (implement once climber is implemented)
   }

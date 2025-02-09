@@ -123,7 +123,7 @@ public final class Constants {
     public static final double POSITION_L1 = 0.1; // Theoretical: 0.189
     public static final double POSITION_L2 = 0.2; // Theoretical: 0.541
     public static final double POSITION_L3 = 0.3; // Theoretical: 0.941
-    public static final double POSITION_L4 = 0.4; // Theoretical: 1.63 (MAKE SURE THIS IS WITHIN EXTENSION LIMITS)
+    public static final double POSITION_L4 = 0.4; // Theoretical: 1.50
     public static final double POSITION_INTAKE = 0.25;  // Theoretical: 0.304
 
     // SLOW RISE/FALL
@@ -160,7 +160,7 @@ public final class Constants {
     public static final double L2_ANGLE = -0.1;
     public static final double L3_ANGLE = L2_ANGLE;
     public static final double L4_ANGLE = -0.12;
-    public static final double STOW_ANGLE = 0.083;
+    public static final double STOW_ANGLE = 0.16;
     public static final double INTAKE_ANGLE = 0.1;
 
     // PID + Feedforward
