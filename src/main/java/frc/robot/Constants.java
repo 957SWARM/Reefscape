@@ -119,12 +119,13 @@ public final class Constants {
     public static final int MOTIONMAGIC_ACCELERATION = 240; // Target acceleration of 160 rps/s (0.5 seconds)
     public static final int MOTIONMAGIC_JERK = 600; // Target jerk of 1600 rps/s/s (0.1 seconds)
 
+    // measurements in meters the carriage rises. (end effector raises twice these values)
     public static final double POSITION_GROUND = 0;
-    public static final double POSITION_L1 = 0.1; // Theoretical: 0.189 
-    public static final double POSITION_L2 = 0.2; // Theoretical: 0.541
-    public static final double POSITION_L3 = 0.3; // Theoretical: 0.941
-    public static final double POSITION_L4 = 0.75; // Theoretical: 1.50
-    public static final double POSITION_INTAKE = 0.25;  // Theoretical: 0.304
+    public static final double POSITION_L1 = 0.095;
+    public static final double POSITION_L2 = 0.271;
+    public static final double POSITION_L3 = 0.471;
+    public static final double POSITION_L4 = 0.75;
+    public static final double POSITION_INTAKE = 0.152;
 
     // SLOW RISE/FALL
     public static final double SETPOINT_INCREMENT = .01; // how much the setpoint changes per robot loop in manual control
@@ -134,7 +135,7 @@ public final class Constants {
     public static final double RotationsToMeters = 1.0 / metersToRotations;
 
     // MAXIMUMs/MINIMUMs (meters)
-    public static final double MAX_HEIGHT = .75;
+    public static final double MAX_HEIGHT = .763;
     public static final double MIN_HEIGHT = 0;
     public static final int CURRENT_LIMIT = 30;
 
