@@ -54,10 +54,10 @@ public class ElevatorSubsystem extends SubsystemBase{
     }
 
     public void periodic(){
-        if (bottomLimitSwitch.get())
-            kraken.setPosition(0);
+        // if (bottomLimitSwitch.get())
+        //     kraken.setPosition(0);
     
-        kraken.setControl(request.withPosition(getAsRotations(targetSetpoint)));
+        kraken.setControl(request.withPosition(getAsRotations(-targetSetpoint)));
         // System.out.println(kraken.getPosition());
         
     }
@@ -72,6 +72,10 @@ public class ElevatorSubsystem extends SubsystemBase{
         return kraken.getPosition().getValueAsDouble() * ElevatorConstants.RotationsToMeters;
     }
 
+    public double getPosition(){
+        return kraken.getPosition().getValueAsDouble();
+    }
+
     private void assignSetpoint(double assignSetpoint){
         // make sure setpoint is within safe range
         targetSetpoint = MathUtil.clamp(
@@ -79,6 +83,12 @@ public class ElevatorSubsystem extends SubsystemBase{
             ElevatorConstants.MIN_HEIGHT, 
             ElevatorConstants.MAX_HEIGHT
         );
+    }
+
+    public Command toStow(){
+        return Commands.runOnce(() -> {
+            assignSetpoint(ElevatorConstants.POSITION_GROUND);
+        });
     }
 
     public Command toL1(){

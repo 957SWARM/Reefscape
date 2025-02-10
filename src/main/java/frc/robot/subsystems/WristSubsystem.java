@@ -25,7 +25,7 @@ public class WristSubsystem extends SubsystemBase{
         WristConstants.kI, 
         WristConstants.kD
     );
-    private double targetSetpoint = WristConstants.STOW_ANGLE;
+    private double targetSetpoint = WristConstants.INTAKE_ANGLE;
 
     public WristSubsystem(){ 
         // Current Limit
@@ -36,14 +36,18 @@ public class WristSubsystem extends SubsystemBase{
 
     public void periodic(){
 
+        //System.out.println(getModifiedSetpoint(encoder.getAbsPosition()));
+
         double modifiedSetpoint = targetSetpoint;
         if (modifiedSetpoint >= 0.5) 
             modifiedSetpoint = modifiedSetpoint - 1;
+        
+        //System.out.println(targetSetpoint);
 
         pid.setSetpoint(modifiedSetpoint);
 
         // calculations of feedback and feedforward
-        double feedback = pid.calculate(getPosition());  //pid feedback on current position
+        double feedback = pid.calculate(getModifiedSetpoint(getPosition()));  //pid feedback on current position
         double feedforward = getFeedForward();  // feedforwad that counteracts gravity
 
         // clamping of output to minimum/maximum voltage
@@ -53,7 +57,9 @@ public class WristSubsystem extends SubsystemBase{
             WristConstants.MAXIMUM_VOLTAGE
         );
 
-        motor.setVoltage(output);
+        System.out.println(-output);
+
+        motor.setVoltage(-output);
     }
 
     // angle measured in rotations
@@ -61,11 +67,12 @@ public class WristSubsystem extends SubsystemBase{
         return runOnce(
                 () -> {
                     // makes sure angle is within a reasonable range
-                    targetSetpoint = MathUtil.clamp(
-                        setpoint,
-                        WristConstants.MINIMUM_ANGLE,
-                        WristConstants.MAXIMUM_ANGLE
-                    );
+                    // targetSetpoint = MathUtil.clamp(
+                    //     setpoint,
+                    //     WristConstants.MINIMUM_ANGLE,
+                    //     WristConstants.MAXIMUM_ANGLE
+                    // );
+                    targetSetpoint = setpoint;
                 });
     }
 
@@ -104,5 +111,11 @@ public class WristSubsystem extends SubsystemBase{
         // converted to radians for sine function
         double angle = Units.rotationsToRadians(encoder.getAbsPosition());
         return Math.cos(angle) * WristConstants.kG;
+    }
+
+    public double getModifiedSetpoint(double setpoint){
+        if (setpoint >= 0.5) 
+            setpoint = setpoint - 1;
+        return setpoint;
     }
 }

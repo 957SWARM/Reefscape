@@ -64,10 +64,11 @@ public class RobotContainer {
 
     // State Triggers
     // rumbles controller when coral is intaked
-    Trigger intakeRumble = new Trigger(() -> m_intake.checkToF());
-    intakeRumble.onTrue( Commands.run(() -> m_driver.setRumble(true))
-      .withTimeout(.5)
-      .andThen(Commands.run(() -> m_driver.setRumble(false))));
+    // Trigger intakeRumble = new Trigger(() -> m_intake.checkToF());
+    // intakeRumble.onTrue( Commands.run(() -> m_driver.setRumble(true))
+    //   .withTimeout(.5)
+    //   .andThen(Commands.run(() -> m_driver.setRumble(false))));
+    
 
     // Configure default commands
     m_robotDrive.setDefaultCommand(

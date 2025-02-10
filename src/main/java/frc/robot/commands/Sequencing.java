@@ -40,7 +40,7 @@ public class Sequencing {
     }
 
     public static Command stow(ElevatorSubsystem elevator, WristSubsystem wrist, IntakeSubsystem intake){
-        return elevator.toL2()
+        return elevator.toStow()
         .alongWith(wrist.toStow())
         .alongWith(intake.stopIntakeCommand());
     }

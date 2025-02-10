@@ -110,20 +110,20 @@ public final class Constants {
     public static final int kS = 0; // Add output to overcome static friction
     public static final int kV = 0; // A velocity target of 1 rps results in output
     public static final int kA = 0; // An acceleration of 1 rps/s requires output
-    public static final int kP = 0; // A position error of 0.2 rotations results in output
+    public static final int kP = 3; // A position error of 0.2 rotations results in output
     public static final int kI = 0; // No output for integrated error
     public static final int kD = 0; // A velocity error of 1 rps results in output
     public static final int kG = 0; // A velocity error of 1 rps results in output
 
-    public static final int MOTIONMAGIC_VELOCITY = 40; // Target cruise velocity of 80 rps
-    public static final int MOTIONMAGIC_ACCELERATION = 80; // Target acceleration of 160 rps/s (0.5 seconds)
-    public static final int MOTIONMAGIC_JERK = 800; // Target jerk of 1600 rps/s/s (0.1 seconds)
+    public static final int MOTIONMAGIC_VELOCITY = 90; // Target cruise velocity of 80 rps
+    public static final int MOTIONMAGIC_ACCELERATION = 240; // Target acceleration of 160 rps/s (0.5 seconds)
+    public static final int MOTIONMAGIC_JERK = 600; // Target jerk of 1600 rps/s/s (0.1 seconds)
 
     public static final double POSITION_GROUND = 0;
-    public static final double POSITION_L1 = 0.1; // Theoretical: 0.189
+    public static final double POSITION_L1 = 0.1; // Theoretical: 0.189 
     public static final double POSITION_L2 = 0.2; // Theoretical: 0.541
     public static final double POSITION_L3 = 0.3; // Theoretical: 0.941
-    public static final double POSITION_L4 = 0.4; // Theoretical: 1.50
+    public static final double POSITION_L4 = 0.75; // Theoretical: 1.50
     public static final double POSITION_INTAKE = 0.25;  // Theoretical: 0.304
 
     // SLOW RISE/FALL
@@ -134,7 +134,7 @@ public final class Constants {
     public static final double RotationsToMeters = 1.0 / metersToRotations;
 
     // MAXIMUMs/MINIMUMs (meters)
-    public static final double MAX_HEIGHT = .53;
+    public static final double MAX_HEIGHT = .75;
     public static final double MIN_HEIGHT = 0;
     public static final int CURRENT_LIMIT = 30;
 
@@ -147,25 +147,25 @@ public final class Constants {
     public static final int ENCODER_CAN_ID  = 12;
 
     // Maximums and Minimums Allowed
-    public static final double MAXIMUM_VOLTAGE = 3;
+    public static final double MAXIMUM_VOLTAGE = 7;
     public static final double MINIMUM_VOLTAGE = -MAXIMUM_VOLTAGE;
 
-    public static final double MAXIMUM_ANGLE = 0.25;
-    public static final double MINIMUM_ANGLE = -0.125;
+    public static final double MAXIMUM_ANGLE = 0.88;
+    public static final double MINIMUM_ANGLE = 0.25;
 
     public static final int CURRENT_LIMIT = 30;
 
     // angle setpoints for scoring, intake, stowing
-    public static final double L1_ANGLE = -0.1;
-    public static final double L2_ANGLE = -0.1;
+    public static final double L1_ANGLE = 0.9;
+    public static final double L2_ANGLE = 0.9;
     public static final double L3_ANGLE = L2_ANGLE;
-    public static final double L4_ANGLE = -0.12;
+    public static final double L4_ANGLE = 0.88;
     public static final double STOW_ANGLE = 0.16;
     public static final double INTAKE_ANGLE = 0.1;
 
     // PID + Feedforward
-    public static final double kG = .5;  // constant multiplied by angle of arm to maintain position
-    public static final double kP = 0;
+    public static final double kG = 0;  // constant multiplied by angle of arm to maintain position
+    public static final double kP = 64;
     public static final double kI = 0;
     public static final double kD = 0;
 
