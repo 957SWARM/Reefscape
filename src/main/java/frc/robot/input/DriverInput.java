@@ -40,15 +40,15 @@ public class DriverInput {
     }
 
     public boolean L2(){
-        return controller.getBButton();
-    }
-
-    public boolean L3(){
         return controller.getXButton();
     }
 
-    public boolean L4(){
+    public boolean L3(){
         return controller.getYButton();
+    }
+
+    public boolean L4(){
+        return controller.getBButton();
     }
 
     public boolean stow(){
