@@ -40,10 +40,10 @@ public final class Constants {
         new Translation2d(-kWheelBase / 2, -kTrackWidth / 2));
 
     // Angular offsets of the modules relative to the chassis in radians
-    public static final double kFrontLeftChassisAngularOffset = 0;
-    public static final double kFrontRightChassisAngularOffset = 0;
-    public static final double kBackLeftChassisAngularOffset = 0;
-    public static final double kBackRightChassisAngularOffset = 0;
+    public static final double kFrontLeftChassisAngularOffset = Math.PI / 4;
+    public static final double kFrontRightChassisAngularOffset = Math.PI / 4;
+    public static final double kBackLeftChassisAngularOffset = Math.PI / 4;
+    public static final double kBackRightChassisAngularOffset = Math.PI / 4;
 
     // SPARK MAX CAN IDs
     public static final int kFrontLeftDrivingCanId = 1; // New bot: 1, B#: 7
@@ -192,7 +192,7 @@ public final class Constants {
 
     // TOF RELATED
     public static final double TOF_TIMING_BUDGET = 30;
-    public static final double TOF_THRESHOLD = 10;
+    public static final double TOF_THRESHOLD = 100;
     public static final double FILTER_TIME_CONSTANT = .1; // decrease for faster response, increase for less noise
 
     // SPEEDS

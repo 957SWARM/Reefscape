@@ -44,7 +44,7 @@ public class Robot extends TimedRobot {
 
     FollowPathCommand.warmupCommand().schedule(); // For Path Planner. Supposedly speeds up followings paths
 
-    CameraServer.startAutomaticCapture().setResolution(480, 360); // For end-effector camera
+    CameraServer.startAutomaticCapture().setResolution(240, 180); // For end-effector camera
     
   }
 
