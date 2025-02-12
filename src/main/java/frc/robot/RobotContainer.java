@@ -16,6 +16,7 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.RunCommand;
+import edu.wpi.first.wpilibj2.command.WaitCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.Constants.IOConstants;
@@ -68,7 +69,8 @@ public class RobotContainer {
     // intakeRumble.onTrue( Commands.run(() -> m_driver.setRumble(true))
     //   .withTimeout(.5)
     //   .andThen(Commands.run(() -> m_driver.setRumble(false))));
-    
+    Trigger coralLeft = new Trigger(() -> !m_intake.checkToF() && m_intake.getVoltage() == IntakeConstants.EJECT_SPEED);
+    coralLeft.onTrue(new WaitCommand(.5).andThen(m_intake.stopIntakeCommand()));
 
     // Configure default commands
     m_robotDrive.setDefaultCommand(

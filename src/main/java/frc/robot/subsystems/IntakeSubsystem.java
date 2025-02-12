@@ -63,6 +63,10 @@ public class IntakeSubsystem extends SubsystemBase{
         return toF.getRange();
     }
 
+    public double getVoltage(){
+        return appliedVoltage;
+    }
+
     public Command stopIntakeCommand(){
         return runOnce(() -> {
             appliedVoltage = 0;

@@ -40,10 +40,10 @@ public final class Constants {
         new Translation2d(-kWheelBase / 2, -kTrackWidth / 2));
 
     // Angular offsets of the modules relative to the chassis in radians
-    public static final double kFrontLeftChassisAngularOffset = Math.PI / 4;
-    public static final double kFrontRightChassisAngularOffset = Math.PI / 4;
-    public static final double kBackLeftChassisAngularOffset = Math.PI / 4;
-    public static final double kBackRightChassisAngularOffset = Math.PI / 4;
+    public static final double kFrontLeftChassisAngularOffset = -(Math.PI/2);
+    public static final double kFrontRightChassisAngularOffset = 0;
+    public static final double kBackLeftChassisAngularOffset = -(Math.PI);
+    public static final double kBackRightChassisAngularOffset = (Math.PI/2);
 
     // SPARK MAX CAN IDs
     public static final int kFrontLeftDrivingCanId = 1; // New bot: 1, B#: 7
@@ -121,11 +121,11 @@ public final class Constants {
 
     // measurements in meters the carriage rises. (end effector raises twice these values)
     public static final double POSITION_GROUND = 0;
-    public static final double POSITION_L1 = 0.095;
+    public static final double POSITION_L1 = 0.07;
     public static final double POSITION_L2 = 0.271;
     public static final double POSITION_L3 = 0.471;
-    public static final double POSITION_L4 = 0.75;
-    public static final double POSITION_INTAKE = 0.152;
+    public static final double POSITION_L4 = 0.76;
+    public static final double POSITION_INTAKE = 0.1;
 
     // SLOW RISE/FALL
     public static final double SETPOINT_INCREMENT = .01; // how much the setpoint changes per robot loop in manual control
@@ -157,12 +157,12 @@ public final class Constants {
     public static final int CURRENT_LIMIT = 30;
 
     // angle setpoints for scoring, intake, stowing
-    public static final double L1_ANGLE = 0.9;
+    public static final double L1_ANGLE = 0;
     public static final double L2_ANGLE = 0.9;
     public static final double L3_ANGLE = L2_ANGLE;
-    public static final double L4_ANGLE = 0.88;
+    public static final double L4_ANGLE = 0.92;
     public static final double STOW_ANGLE = 0.16;
-    public static final double INTAKE_ANGLE = 0.1;
+    public static final double INTAKE_ANGLE = 0.11;
 
     // PID + Feedforward
     public static final double kG = 0;  // constant multiplied by angle of arm to maintain position
