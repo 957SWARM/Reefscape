@@ -1,6 +1,7 @@
 package frc.robot.input;
 
 import edu.wpi.first.math.filter.SlewRateLimiter;
+import edu.wpi.first.wpilibj.GenericHID.RumbleType;
 import edu.wpi.first.wpilibj.XboxController;
 import frc.robot.Constants.IOConstants;
 
@@ -69,6 +70,10 @@ public class DriverInput {
 
     public boolean slowFall(){
         return controller.getPOV() == 180;
+    }
+
+    public void setRumble(boolean on) {
+        controller.setRumble(RumbleType.kBothRumble, on ? 1 : 0);
     }
 
 }

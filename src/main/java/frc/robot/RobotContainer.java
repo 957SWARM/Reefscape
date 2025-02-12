@@ -19,8 +19,10 @@ import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
+import frc.robot.Constants.ElevatorConstants;
 import frc.robot.Constants.IOConstants;
 import frc.robot.Constants.IntakeConstants;
+import frc.robot.Constants.WristConstants;
 import frc.robot.commands.Sequencing;
 import frc.robot.input.DriverInput;
 import frc.robot.input.OperatorInput;
@@ -64,13 +66,22 @@ public class RobotContainer {
     configureButtonBindings();
 
     // State Triggers
-    // rumbles controller when coral is intaked
-    // Trigger intakeRumble = new Trigger(() -> m_intake.checkToF());
-    // intakeRumble.onTrue( Commands.run(() -> m_driver.setRumble(true))
-    //   .withTimeout(.5)
-    //   .andThen(Commands.run(() -> m_driver.setRumble(false))));
+    //rumbles controller when coral is intaked
+    Trigger intakeRumble = new Trigger(() -> m_intake.checkToF());
+    intakeRumble.onTrue( Commands.run(() -> m_driver.setRumble(true))
+      .withTimeout(.75)
+      .andThen(Commands.run(() -> m_driver.setRumble(false))));
+
+    // stops intake when coral leaves
     Trigger coralLeft = new Trigger(() -> !m_intake.checkToF() && m_intake.getVoltage() == IntakeConstants.EJECT_SPEED);
     coralLeft.onTrue(new WaitCommand(.5).andThen(m_intake.stopIntakeCommand()));
+
+    // automatically sends robot to stow after intaking
+    Trigger coralIn = new Trigger(
+      () -> m_elevator.getTargetSetpoint() == ElevatorConstants.POSITION_INTAKE 
+      && m_wrist.getTargetSetpoint() == WristConstants.INTAKE_ANGLE
+      && m_intake.checkToF());
+    coralIn.onTrue(Sequencing.stow(m_elevator, m_wrist, m_intake));
 
     // Configure default commands
     m_robotDrive.setDefaultCommand(

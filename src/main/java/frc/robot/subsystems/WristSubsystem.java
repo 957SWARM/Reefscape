@@ -76,6 +76,10 @@ public class WristSubsystem extends SubsystemBase{
                 });
     }
 
+    public double getTargetSetpoint(){
+        return targetSetpoint;
+    }
+
     public Command toL1(){
         return setSetpoint(WristConstants.L1_ANGLE);
     }

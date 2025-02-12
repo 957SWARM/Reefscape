@@ -77,6 +77,10 @@ public class ElevatorSubsystem extends SubsystemBase{
         return kraken.getPosition().getValueAsDouble();
     }
 
+    public double getTargetSetpoint(){
+        return targetSetpoint;
+    }
+
     private void assignSetpoint(double assignSetpoint){
         // make sure setpoint is within safe range
         targetSetpoint = MathUtil.clamp(
