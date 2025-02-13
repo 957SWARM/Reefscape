@@ -57,7 +57,7 @@ public class WristSubsystem extends SubsystemBase{
             WristConstants.MAXIMUM_VOLTAGE
         );
 
-        System.out.println(-output);
+        //System.out.println(-output);
 
         motor.setVoltage(-output);
     }

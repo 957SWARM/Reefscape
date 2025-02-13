@@ -4,6 +4,10 @@
 
 package frc.robot;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.trajectory.TrapezoidProfile;
@@ -223,6 +227,13 @@ public final class Constants {
     public static final int MOTOR_CAN_ID = 11;
 
     public static final int CURRENT_LIMIT = 30;
+    
+  }
+
+  public static final class VisionConstants {
+    public static final Pose2d LEFT_REEF = new Pose2d();
+    public static final Pose2d RIGHT_REEF = new Pose2d();
+    public static final List<Pose2d> REEF_POSES = new ArrayList<>();
     
   }
 }

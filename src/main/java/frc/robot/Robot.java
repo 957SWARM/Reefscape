@@ -67,6 +67,8 @@ public class Robot extends TimedRobot {
       LimelightHelpers.getBotPose3d_TargetSpace("limelight").toPose2d().getX() + " || "
       + LimelightHelpers.getBotPose3d_TargetSpace("limelight").toPose2d().getY() + " || "
       + LimelightHelpers.getBotPose3d_TargetSpace("limelight").toPose2d().getRotation().getDegrees());
+
+    //System.out.println(LimelightHelpers.getTX("limelight"));
   }
 
   /** This function is called once each time the robot enters Disabled mode. */
