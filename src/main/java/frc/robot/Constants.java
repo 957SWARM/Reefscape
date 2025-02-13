@@ -5,9 +5,11 @@
 package frc.robot;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.trajectory.TrapezoidProfile;
@@ -29,7 +31,7 @@ public final class Constants {
   public static final class DriveConstants {
     // Driving Parameters - Note that these are not the maximum capable speeds of
     // the robot, rather the allowed maximum speeds
-    public static final double kMaxSpeedMetersPerSecond = 2.4;  // default: 4.8
+    public static final double kMaxSpeedMetersPerSecond = .5;  // default: 4.8
     public static final double kMaxAngularSpeed = 2 * Math.PI; // default: 2*pi. radians per second
 
     // Chassis configuration
@@ -231,9 +233,18 @@ public final class Constants {
   }
 
   public static final class VisionConstants {
-    public static final Pose2d LEFT_REEF = new Pose2d();
-    public static final Pose2d RIGHT_REEF = new Pose2d();
-    public static final List<Pose2d> REEF_POSES = new ArrayList<>();
-    
+    public static final Pose2d LEFT_REEF = new Pose2d(new Translation2d(.165, .508), new Rotation2d());
+    public static final Pose2d RIGHT_REEF = new Pose2d(new Translation2d(-.165, .508), new Rotation2d());
+    public static final List<Pose2d> REEF_POSES = Arrays.asList(LEFT_REEF, RIGHT_REEF);
+
+    public static final String REEF_LIMELIGHT_NAME = "limelight";
+
+    public static final double TRANSLATION_P = 1;
+    public static final double TRANSLATION_I = 0;
+    public static final double TRANSLATION_D = 0;
+
+    public static final double ROTATION_P = 0.3;
+    public static final double ROTATION_I = 0;
+    public static final double ROTATION_D = 0;
   }
 }
