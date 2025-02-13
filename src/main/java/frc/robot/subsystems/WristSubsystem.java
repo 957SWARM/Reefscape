@@ -3,8 +3,6 @@ package frc.robot.subsystems;
 import com.ctre.phoenix6.configs.CurrentLimitsConfigs;
 import com.ctre.phoenix6.hardware.TalonFX;
 import com.reduxrobotics.sensors.canandmag.Canandmag;
-import com.revrobotics.spark.SparkLowLevel.MotorType;
-
 import edu.wpi.first.epilogue.Logged;
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.controller.PIDController;
@@ -35,15 +33,8 @@ public class WristSubsystem extends SubsystemBase{
     }
 
     public void periodic(){
-
-        //System.out.println(getModifiedSetpoint(encoder.getAbsPosition()));
-
         double modifiedSetpoint = targetSetpoint;
-        if (modifiedSetpoint >= 0.5) 
-            modifiedSetpoint = modifiedSetpoint - 1;
-        
-        //System.out.println(targetSetpoint);
-
+        modifiedSetpoint = (modifiedSetpoint >= 0.5) ? modifiedSetpoint - 1: targetSetpoint;
         pid.setSetpoint(modifiedSetpoint);
 
         // calculations of feedback and feedforward
@@ -56,8 +47,6 @@ public class WristSubsystem extends SubsystemBase{
             WristConstants.MINIMUM_VOLTAGE,
             WristConstants.MAXIMUM_VOLTAGE
         );
-
-        System.out.println(-output);
 
         motor.setVoltage(-output);
     }

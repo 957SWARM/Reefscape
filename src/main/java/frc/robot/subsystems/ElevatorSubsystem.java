@@ -25,6 +25,8 @@ public class ElevatorSubsystem extends SubsystemBase{
     private final MotionMagicVoltage request;
     private double targetSetpoint = ElevatorConstants.POSITION_GROUND;
 
+    boolean isReset = false;
+
     public ElevatorSubsystem(){
         kraken = new TalonFX(ElevatorConstants.MOTOR_ID);
         
@@ -54,12 +56,17 @@ public class ElevatorSubsystem extends SubsystemBase{
     }
 
     public void periodic(){
-        // if (bottomLimitSwitch.get())
-        //     kraken.setPosition(0);
-    
-        kraken.setControl(request.withPosition(getAsRotations(-targetSetpoint)));
-        // System.out.println(kraken.getPosition());
+        if (bottomLimitSwitch.get() && !isReset) {
+            kraken.setPosition(0);
+            isReset = !isReset;
+        }
+
+        if (!bottomLimitSwitch.get() && isReset){
+            isReset = !isReset;
+        }
         
+        kraken.setControl(request.withPosition(getAsRotations(-targetSetpoint)));
+
     }
 
     public static double getAsRotations(double meters){

@@ -26,6 +26,7 @@ import frc.robot.Constants.WristConstants;
 import frc.robot.commands.Sequencing;
 import frc.robot.input.DriverInput;
 import frc.robot.input.OperatorInput;
+import frc.robot.subsystems.ClimbSubsystem;
 import frc.robot.subsystems.ElevatorSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.subsystems.WristSubsystem;
@@ -47,6 +48,7 @@ public class RobotContainer {
   ElevatorSubsystem m_elevator = new ElevatorSubsystem();
   WristSubsystem  m_wrist = new WristSubsystem();
   IntakeSubsystem m_intake = new IntakeSubsystem();
+  ClimbSubsystem m_climber = new ClimbSubsystem();
 
   // Controllers
   DriverInput m_driver = new DriverInput();
@@ -153,6 +155,13 @@ public class RobotContainer {
       .whileTrue(m_elevator.slowFall());
     
     // OPERATOR CONTROLS (implement once climber is implemented)
+    new Trigger(() -> m_operator.deployClimb())
+      .whileTrue(m_climber.extend())
+      .onFalse(m_climber.stopCommand());
+      
+    new Trigger(() -> m_operator.retractClimb())
+      .whileTrue(m_climber.retract())
+      .onFalse(m_climber.stopCommand());
   }
 
   /**
