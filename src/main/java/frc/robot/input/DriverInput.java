@@ -76,4 +76,8 @@ public class DriverInput {
         controller.setRumble(RumbleType.kBothRumble, on ? 1 : 0);
     }
 
+    public boolean tempVision(){
+        return controller.getStartButton();
+    }
+
 }

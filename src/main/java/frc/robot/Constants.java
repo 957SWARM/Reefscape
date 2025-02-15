@@ -4,7 +4,16 @@
 
 package frc.robot;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
+import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.math.geometry.Pose3d;
+import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.math.geometry.Rotation3d;
 import edu.wpi.first.math.geometry.Translation2d;
+import edu.wpi.first.math.geometry.Translation3d;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.trajectory.TrapezoidProfile;
 import edu.wpi.first.math.util.Units;
@@ -123,8 +132,8 @@ public final class Constants {
     public static final double POSITION_GROUND = 0;
     public static final double POSITION_L1 = 0.07;
     public static final double POSITION_L2 = 0.271;
-    public static final double POSITION_L3 = 0.471;
-    public static final double POSITION_L4 = 0.76;
+    public static final double POSITION_L3 = 0.491;
+    public static final double POSITION_L4 = 0.78;
     public static final double POSITION_INTAKE = 0.1;
 
     // SLOW RISE/FALL
@@ -135,7 +144,7 @@ public final class Constants {
     public static final double RotationsToMeters = 1.0 / metersToRotations;
 
     // MAXIMUMs/MINIMUMs (meters)
-    public static final double MAX_HEIGHT = .763;
+    public static final double MAX_HEIGHT = .78;
     public static final double MIN_HEIGHT = 0;
     public static final int CURRENT_LIMIT = 30;
 
@@ -224,5 +233,40 @@ public final class Constants {
 
     public static final int CURRENT_LIMIT = 30;
     
+  }
+
+  public static final class VisionConstants {
+    public static final Pose3d LEFT_REEF = new Pose3d(new Translation3d(-.215, 0, -.65), new Rotation3d());
+    public static final Pose3d RIGHT_REEF = new Pose3d(new Translation3d(.115, 0, -.65), new Rotation3d());
+    public static final List<Pose3d> REEF_POSES = Arrays.asList(LEFT_REEF, RIGHT_REEF);
+    public static final List<Double> REEF_TAG_IDS = Arrays.asList(
+      (double)6, 
+      (double)7, 
+      (double)8, 
+      (double)9, 
+      (double)10, 
+      (double)11, 
+      (double)17, 
+      (double)18, 
+      (double)19, 
+      (double)20, 
+      (double)21, 
+      (double)22
+    );
+
+    public static final String REEF_LIMELIGHT_NAME = "limelight";
+
+    public static final double TRANSLATION_P = 2;
+    public static final double TRANSLATION_I = 0;
+    public static final double TRANSLATION_D = 0;
+
+    public static final double ROTATION_P = 0.03;
+    public static final double ROTATION_I = 0;
+    public static final double ROTATION_D = 0;
+
+    public static final double MAX_VISION_SPEED = 0.25; //JOYSTICK
+
+    public static final double TRANSLATION_TOLERANCE = 0.05; //METERS
+    public static final double ROTATION_TOLERANCE = 1; //DEGREES?
   }
 }
