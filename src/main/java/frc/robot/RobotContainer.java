@@ -58,13 +58,18 @@ public class RobotContainer {
    */
   public RobotContainer() {
 
+    NamedCommands.registerCommand("Score L1", Sequencing.L1(m_elevator, m_wrist, m_intake));
+    NamedCommands.registerCommand("Stow", Sequencing.stow(m_elevator, m_wrist, m_intake));
+    NamedCommands.registerCommand("Eject", m_intake.ejectCommand(IntakeConstants.EJECT_SPEED));
+
     autoChooser = AutoBuilder.buildAutoChooser();
     SmartDashboard.putData("Auto Chooser", autoChooser);
     //autoChooser.addOption("Test Auto", new PathPlannerAuto("Test Auto"));
     autoChooser.addOption("Nothing", new InstantCommand());
     autoChooser.addOption("B Test Auto", new PathPlannerAuto("B Test Auto"));
+    autoChooser.addOption("Straight Near L1 Auto", new PathPlannerAuto("Straight Near L1 Auto"));
 
-    configureNamedCommands();
+    //configureNamedCommands();
 
     // Configure the button bindings
     configureButtonBindings();
