@@ -9,8 +9,11 @@ import java.util.Arrays;
 import java.util.List;
 
 import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.math.geometry.Pose3d;
 import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.math.geometry.Rotation3d;
 import edu.wpi.first.math.geometry.Translation2d;
+import edu.wpi.first.math.geometry.Translation3d;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.trajectory.TrapezoidProfile;
 import edu.wpi.first.math.util.Units;
@@ -31,7 +34,7 @@ public final class Constants {
   public static final class DriveConstants {
     // Driving Parameters - Note that these are not the maximum capable speeds of
     // the robot, rather the allowed maximum speeds
-    public static final double kMaxSpeedMetersPerSecond = .5;  // default: 4.8
+    public static final double kMaxSpeedMetersPerSecond = 2.4;  // default: 4.8
     public static final double kMaxAngularSpeed = 2 * Math.PI; // default: 2*pi. radians per second
 
     // Chassis configuration
@@ -129,8 +132,8 @@ public final class Constants {
     public static final double POSITION_GROUND = 0;
     public static final double POSITION_L1 = 0.07;
     public static final double POSITION_L2 = 0.271;
-    public static final double POSITION_L3 = 0.471;
-    public static final double POSITION_L4 = 0.76;
+    public static final double POSITION_L3 = 0.491;
+    public static final double POSITION_L4 = 0.78;
     public static final double POSITION_INTAKE = 0.1;
 
     // SLOW RISE/FALL
@@ -141,7 +144,7 @@ public final class Constants {
     public static final double RotationsToMeters = 1.0 / metersToRotations;
 
     // MAXIMUMs/MINIMUMs (meters)
-    public static final double MAX_HEIGHT = .763;
+    public static final double MAX_HEIGHT = .78;
     public static final double MIN_HEIGHT = 0;
     public static final int CURRENT_LIMIT = 30;
 
@@ -233,17 +236,31 @@ public final class Constants {
   }
 
   public static final class VisionConstants {
-    public static final Pose2d LEFT_REEF = new Pose2d(new Translation2d(.165, .508), new Rotation2d());
-    public static final Pose2d RIGHT_REEF = new Pose2d(new Translation2d(-.165, .508), new Rotation2d());
-    public static final List<Pose2d> REEF_POSES = Arrays.asList(LEFT_REEF, RIGHT_REEF);
+    public static final Pose3d LEFT_REEF = new Pose3d(new Translation3d(-.215, 0, -.61), new Rotation3d());
+    public static final Pose3d RIGHT_REEF = new Pose3d(new Translation3d(.115, 0, -.61), new Rotation3d());
+    public static final List<Pose3d> REEF_POSES = Arrays.asList(LEFT_REEF, RIGHT_REEF);
+    public static final List<Double> REEF_TAG_IDS = Arrays.asList(
+      (double)6, 
+      (double)7, 
+      (double)8, 
+      (double)9, 
+      (double)10, 
+      (double)11, 
+      (double)17, 
+      (double)18, 
+      (double)19, 
+      (double)20, 
+      (double)21, 
+      (double)22
+    );
 
     public static final String REEF_LIMELIGHT_NAME = "limelight";
 
-    public static final double TRANSLATION_P = 1;
+    public static final double TRANSLATION_P = 2;
     public static final double TRANSLATION_I = 0;
     public static final double TRANSLATION_D = 0;
 
-    public static final double ROTATION_P = 0.3;
+    public static final double ROTATION_P = 0.03;
     public static final double ROTATION_I = 0;
     public static final double ROTATION_D = 0;
   }
