@@ -5,6 +5,7 @@
 package frc.robot;
 
 import com.pathplanner.lib.auto.AutoBuilder;
+import com.pathplanner.lib.auto.NamedCommands;
 import com.pathplanner.lib.commands.PathPlannerAuto;
 
 import edu.wpi.first.epilogue.Logged;
@@ -59,8 +60,11 @@ public class RobotContainer {
 
     autoChooser = AutoBuilder.buildAutoChooser();
     SmartDashboard.putData("Auto Chooser", autoChooser);
-    autoChooser.addOption("Test Auto", new PathPlannerAuto("Test Auto"));
+    //autoChooser.addOption("Test Auto", new PathPlannerAuto("Test Auto"));
     autoChooser.addOption("Nothing", new InstantCommand());
+    autoChooser.addOption("B Test Auto", new PathPlannerAuto("B Test Auto"));
+
+    configureNamedCommands();
 
     // Configure the button bindings
     configureButtonBindings();
@@ -153,6 +157,11 @@ public class RobotContainer {
       .whileTrue(m_elevator.slowFall());
     
     // OPERATOR CONTROLS (implement once climber is implemented)
+  }
+
+  public void configureNamedCommands(){
+    NamedCommands.registerCommand("Score L1", Sequencing.L1(m_elevator, m_wrist, m_intake));
+    NamedCommands.registerCommand("Stow", Sequencing.stow(m_elevator, m_wrist, m_intake));
   }
 
   /**
