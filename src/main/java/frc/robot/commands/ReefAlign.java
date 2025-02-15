@@ -3,6 +3,7 @@ package frc.robot.commands;
 import java.util.List;
 
 import edu.wpi.first.epilogue.Logged;
+import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Pose3d;
@@ -50,8 +51,7 @@ public class ReefAlign {
             else{
                 drive.drive(0, 0, 0, false, 0);
             }
-            
-        }, drive);
+        }, drive).until(this::checkAligned);
     }
 
     //FORWARD: 
@@ -59,15 +59,25 @@ public class ReefAlign {
     //LL TARGET SPACE: +Z
     public double getXOutput(){
 
-        return -xPID.calculate(getXDiff());
+        double clampedOutput = MathUtil.clamp(
+            -xPID.calculate(getXDiff()), 
+            -VisionConstants.MAX_VISION_SPEED, 
+            VisionConstants.MAX_VISION_SPEED);
+
+        return clampedOutput;
     }
 
     //LEFT:
     //ROBOT SPACE: +Y
     //LL TARGET SPACE: +X
     public double getYOutput(){
+
+        double clampedOutput = MathUtil.clamp(
+            -yPID.calculate(getYDiff()), 
+            -VisionConstants.MAX_VISION_SPEED, 
+            VisionConstants.MAX_VISION_SPEED);
         
-        return -yPID.calculate(getYDiff());
+        return clampedOutput;
     }
 
     public double getRotOutput(){
@@ -118,17 +128,6 @@ public class ReefAlign {
 
     }
 
-    public boolean checkReefTag(){
-        boolean valid = false;
-        if(
-            LimelightHelpers.getTV(VisionConstants.REEF_LIMELIGHT_NAME)
-            && VisionConstants.REEF_TAG_IDS.contains(LimelightHelpers.getFiducialID(VisionConstants.REEF_LIMELIGHT_NAME))
-            ){
-            valid = true;
-        }
-        return valid;
-    }
-
     //MINIMIZES TARGET SPACE X: LEFT/RIGHT
     public Pose3d findNearestPose(Pose3d current, List<Pose3d> poses){
         Pose3d nearestPose = null;
@@ -146,31 +145,30 @@ public class ReefAlign {
         return nearestPose;
     }
 
+    public boolean checkReefTag(){
+        boolean valid = false;
+        if(
+            LimelightHelpers.getTV(VisionConstants.REEF_LIMELIGHT_NAME)
+            && VisionConstants.REEF_TAG_IDS.contains(LimelightHelpers.getFiducialID(VisionConstants.REEF_LIMELIGHT_NAME))
+            ){
+            valid = true;
+        }
+        return valid;
+    }
+
+    public boolean checkAligned(){
+        return Math.abs(getXDiff()) > VisionConstants.TRANSLATION_TOLERANCE
+        && Math.abs(getYDiff()) > VisionConstants.TRANSLATION_TOLERANCE
+        && Math.abs(getRotDiff()) > VisionConstants.ROTATION_TOLERANCE;
+    }
+
     //DEBUGGING LOGGING FUNCTIONS
 
-    //TARGET POSE IN ROBOT SPACE / ROBOT POSE IN TARGET SPACE
-
-    //SHOULD GET MOER POS FURTHER FROM TAG
-    public double robotXTargetZ(){
-        return currentPose.getZ();
-    }
-
-    //SHOULD GET MORE POS LEFT OF TAG
-    public double robotYTargetX(){
-        return currentPose.getX();
-    }
-
-    //MIGHT BE CCW POS?
-    public double targetSpaceRot(){
-        return Units.radiansToDegrees(currentPose.getRotation().getAngle());
-    }
-
-
-    public String selectedPose(){
+    public String reefPose(){
         return nearestReefPose.toString();
     }
 
-    public String curPose(){
+    public String robotPose(){
         return currentPose.toString();
     }
 

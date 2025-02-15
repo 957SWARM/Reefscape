@@ -236,8 +236,8 @@ public final class Constants {
   }
 
   public static final class VisionConstants {
-    public static final Pose3d LEFT_REEF = new Pose3d(new Translation3d(-.215, 0, -.61), new Rotation3d());
-    public static final Pose3d RIGHT_REEF = new Pose3d(new Translation3d(.115, 0, -.61), new Rotation3d());
+    public static final Pose3d LEFT_REEF = new Pose3d(new Translation3d(-.215, 0, -.65), new Rotation3d());
+    public static final Pose3d RIGHT_REEF = new Pose3d(new Translation3d(.115, 0, -.65), new Rotation3d());
     public static final List<Pose3d> REEF_POSES = Arrays.asList(LEFT_REEF, RIGHT_REEF);
     public static final List<Double> REEF_TAG_IDS = Arrays.asList(
       (double)6, 
@@ -263,5 +263,10 @@ public final class Constants {
     public static final double ROTATION_P = 0.03;
     public static final double ROTATION_I = 0;
     public static final double ROTATION_D = 0;
+
+    public static final double MAX_VISION_SPEED = 0.25; //JOYSTICK
+
+    public static final double TRANSLATION_TOLERANCE = 0.05; //METERS
+    public static final double ROTATION_TOLERANCE = 1; //DEGREES?
   }
 }
