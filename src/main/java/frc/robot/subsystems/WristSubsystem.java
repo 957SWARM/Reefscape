@@ -25,7 +25,7 @@ public class WristSubsystem extends SubsystemBase{
         WristConstants.kI, 
         WristConstants.kD
     );
-    private double targetSetpoint = WristConstants.INTAKE_ANGLE;
+    private double targetSetpoint = WristConstants.STOW_ANGLE;
 
     public WristSubsystem(){ 
         // Current Limit
