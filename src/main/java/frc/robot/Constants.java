@@ -177,7 +177,7 @@ public final class Constants {
     public static final double kG = -2;  // constant multiplied by angle of arm to maintain position
     public static final double kP = 50;
     public static final double kI = 0;
-    public static final double kD = 0;
+    public static final double kD = 0;0
 
     // SLOW FALL/RISE VOLTAGE. Voltage that slowly moves the motor intended for manual adjustment
     public static final double SLOW_RISE_VOLTAGE = .5;
