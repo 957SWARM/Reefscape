@@ -36,7 +36,7 @@ public class Sequencing {
 
     public static Command L4(ElevatorSubsystem elevator, WristSubsystem wrist, IntakeSubsystem intake){
         return elevator.toL4()
-        .alongWith(new WaitCommand(.5).andThen(wrist.toL4()))
+        .alongWith(new WaitCommand(1.5).andThen(wrist.toL4()))
         .alongWith(intake.stopIntakeCommand());
     }
 

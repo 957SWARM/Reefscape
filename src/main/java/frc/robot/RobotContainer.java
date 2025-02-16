@@ -75,6 +75,7 @@ public class RobotContainer {
     autoChooser.addOption("B Test Auto", new PathPlannerAuto("B Test Auto"));
     autoChooser.addOption("Straight Near L1 Auto", new PathPlannerAuto("Straight Near L1 Auto"));
     autoChooser.addOption("Near L4", new PathPlannerAuto("Near L4 Auto"));
+    autoChooser.addOption("Just Leave", new PathPlannerAuto("Just Leave"));
 
     //configureNamedCommands();
 
