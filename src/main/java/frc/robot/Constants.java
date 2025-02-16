@@ -128,8 +128,8 @@ public final class Constants {
     // measurements in meters the carriage rises. (end effector raises twice these values)
     public static final double POSITION_GROUND = 0;
     public static final double POSITION_L1 = 0.07;
-    public static final double POSITION_L2 = 0.255;
-    public static final double POSITION_L3 = 0.465;
+    public static final double POSITION_L2 = 0.242;
+    public static final double POSITION_L3 = 0.452;
     public static final double POSITION_L4 = 0.78;
     public static final double POSITION_INTAKE = 0.1;
 
