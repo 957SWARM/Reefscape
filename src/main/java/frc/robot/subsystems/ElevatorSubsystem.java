@@ -54,7 +54,6 @@ public class ElevatorSubsystem extends SubsystemBase{
     }
 
     public void periodic(){
-        System.out.println("I'm elevator, and I work!");
         // if (bottomLimitSwitch.get())
         //     kraken.setPosition(0);
     

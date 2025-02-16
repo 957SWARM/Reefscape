@@ -10,6 +10,7 @@ import com.pathplanner.lib.commands.PathPlannerAuto;
 
 import edu.wpi.first.epilogue.Logged;
 import edu.wpi.first.math.MathUtil;
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -63,7 +64,9 @@ public class RobotContainer {
 
     NamedCommands.registerCommand("Score L1", Sequencing.L1(m_elevator, m_wrist, m_intake));
     NamedCommands.registerCommand("Stow", Sequencing.stow(m_elevator, m_wrist, m_intake));
-    NamedCommands.registerCommand("Eject", m_intake.ejectCommand(IntakeConstants.EJECT_SPEED));
+    NamedCommands.registerCommand("Eject", m_intake.autoEject(IntakeConstants.EJECT_SPEED).withTimeout(.75));
+    NamedCommands.registerCommand("Vision Align", reefAlign.alignNearestReef(m_robotDrive));
+    NamedCommands.registerCommand("Score L4", Sequencing.L4(m_elevator, m_wrist, m_intake));
 
     autoChooser = AutoBuilder.buildAutoChooser();
     SmartDashboard.putData("Auto Chooser", autoChooser);
@@ -71,6 +74,7 @@ public class RobotContainer {
     autoChooser.addOption("Nothing", new InstantCommand());
     autoChooser.addOption("B Test Auto", new PathPlannerAuto("B Test Auto"));
     autoChooser.addOption("Straight Near L1 Auto", new PathPlannerAuto("Straight Near L1 Auto"));
+    autoChooser.addOption("Near L4", new PathPlannerAuto("Near L4 Auto"));
 
     //configureNamedCommands();
 
@@ -85,7 +89,8 @@ public class RobotContainer {
       .andThen(Commands.run(() -> m_driver.setRumble(false))));
 
     // stops intake when coral leaves
-    Trigger coralLeft = new Trigger(() -> !m_intake.checkToF() && m_intake.getVoltage() == IntakeConstants.EJECT_SPEED);
+    Trigger coralLeft = new Trigger(() -> !m_intake.checkToF() && m_intake.getVoltage() == IntakeConstants.EJECT_SPEED
+    && !DriverStation.isAutonomous());
     coralLeft.onTrue(new WaitCommand(.5).andThen(m_intake.stopIntakeCommand()));
 
     // automatically sends robot to stow after intaking

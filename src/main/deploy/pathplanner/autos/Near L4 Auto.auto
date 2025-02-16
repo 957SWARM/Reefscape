@@ -5,27 +5,45 @@
     "data": {
       "commands": [
         {
-          "type": "named",
-          "data": {
-            "name": "Stow"
-          }
-        },
-        {
           "type": "path",
           "data": {
-            "pathName": "Leave"
-          }
-        },
-        {
-          "type": "path",
-          "data": {
-            "pathName": "Leave Reverse"
+            "pathName": "Get Close"
           }
         },
         {
           "type": "named",
           "data": {
-            "name": "Score L1"
+            "name": "Vision Align"
+          }
+        },
+        {
+          "type": "wait",
+          "data": {
+            "waitTime": 1.0
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "Score L4"
+          }
+        },
+        {
+          "type": "wait",
+          "data": {
+            "waitTime": 2.5
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "Eject"
+          }
+        },
+        {
+          "type": "wait",
+          "data": {
+            "waitTime": 1.0
           }
         },
         {
