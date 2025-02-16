@@ -4,13 +4,10 @@
 
 package frc.robot;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Pose3d;
-import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Rotation3d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.geometry.Translation3d;
@@ -169,12 +166,12 @@ public final class Constants {
     public static final double L1_ANGLE = 0;
     public static final double L2_ANGLE = 0.91;
     public static final double L3_ANGLE = L2_ANGLE;
-    public static final double L4_ANGLE = 0.93;
+    public static final double L4_ANGLE = 0.9;
     public static final double STOW_ANGLE = 0.165;
     public static final double INTAKE_ANGLE = 0.11;
 
     // PID + Feedforward
-    public static final double kG = -2;  // constant multiplied by angle of arm to maintain position
+    public static final double kG = 0.5;  // constant multiplied by angle of arm to maintain position
     public static final double kP = 50;
     public static final double kI = 0;
     public static final double kD = 0;
