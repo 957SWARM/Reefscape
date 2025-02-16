@@ -157,7 +157,7 @@ public final class Constants {
     public static final int ENCODER_CAN_ID  = 12;
 
     // Maximums and Minimums Allowed
-    public static final double MAXIMUM_VOLTAGE = 7;
+    public static final double MAXIMUM_VOLTAGE = 9;
     public static final double MINIMUM_VOLTAGE = -MAXIMUM_VOLTAGE;
 
     public static final double MAXIMUM_ANGLE = 0.88;
@@ -174,8 +174,8 @@ public final class Constants {
     public static final double INTAKE_ANGLE = 0.11;
 
     // PID + Feedforward
-    public static final double kG = 0;  // constant multiplied by angle of arm to maintain position
-    public static final double kP = 64;
+    public static final double kG = -2;  // constant multiplied by angle of arm to maintain position
+    public static final double kP = 50;
     public static final double kI = 0;
     public static final double kD = 0;
 
