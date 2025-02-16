@@ -167,9 +167,9 @@ public final class Constants {
 
     // angle setpoints for scoring, intake, stowing
     public static final double L1_ANGLE = 0;
-    public static final double L2_ANGLE = 0.9;
+    public static final double L2_ANGLE = 0.91;
     public static final double L3_ANGLE = L2_ANGLE;
-    public static final double L4_ANGLE = 0.92;
+    public static final double L4_ANGLE = 0.93;
     public static final double STOW_ANGLE = 0.16;
     public static final double INTAKE_ANGLE = 0.11;
 
