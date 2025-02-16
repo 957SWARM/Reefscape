@@ -30,7 +30,7 @@ public class Sequencing {
 
     public static Command L3(ElevatorSubsystem elevator, WristSubsystem wrist, IntakeSubsystem intake){
         return elevator.toL3()
-        .alongWith(new WaitCommand(.5).andThen(wrist.toL3()))
+        .alongWith(new WaitCommand(.8).andThen(wrist.toL3()))
         .alongWith(intake.stopIntakeCommand());
     }
 
