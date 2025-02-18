@@ -9,7 +9,6 @@ import com.ctre.phoenix6.hardware.TalonFX;
 
 import edu.wpi.first.epilogue.Logged;
 import edu.wpi.first.math.MathUtil;
-import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -20,7 +19,7 @@ public class ElevatorSubsystem extends SubsystemBase{
 
     // Hardware
     private TalonFX kraken;
-    private DigitalInput bottomLimitSwitch = new DigitalInput(0);
+    // private DigitalInput bottomLimitSwitch = new DigitalInput(0);
 
     private final MotionMagicVoltage request;
     private double targetSetpoint = ElevatorConstants.POSITION_GROUND;

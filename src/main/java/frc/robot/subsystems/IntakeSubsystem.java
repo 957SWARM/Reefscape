@@ -84,4 +84,11 @@ public class IntakeSubsystem extends SubsystemBase{
             appliedVoltage = ejectSpeed;
         });
     }
+
+    // eject command used for auto
+    public Command autoEject(double ejectSpeed){
+        return runOnce(() -> {
+            appliedVoltage = ejectSpeed;
+        });
+    }
 }
