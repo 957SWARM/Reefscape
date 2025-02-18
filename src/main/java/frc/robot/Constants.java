@@ -258,11 +258,11 @@ public final class Constants {
     public static final double TRANSLATION_I = 0;
     public static final double TRANSLATION_D = 0;
 
-    public static final double ROTATION_P = 0.03;
+    public static final double ROTATION_P = 0.025;
     public static final double ROTATION_I = 0;
     public static final double ROTATION_D = 0;
 
-    public static final double MAX_VISION_SPEED = 0.2; //JOYSTICK
+    public static final double MAX_VISION_SPEED = 0.1; //JOYSTICK
 
     public static final double TRANSLATION_TOLERANCE = 0.01; //METERS
     public static final double ROTATION_TOLERANCE = 1; //DEGREES?
