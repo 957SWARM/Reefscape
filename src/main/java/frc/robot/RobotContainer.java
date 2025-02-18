@@ -25,6 +25,7 @@ import frc.robot.Constants.ElevatorConstants;
 import frc.robot.Constants.IOConstants;
 import frc.robot.Constants.IntakeConstants;
 import frc.robot.Constants.WristConstants;
+import frc.robot.commands.LEDStripPatterns;
 import frc.robot.commands.ReefAlign;
 import frc.robot.commands.Sequencing;
 import frc.robot.input.DriverInput;
@@ -48,16 +49,18 @@ public class RobotContainer {
 
   // The robot's subsystems
   private final DriveSubsystem m_robotDrive = new DriveSubsystem();
-  ElevatorSubsystem m_elevator = new ElevatorSubsystem();
-  WristSubsystem  m_wrist = new WristSubsystem();
-  IntakeSubsystem m_intake = new IntakeSubsystem();
-  ClimbSubsystem m_climber = new ClimbSubsystem();
+  private final ElevatorSubsystem m_elevator = new ElevatorSubsystem();
+  private final WristSubsystem  m_wrist = new WristSubsystem();
+  private final IntakeSubsystem m_intake = new IntakeSubsystem();
+  private final ClimbSubsystem m_climber = new ClimbSubsystem();
 
-  ReefAlign reefAlign = new ReefAlign();
+  // Command classes
+  final ReefAlign reefAlign = new ReefAlign();
+  final LEDStripPatterns led = new LEDStripPatterns();
 
   // Controllers
-  DriverInput m_driver = new DriverInput();
-  OperatorInput m_operator = new OperatorInput();
+  private final DriverInput m_driver = new DriverInput();
+  private final OperatorInput m_operator = new OperatorInput();
 
   /**
    * The container for the robot. Contains subsystems, OI devices, and commands.
