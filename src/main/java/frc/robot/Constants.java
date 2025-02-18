@@ -4,13 +4,10 @@
 
 package frc.robot;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Pose3d;
-import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Rotation3d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.geometry.Translation3d;
@@ -131,8 +128,8 @@ public final class Constants {
     // measurements in meters the carriage rises. (end effector raises twice these values)
     public static final double POSITION_GROUND = 0;
     public static final double POSITION_L1 = 0.07;
-    public static final double POSITION_L2 = 0.271;
-    public static final double POSITION_L3 = 0.491;
+    public static final double POSITION_L2 = 0.242;
+    public static final double POSITION_L3 = 0.452;
     public static final double POSITION_L4 = 0.78;
     public static final double POSITION_INTAKE = 0.1;
 
@@ -157,7 +154,7 @@ public final class Constants {
     public static final int ENCODER_CAN_ID  = 12;
 
     // Maximums and Minimums Allowed
-    public static final double MAXIMUM_VOLTAGE = 7;
+    public static final double MAXIMUM_VOLTAGE = 9;
     public static final double MINIMUM_VOLTAGE = -MAXIMUM_VOLTAGE;
 
     public static final double MAXIMUM_ANGLE = 0.88;
@@ -167,15 +164,15 @@ public final class Constants {
 
     // angle setpoints for scoring, intake, stowing
     public static final double L1_ANGLE = 0;
-    public static final double L2_ANGLE = 0.9;
+    public static final double L2_ANGLE = 0.91;
     public static final double L3_ANGLE = L2_ANGLE;
-    public static final double L4_ANGLE = 0.92;
-    public static final double STOW_ANGLE = 0.16;
+    public static final double L4_ANGLE = 0.9;
+    public static final double STOW_ANGLE = 0.165;
     public static final double INTAKE_ANGLE = 0.11;
 
     // PID + Feedforward
-    public static final double kG = 0;  // constant multiplied by angle of arm to maintain position
-    public static final double kP = 64;
+    public static final double kG = 0.5;  // constant multiplied by angle of arm to maintain position
+    public static final double kP = 50;
     public static final double kI = 0;
     public static final double kD = 0;
 

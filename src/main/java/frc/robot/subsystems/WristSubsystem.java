@@ -3,7 +3,6 @@ package frc.robot.subsystems;
 import com.ctre.phoenix6.configs.CurrentLimitsConfigs;
 import com.ctre.phoenix6.hardware.TalonFX;
 import com.reduxrobotics.sensors.canandmag.Canandmag;
-import com.revrobotics.spark.SparkLowLevel.MotorType;
 
 import edu.wpi.first.epilogue.Logged;
 import edu.wpi.first.math.MathUtil;
@@ -25,7 +24,7 @@ public class WristSubsystem extends SubsystemBase{
         WristConstants.kI, 
         WristConstants.kD
     );
-    private double targetSetpoint = WristConstants.INTAKE_ANGLE;
+    private double targetSetpoint = WristConstants.STOW_ANGLE;
 
     public WristSubsystem(){ 
         // Current Limit
