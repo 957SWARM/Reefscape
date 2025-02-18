@@ -7,6 +7,10 @@ public class OperatorInput {
 
     XboxController controller = new XboxController(IOConstants.OPERATOR_PORT);
 
+    public boolean stopClimb(){
+        return controller.getXButton();
+    }
+    
     public boolean deployClimb(){
         return controller.getYButton();
     }

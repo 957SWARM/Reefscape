@@ -31,7 +31,7 @@ public final class Constants {
   public static final class DriveConstants {
     // Driving Parameters - Note that these are not the maximum capable speeds of
     // the robot, rather the allowed maximum speeds
-    public static final double kMaxSpeedMetersPerSecond = 2.4;  // default: 4.8
+    public static final double kMaxSpeedMetersPerSecond = 4;  // default: 4.8
     public static final double kMaxAngularSpeed = 2 * Math.PI; // default: 2*pi. radians per second
 
     // Chassis configuration
@@ -116,21 +116,21 @@ public final class Constants {
     public static final int kS = 0; // Add output to overcome static friction
     public static final int kV = 0; // A velocity target of 1 rps results in output
     public static final int kA = 0; // An acceleration of 1 rps/s requires output
-    public static final int kP = 3; // A position error of 0.2 rotations results in output
+    public static final int kP = 4; // A position error of 0.2 rotations results in output
     public static final int kI = 0; // No output for integrated error
     public static final int kD = 0; // A velocity error of 1 rps results in output
     public static final int kG = 0; // A velocity error of 1 rps results in output
 
-    public static final int MOTIONMAGIC_VELOCITY = 90; // Target cruise velocity of 80 rps
-    public static final int MOTIONMAGIC_ACCELERATION = 240; // Target acceleration of 160 rps/s (0.5 seconds)
-    public static final int MOTIONMAGIC_JERK = 600; // Target jerk of 1600 rps/s/s (0.1 seconds)
+    public static final int MOTIONMAGIC_VELOCITY = 100; // Target cruise velocity of 80 rps
+    public static final int MOTIONMAGIC_ACCELERATION = 480; // Target acceleration of 160 rps/s (0.5 seconds)
+    public static final int MOTIONMAGIC_JERK = 1200; // Target jerk of 1600 rps/s/s (0.1 seconds) Robin H.
 
     // measurements in meters the carriage rises. (end effector raises twice these values)
     public static final double POSITION_GROUND = 0;
     public static final double POSITION_L1 = 0.07;
     public static final double POSITION_L2 = 0.242;
     public static final double POSITION_L3 = 0.452;
-    public static final double POSITION_L4 = 0.78;
+    public static final double POSITION_L4 = 0.775;
     public static final double POSITION_INTAKE = 0.1;
 
     // SLOW RISE/FALL
@@ -157,8 +157,9 @@ public final class Constants {
     public static final double MAXIMUM_VOLTAGE = 9;
     public static final double MINIMUM_VOLTAGE = -MAXIMUM_VOLTAGE;
 
-    public static final double MAXIMUM_ANGLE = 0.88;
-    public static final double MINIMUM_ANGLE = 0.25;
+    // DO NOT SET VALUES BETWEEN 0.29 AND 0.876!!!!!!!!!!
+    public static final double MAXIMUM_ANGLE = 0.876;
+    public static final double MINIMUM_ANGLE = 0.29;
 
     public static final int CURRENT_LIMIT = 30;
 
@@ -257,11 +258,11 @@ public final class Constants {
     public static final double TRANSLATION_I = 0;
     public static final double TRANSLATION_D = 0;
 
-    public static final double ROTATION_P = 0.03;
+    public static final double ROTATION_P = 0.025;
     public static final double ROTATION_I = 0;
     public static final double ROTATION_D = 0;
 
-    public static final double MAX_VISION_SPEED = 0.2; //JOYSTICK
+    public static final double MAX_VISION_SPEED = 0.1; //JOYSTICK
 
     public static final double TRANSLATION_TOLERANCE = 0.01; //METERS
     public static final double ROTATION_TOLERANCE = 1; //DEGREES?

@@ -33,6 +33,12 @@ public class ClimbSubsystem extends SubsystemBase{
         neo.setVoltage(appliedVoltage);
     }
 
+    public Command stopCommand(){
+        return Commands.runOnce(() -> {
+            appliedVoltage = 0;
+        });
+    }
+    
     public Command extend(){
         return Commands.runOnce(() -> {
             appliedVoltage = ClimberConstants.CLIMB_PULL_STRENGTH_VOLTS;
