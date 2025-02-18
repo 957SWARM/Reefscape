@@ -55,7 +55,7 @@ public class WristSubsystem extends SubsystemBase{
     public Command setSetpoint(double setpoint) {
         return runOnce(
                 () -> {
-                targetSetpoint = setpoint;
+                    targetSetpoint = setpoint;
                 });
     }
 
