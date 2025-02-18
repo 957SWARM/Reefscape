@@ -23,6 +23,7 @@ import frc.robot.Constants.ElevatorConstants;
 import frc.robot.Constants.IOConstants;
 import frc.robot.Constants.IntakeConstants;
 import frc.robot.Constants.WristConstants;
+import frc.robot.commands.ReefAlign;
 import frc.robot.commands.Sequencing;
 import frc.robot.input.DriverInput;
 import frc.robot.input.OperatorInput;
@@ -49,6 +50,8 @@ public class RobotContainer {
   WristSubsystem  m_wrist = new WristSubsystem();
   IntakeSubsystem m_intake = new IntakeSubsystem();
   ClimbSubsystem m_climber = new ClimbSubsystem();
+
+  ReefAlign reefAlign = new ReefAlign();
 
   // Controllers
   DriverInput m_driver = new DriverInput();
@@ -153,6 +156,10 @@ public class RobotContainer {
     // manual control for slowly descending elevator
     new Trigger(() -> m_driver.slowFall())
       .whileTrue(m_elevator.slowFall());
+
+    //temporary vision align testing
+    new Trigger(() -> m_driver.tempVision())
+    .whileTrue(reefAlign.alignNearestReef(m_robotDrive));
     
     // OPERATOR CONTROLS (implement once climber is implemented)
     new Trigger(() -> m_operator.deployClimb())
