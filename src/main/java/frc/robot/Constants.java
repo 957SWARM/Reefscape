@@ -157,8 +157,9 @@ public final class Constants {
     public static final double MAXIMUM_VOLTAGE = 9;
     public static final double MINIMUM_VOLTAGE = -MAXIMUM_VOLTAGE;
 
-    public static final double MAXIMUM_ANGLE = 0.88;
-    public static final double MINIMUM_ANGLE = 0.25;
+    // DO NOT SET VALUES BETWEEN 0.29 AND 0.876!!!!!!!!!!
+    public static final double MAXIMUM_ANGLE = 0.876;
+    public static final double MINIMUM_ANGLE = 0.29;
 
     public static final int CURRENT_LIMIT = 30;
 

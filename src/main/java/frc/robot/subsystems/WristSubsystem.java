@@ -55,13 +55,7 @@ public class WristSubsystem extends SubsystemBase{
     public Command setSetpoint(double setpoint) {
         return runOnce(
                 () -> {
-                    // makes sure angle is within a reasonable range
-                    // targetSetpoint = MathUtil.clamp(
-                    //     setpoint,
-                    //     WristConstants.MINIMUM_ANGLE,
-                    //     WristConstants.MAXIMUM_ANGLE
-                    // );
-                    targetSetpoint = setpoint;
+                targetSetpoint = setpoint;
                 });
     }
 
