@@ -29,7 +29,6 @@ import frc.robot.commands.LEDStripPatterns;
 import frc.robot.commands.ReefAlign;
 import frc.robot.commands.Sequencing;
 import frc.robot.input.DriverInput;
-import frc.robot.input.OperatorInput;
 import frc.robot.subsystems.ClimbSubsystem;
 import frc.robot.subsystems.ElevatorSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
@@ -59,8 +58,7 @@ public class RobotContainer {
   final LEDStripPatterns led = new LEDStripPatterns();
 
   // Controllers
-  private final DriverInput m_driver = new DriverInput();
-  private final OperatorInput m_operator = new OperatorInput();
+  DriverInput m_driver = new DriverInput();
 
   /**
    * The container for the robot. Contains subsystems, OI devices, and commands.
@@ -167,24 +165,17 @@ public class RobotContainer {
     new Trigger(() -> m_driver.stow())
       .onTrue(Sequencing.stow(m_elevator, m_wrist, m_intake));
 
-    // manual control for slowly lifting elevator
-    new Trigger(() -> m_driver.slowRise())
-      .whileTrue(m_elevator.slowRise());
-
-    // manual control for slowly descending elevator
-    new Trigger(() -> m_driver.slowFall())
-      .whileTrue(m_elevator.slowFall());
-
     //temporary vision align testing
     new Trigger(() -> m_driver.tempVision())
     .whileTrue(reefAlign.alignNearestReef(m_robotDrive));
     
-    // OPERATOR CONTROLS (implement once climber is implemented)
-    new Trigger(() -> m_operator.deployClimb())
+    // climbs while up on d-pad is held
+    new Trigger(() -> m_driver.deployClimb())
       .whileTrue(m_climber.extend())
       .onFalse(m_climber.stopCommand());
       
-    new Trigger(() -> m_operator.retractClimb())
+    // retracts climber while down on d-pad is held
+    new Trigger(() -> m_driver.retractClimb())
       .whileTrue(m_climber.retract())
       .onFalse(m_climber.stopCommand());
   }
