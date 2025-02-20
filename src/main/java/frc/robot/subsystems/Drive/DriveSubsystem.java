@@ -14,6 +14,7 @@ import edu.wpi.first.epilogue.Logged;
 import edu.wpi.first.hal.FRCNetComm.tInstances;
 import edu.wpi.first.hal.FRCNetComm.tResourceType;
 import edu.wpi.first.hal.HAL;
+import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
@@ -25,6 +26,7 @@ import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 import frc.robot.Constants.DriveConstants;
+import frc.robot.Constants.ElevatorConstants;
 
 @Logged
 public class DriveSubsystem extends SubsystemBase {
@@ -125,11 +127,12 @@ public class DriveSubsystem extends SubsystemBase {
    * @param fieldRelative Whether the provided x and y speeds are relative to the
    *                      field.
    */
-  public void drive(double xSpeed, double ySpeed, double rot, boolean fieldRelative) {
+  public void drive(double xSpeed, double ySpeed, double rot, boolean fieldRelative, double elevatorHeight) {
+
     // Convert the commanded speeds into the correct units for the drivetrain
-    double xSpeedDelivered = xSpeed * DriveConstants.kMaxSpeedMetersPerSecond;
-    double ySpeedDelivered = ySpeed * DriveConstants.kMaxSpeedMetersPerSecond;
-    double rotDelivered = rot * DriveConstants.kMaxAngularSpeed;
+    double xSpeedDelivered = adjustSpeed(xSpeed * DriveConstants.kMaxSpeedMetersPerSecond, elevatorHeight);
+    double ySpeedDelivered = adjustSpeed(ySpeed * DriveConstants.kMaxSpeedMetersPerSecond, elevatorHeight);
+    double rotDelivered = adjustSpeed(rot * DriveConstants.kMaxAngularSpeed, elevatorHeight);
 
     var swerveModuleStates = DriveConstants.kDriveKinematics.toSwerveModuleStates(
         fieldRelative
@@ -218,6 +221,15 @@ public class DriveSubsystem extends SubsystemBase {
   public double getTurnRate() {
     return m_gyro.getAngularVelocityZWorld().getValueAsDouble() * (DriveConstants.kGyroReversed ? -1.0 : 1.0);
 
+  }
+
+  // returns new speed based on elevator height (higher elevator = slower speed)
+  public double adjustSpeed(double speed, double elevatorHeight){
+    // elevator max height multiplied by 2 because of 2nd stage
+    double fractionOfHeight = Math.abs(elevatorHeight / (ElevatorConstants.MAX_HEIGHT * 2));
+    double fractionOfSpeed = 0.25 + (0.75 * (1 - fractionOfHeight));
+    fractionOfSpeed = MathUtil.clamp(fractionOfSpeed, 0.25, 1);
+    return fractionOfSpeed * speed;
   }
 
   // Helper Function for setting up AutoBuilder for Path Planner. Mostly copied code from Path Planner

@@ -1,9 +1,8 @@
 package frc.robot.subsystems;
 
+import com.ctre.phoenix6.configs.CurrentLimitsConfigs;
+import com.ctre.phoenix6.hardware.TalonFX;
 import com.reduxrobotics.sensors.canandmag.Canandmag;
-import com.revrobotics.spark.SparkLowLevel.MotorType;
-import com.revrobotics.spark.SparkMax;
-
 import edu.wpi.first.epilogue.Logged;
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.controller.PIDController;
@@ -15,69 +14,77 @@ import frc.robot.Constants.WristConstants;
 @Logged
 public class WristSubsystem extends SubsystemBase{
 
-    SparkMax motor = new SparkMax(WristConstants.MOTOR_CAN_ID, MotorType.kBrushless);
-    Canandmag encoder = new Canandmag(WristConstants.ENCODER_CAN_ID);
-    PIDController pid = new PIDController(
+    // Hardware
+    private TalonFX motor = new TalonFX(WristConstants.MOTOR_CAN_ID);
+    private Canandmag encoder = new Canandmag(WristConstants.ENCODER_CAN_ID);
+    
+    private PIDController pid = new PIDController(
         WristConstants.kP, 
         WristConstants.kI, 
         WristConstants.kD
     );
+    private double targetSetpoint = WristConstants.STOW_ANGLE;
 
-    public WristSubsystem(){
-        // assumes wrist starts out straight up. Zero point is defined as straight down
-        encoder.setAbsPosition(.5);
+    public WristSubsystem(){ 
+        // Current Limit
+        var limitConfigs = new CurrentLimitsConfigs();
+        limitConfigs.SupplyCurrentLimit = WristConstants.CURRENT_LIMIT;
+        motor.getConfigurator().apply(limitConfigs);
+    }
+
+    public void periodic(){
+        double modifiedSetpoint = targetSetpoint;
+        modifiedSetpoint = (modifiedSetpoint >= 0.5) ? modifiedSetpoint - 1: targetSetpoint;
+        pid.setSetpoint(modifiedSetpoint);
+
+        // calculations of feedback and feedforward
+        double feedback = pid.calculate(getModifiedSetpoint(getPosition()));  //pid feedback on current position
+        double feedforward = getFeedForward();  // feedforwad that counteracts gravity
+
+        // clamping of output to minimum/maximum voltage
+        double output = MathUtil.clamp(
+            feedback + feedforward,
+            WristConstants.MINIMUM_VOLTAGE,
+            WristConstants.MAXIMUM_VOLTAGE
+        );
+
+        motor.setVoltage(-output);
     }
 
     // angle measured in rotations
-    public Command goToSetpoint(double setpoint) {
-        return run(
+    public Command setSetpoint(double setpoint) {
+        return runOnce(
                 () -> {
-                    // makes sure angle is within a reasonable range
-                    double safeSetpoint = MathUtil.clamp(
-                        setpoint,
-                        WristConstants.MINIMUM_ANGLE,
-                        WristConstants.MAXIMUM_ANGLE
-                    );
-
-                    pid.setSetpoint(safeSetpoint);
-
-                    // calculations of feedback and feedforward
-                    double feedback = pid.calculate(getPosition());  //pid feedback on current position
-                    double feedforward = getFeedForward();  // feedforwad that counteracts gravity
-
-                    // clamping of output to minimum/maximum voltage
-                    double output = MathUtil.clamp(
-                        feedback + feedforward,
-                        WristConstants.MINIMUM_VOLTAGE,
-                        WristConstants.MAXIMUM_VOLTAGE
-                    );
-
-                    motor.setVoltage(output);
+                    targetSetpoint = setpoint;
                 });
     }
 
+    public double getTargetSetpoint(){
+        return targetSetpoint;
+    }
+
     public Command toL1(){
-        return goToSetpoint(WristConstants.L1_ANGLE);
+        return setSetpoint(WristConstants.L1_ANGLE);
     }
 
     public Command toL2(){
-        return goToSetpoint(WristConstants.L2_ANGLE);
+        return setSetpoint(WristConstants.L2_ANGLE);
     }
 
     public Command toL3(){
-        return goToSetpoint(WristConstants.L3_ANGLE);
+        return setSetpoint(WristConstants.L3_ANGLE);
     }
 
     public Command toL4(){
-        return goToSetpoint(WristConstants.L4_ANGLE);
+        return setSetpoint(WristConstants.L4_ANGLE);
     }
 
     public Command toIntake(){
-        return goToSetpoint(WristConstants.INTAKE_ANGLE);
+        return setSetpoint(WristConstants.INTAKE_ANGLE);
     }
 
     public Command toStow(){
-        return goToSetpoint(WristConstants.STOW_ANGLE);
+        return setSetpoint(WristConstants.STOW_ANGLE);
     }
 
     // gets encoder position
@@ -90,6 +97,12 @@ public class WristSubsystem extends SubsystemBase{
         // angle measured between straight down and current position
         // converted to radians for sine function
         double angle = Units.rotationsToRadians(encoder.getAbsPosition());
-        return Math.sin(angle) * WristConstants.kG;
+        return Math.cos(angle) * WristConstants.kG;
+    }
+
+    public double getModifiedSetpoint(double setpoint){
+        if (setpoint >= 0.5) 
+            setpoint = setpoint - 1;
+        return setpoint;
     }
 }

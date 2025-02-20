@@ -1,5 +1,7 @@
 package frc.robot.input;
 
+import edu.wpi.first.math.filter.SlewRateLimiter;
+import edu.wpi.first.wpilibj.GenericHID.RumbleType;
 import edu.wpi.first.wpilibj.XboxController;
 import frc.robot.Constants.IOConstants;
 
@@ -7,19 +9,27 @@ public class DriverInput {
 
     XboxController controller = new XboxController(IOConstants.DRIVER_PORT);
 
-    // input cubed to improve fine movement at slow speeds
+    // Slew Rate Limiters. limit how fast joystick values can change
+    SlewRateLimiter xLimiter = new SlewRateLimiter(20);
+    SlewRateLimiter yLimiter = new SlewRateLimiter(20);
+    SlewRateLimiter turnLimiter = new SlewRateLimiter(20);
+
+    // input squared to improve fine movement at slow speeds
     public double driveX(){
-        return controller.getLeftY();
+        return xLimiter.calculate(
+            Math.signum(controller.getLeftY()) * Math.pow(controller.getLeftY(), 2)
+        );
     }
 
-    //input cubed to improve fine movement at slow speeds
+    //input squared to improve fine movement at slow speeds
     public double driveY(){
-        return controller.getLeftX();
+        return yLimiter.calculate(
+            Math.signum(controller.getLeftX()) * Math.pow(controller.getLeftX(), 2)
+        );
     }
 
-    //input cubed to improve fine movement at slow speeds
     public double driveTurn(){
-        return controller.getRightX();
+        return turnLimiter.calculate(controller.getRightX());
     }
 
     public boolean resetGyro(){
@@ -31,15 +41,15 @@ public class DriverInput {
     }
 
     public boolean L2(){
-        return controller.getBButton();
-    }
-
-    public boolean L3(){
         return controller.getXButton();
     }
 
-    public boolean L4(){
+    public boolean L3(){
         return controller.getYButton();
+    }
+
+    public boolean L4(){
+        return controller.getBButton();
     }
 
     public boolean stow(){
@@ -54,12 +64,20 @@ public class DriverInput {
         return controller.getLeftTriggerAxis() > IOConstants.TRIGGER_THRESHOLD;
     }
 
-    public boolean slowRise(){
+    public boolean deployClimb(){
         return controller.getPOV() == 0;
     }
 
-    public boolean slowFall(){
+    public boolean retractClimb(){
         return controller.getPOV() == 180;
+    }
+
+    public void setRumble(boolean on) {
+        controller.setRumble(RumbleType.kBothRumble, on ? 1 : 0);
+    }
+
+    public boolean tempVision(){
+        return controller.getStartButton();
     }
 
 }

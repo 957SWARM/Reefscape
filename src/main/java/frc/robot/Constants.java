@@ -4,7 +4,13 @@
 
 package frc.robot;
 
+import java.util.Arrays;
+import java.util.List;
+
+import edu.wpi.first.math.geometry.Pose3d;
+import edu.wpi.first.math.geometry.Rotation3d;
 import edu.wpi.first.math.geometry.Translation2d;
+import edu.wpi.first.math.geometry.Translation3d;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.trajectory.TrapezoidProfile;
 import edu.wpi.first.math.util.Units;
@@ -25,13 +31,13 @@ public final class Constants {
   public static final class DriveConstants {
     // Driving Parameters - Note that these are not the maximum capable speeds of
     // the robot, rather the allowed maximum speeds
-    public static final double kMaxSpeedMetersPerSecond = 2;  // default: 4.8
-    public static final double kMaxAngularSpeed = 3 * Math.PI; // default: 2*pi. radians per second
+    public static final double kMaxSpeedMetersPerSecond = 4;  // default: 4.8
+    public static final double kMaxAngularSpeed = 2 * Math.PI; // default: 2*pi. radians per second
 
     // Chassis configuration
-    public static final double kTrackWidth = Units.inchesToMeters(20);
+    public static final double kTrackWidth = Units.inchesToMeters(24.5);
     // Distance between centers of right and left wheels on robot ^^^
-    public static final double kWheelBase = Units.inchesToMeters(26);
+    public static final double kWheelBase = Units.inchesToMeters(24.5);
     // Distance between front and back wheels on robot ^^^
     public static final SwerveDriveKinematics kDriveKinematics = new SwerveDriveKinematics(
         new Translation2d(kWheelBase / 2, kTrackWidth / 2),
@@ -40,28 +46,29 @@ public final class Constants {
         new Translation2d(-kWheelBase / 2, -kTrackWidth / 2));
 
     // Angular offsets of the modules relative to the chassis in radians
-    public static final double kFrontLeftChassisAngularOffset = 0;
+    public static final double kFrontLeftChassisAngularOffset = -(Math.PI/2);
     public static final double kFrontRightChassisAngularOffset = 0;
-    public static final double kBackLeftChassisAngularOffset = 0;
-    public static final double kBackRightChassisAngularOffset = 0;
+    public static final double kBackLeftChassisAngularOffset = -(Math.PI);
+    public static final double kBackRightChassisAngularOffset = (Math.PI/2);
 
     // SPARK MAX CAN IDs
-    public static final int kFrontLeftDrivingCanId = 7;
-    public static final int kRearLeftDrivingCanId = 5;
-    public static final int kFrontRightDrivingCanId = 1;
-    public static final int kRearRightDrivingCanId = 3;
+    public static final int kFrontLeftDrivingCanId = 1; // New bot: 1, B#: 7
+    public static final int kFrontRightDrivingCanId = 3; // New bot: 3, B#: 1
+    public static final int kRearLeftDrivingCanId = 5; // New bot: 5, B#: 5
+    public static final int kRearRightDrivingCanId = 7; // New bot: 7, B#: 3
 
-    public static final int kFrontLeftTurningCanId = 8;
-    public static final int kRearLeftTurningCanId = 6;
-    public static final int kFrontRightTurningCanId = 2;
-    public static final int kRearRightTurningCanId = 4;
+    public static final int kFrontLeftTurningCanId = 2; // New bot: 2, B#: 8
+    public static final int kFrontRightTurningCanId = 4; // New bot: 4, B#: 2
+    public static final int kRearLeftTurningCanId = 6; // New bot: 6, B#: 6
+    public static final int kRearRightTurningCanId = 8; // New bot: 8, B#: 4
 
     public static final boolean kGyroReversed = false;
 
     // Gyro (Pigeon2) ID
-    public static final int pigeonID = 32;
+    public static final int pigeonID = 30;  // New bot: 30, B#: 32
 
     // Location constants
+    // Unused right now
     public static final int FRONT_LEFT = 0;
     public static final int FRONT_RIGHT = 0;
     public static final int BACK_LEFT = 0;
@@ -105,61 +112,68 @@ public final class Constants {
   }
 
   public static final class ElevatorConstants {
-    public static final int MOTOR_ID = 0;
+    public static final int MOTOR_ID = 13;
     public static final int kS = 0; // Add output to overcome static friction
     public static final int kV = 0; // A velocity target of 1 rps results in output
     public static final int kA = 0; // An acceleration of 1 rps/s requires output
-    public static final int kP = 0; // A position error of 0.2 rotations results in output
+    public static final int kP = 4; // A position error of 0.2 rotations results in output
     public static final int kI = 0; // No output for integrated error
     public static final int kD = 0; // A velocity error of 1 rps results in output
     public static final int kG = 0; // A velocity error of 1 rps results in output
 
-    public static final int MOTIONMAGIC_VELOCITY = 5; 
-    public static final int MOTIONMAGIC_ACCELERATION = 10; 
-    public static final int MOTIONMAGIC_JERK = 100;
+    public static final int MOTIONMAGIC_VELOCITY = 100; // Target cruise velocity of 80 rps
+    public static final int MOTIONMAGIC_ACCELERATION = 480; // Target acceleration of 160 rps/s (0.5 seconds)
+    public static final int MOTIONMAGIC_JERK = 1200; // Target jerk of 1600 rps/s/s (0.1 seconds) Robin H.
 
+    // measurements in meters the carriage rises. (end effector raises twice these values)
     public static final double POSITION_GROUND = 0;
-    public static final double POSITION_L1 = 4;
-    public static final double POSITION_L2 = 5;
-    public static final double POSITION_L3 = 6;
-    public static final double POSITION_L4 = 7;
-    public static final double POSITION_INTAKE = 4;
+    public static final double POSITION_L1 = 0.07;
+    public static final double POSITION_L2 = 0.242;
+    public static final double POSITION_L3 = 0.452;
+    public static final double POSITION_L4 = 0.775;
+    public static final double POSITION_INTAKE = 0.1;
 
     // SLOW RISE/FALL
     public static final double SETPOINT_INCREMENT = .01; // how much the setpoint changes per robot loop in manual control
 
     // CONVERSIONS
-    public static final double metersToRotations = 1;
+    public static final double metersToRotations = 178.95;
+    public static final double RotationsToMeters = 1.0 / metersToRotations;
 
-    // MAXIMUMs/MINIMUMs
-    public static final double MAX_HEIGHT = 3;
-    public static final double MIN_HEIGHT = 1;
+    // MAXIMUMs/MINIMUMs (meters)
+    public static final double MAX_HEIGHT = .78;
+    public static final double MIN_HEIGHT = 0;
+    public static final int CURRENT_LIMIT = 30;
 
   }
 
+  // angles measured in rotations. 0 defined as straight out from robot
   public static final class WristConstants {
     // CAN IDs & Ports
-    public static final int MOTOR_CAN_ID = 0;
-    public static final int ENCODER_CAN_ID  = 0;
+    public static final int MOTOR_CAN_ID = 9;
+    public static final int ENCODER_CAN_ID  = 12;
 
     // Maximums and Minimums Allowed
-    public static final double MAXIMUM_VOLTAGE = 3;
+    public static final double MAXIMUM_VOLTAGE = 9;
     public static final double MINIMUM_VOLTAGE = -MAXIMUM_VOLTAGE;
 
-    public static final double MAXIMUM_ANGLE = .6;
-    public static final double MINIMUM_ANGLE = 0.1;
+    // DO NOT SET VALUES BETWEEN 0.29 AND 0.876!!!!!!!!!!
+    public static final double MAXIMUM_ANGLE = 0.876;
+    public static final double MINIMUM_ANGLE = 0.29;
+
+    public static final int CURRENT_LIMIT = 30;
 
     // angle setpoints for scoring, intake, stowing
-    public static final double L1_ANGLE = 0.125;
-    public static final double L2_ANGLE = .2;
+    public static final double L1_ANGLE = 0;
+    public static final double L2_ANGLE = 0.91;
     public static final double L3_ANGLE = L2_ANGLE;
-    public static final double L4_ANGLE = .4;
-    public static final double STOW_ANGLE = .5;
-    public static final double INTAKE_ANGLE = .3;
+    public static final double L4_ANGLE = 0.9;
+    public static final double STOW_ANGLE = 0.165;
+    public static final double INTAKE_ANGLE = 0.11;
 
     // PID + Feedforward
-    public static final double kG = .5;  // constant multiplied by angle of arm to maintain position
-    public static final double kP = 0;
+    public static final double kG = 0.5;  // constant multiplied by angle of arm to maintain position
+    public static final double kP = 50;
     public static final double kI = 0;
     public static final double kD = 0;
 
@@ -180,12 +194,17 @@ public final class Constants {
   }
 
   public static final class IntakeConstants {
-    public static final int MOTOR_ID = 0;
+    public static final int MOTOR_ID = 10;
     public static final int SENSOR_ID = 1;
 
-    public static final double TOF_TIMING_BUDGET = 0.003;
-    public static final double TOF_THRESHOLD = 10;
+    public static final int CURRENT_LIMIT = 30;
 
+    // TOF RELATED
+    public static final double TOF_TIMING_BUDGET = 30;
+    public static final double TOF_THRESHOLD = 100;
+    public static final double FILTER_TIME_CONSTANT = .1; // decrease for faster response, increase for less noise
+
+    // SPEEDS
     public static final double IDLE_SPEED = 0;
     public static final double INTAKE_SPEED = 5;
     public static final double EJECT_SPEED = -5;
@@ -205,5 +224,49 @@ public final class Constants {
 
     // BUTTON PORTS
     public static final int LEFT_CENTER_BUTTON = 7;
+  }
+
+  public static final class ClimberConstants {
+
+    public static final double CLIMB_PULL_STRENGTH_VOLTS = 10;
+    public static final int MOTOR_CAN_ID = 11;
+
+    public static final int CURRENT_LIMIT = 30;
+    
+  }
+
+  public static final class VisionConstants {
+    public static final Pose3d LEFT_REEF = new Pose3d(new Translation3d(-.215, 0, -.65), new Rotation3d());
+    public static final Pose3d RIGHT_REEF = new Pose3d(new Translation3d(.115, 0, -.65), new Rotation3d());
+    public static final List<Pose3d> REEF_POSES = Arrays.asList(LEFT_REEF, RIGHT_REEF);
+    public static final List<Double> REEF_TAG_IDS = Arrays.asList(
+      (double)6, 
+      (double)7, 
+      (double)8, 
+      (double)9, 
+      (double)10, 
+      (double)11, 
+      (double)17, 
+      (double)18, 
+      (double)19, 
+      (double)20, 
+      (double)21, 
+      (double)22
+    );
+
+    public static final String REEF_LIMELIGHT_NAME = "limelight";
+
+    public static final double TRANSLATION_P = 2;
+    public static final double TRANSLATION_I = 0;
+    public static final double TRANSLATION_D = 0;
+
+    public static final double ROTATION_P = 0.025;
+    public static final double ROTATION_I = 0;
+    public static final double ROTATION_D = 0;
+
+    public static final double MAX_VISION_SPEED = 0.1; //JOYSTICK
+
+    public static final double TRANSLATION_TOLERANCE = 0.01; //METERS
+    public static final double ROTATION_TOLERANCE = 1; //DEGREES?
   }
 }
