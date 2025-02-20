@@ -12,11 +12,15 @@ import frc.robot.subsystems.LED;
 
 public class LEDStripPatterns {
 
-    LED led = new LED(LEDConstants.TOTAL_PIXELS);
-    int frame = 0;
-    Timer timer = new Timer();
+    LED led;
+    int frame;
+    Timer timer;
 
     public LEDStripPatterns() {
+        led = new LED(LEDConstants.TOTAL_PIXELS);
+        frame = 0;
+        timer = new Timer();
+        
         timer.restart();
     }
 
@@ -37,6 +41,7 @@ public class LEDStripPatterns {
     public Command constantColorAnimation(int start, int length, int r, int g, int b) {
         return Commands.run(
                 () -> {
+                    // Sets LEDs to a specific color when robot is on; turns off when robot is off
                     boolean rslState = RobotController.getRSLState();
                     if (rslState) {
                         for (int i = start; i < start + length; i++) {
@@ -51,9 +56,7 @@ public class LEDStripPatterns {
                 led);
     }
 
-    public Command movingForwardAnimation(
-            int start, int length, double frameTime, boolean isInverted, int r, int g, int b) {
-
+    public Command movingForwardAnimation(int start, int length, double frameTime, boolean isInverted, int r, int g, int b) {
         return Commands.run(
                 () -> {
                     int currentFrame = frame;
@@ -79,9 +82,7 @@ public class LEDStripPatterns {
                 led);
     }
 
-    public Command movingForwardBlocksAnimation(
-            int start, int length, double frameTime, boolean isInverted, int r, int g, int b) {
-
+    public Command movingForwardBlocksAnimation( int start, int length, double frameTime, boolean isInverted, int r, int g, int b) {
         return Commands.run(
                 () -> {
                     int currentFrame = frame;
@@ -107,9 +108,7 @@ public class LEDStripPatterns {
                 led);
     }
 
-    public Command movingForwardChainAnimation(
-            int start, int length, double frameTime, boolean isInverted, int r, int g, int b) {
-
+    public Command movingForwardChainAnimation(int start, int length, double frameTime, boolean isInverted, int r, int g, int b) {
         return Commands.run(
                 () -> {
                     int currentFrame = frame;
@@ -146,13 +145,12 @@ public class LEDStripPatterns {
                 led);
     }
 
-    public Command yellowBoltLightCommand(
-            int start, int length, double frameTime, boolean isInverted) {
-        return movingForwardAnimation(start, length, frameTime, isInverted, 254, 150, 0);
+    public Command blueWavesLightCommand(int start, int length, double frameTime, boolean isInverted) {
+        return movingForwardAnimation(start, length, frameTime, isInverted,0, 20, 50); // RGB matching team blue for 2025
     }
 
-    public Command fullYellowCommand(int start, int length) {
-        return constantColorAnimation(start, length, 254, 150, 0).ignoringDisable(true);
+    public Command fullBlueCommand(int start, int length) {
+        return constantColorAnimation(start, length, 0, 128, 157).ignoringDisable(true);
     }
 
     public Command allianceColor(int start, int length) {
