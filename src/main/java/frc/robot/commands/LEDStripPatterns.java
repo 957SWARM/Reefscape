@@ -41,22 +41,33 @@ public class LEDStripPatterns {
     public Command constantColorAnimation(int start, int length, int r, int g, int b) {
         return Commands.run(
                 () -> {
-                    // Sets LEDs to a specific color when robot is on; turns off when robot is off
-                    boolean rslState = RobotController.getRSLState();
-                    if (rslState) {
-                        for (int i = start; i < start + length; i++) {
-                            led.setPixel(i - 1, r, g, b);
-                        }
-                    } else {
-                        for (int i = start; i < start + length; i++) {
-                            led.setPixel(i - 1, 0, 0, 0);
-                        }
+                    // Sets LEDs to a specific color constantly
+                    for (int i = start; i < start + length; i++) {
+                        led.setPixel(i - 1, r, g, b);
                     }
                 },
                 led);
     }
 
-    public Command movingForwardAnimation(int start, int length, double frameTime, boolean isInverted, int r, int g, int b) {
+    public Command flashingColorCommand(int start, int length, int r, int g, int b){
+        return Commands.run(
+                () -> {
+                    // Sets LEDs to flash with the RSL light
+                    boolean rslState = RobotController.getRSLState();
+                    if (rslState) {
+                        for (int i = start; i < start + length; i++) {
+                            led.setPixel(i - 1, r, g, b);
+                         }
+                        } else {
+                            for (int i = start; i < start + length; i++) {
+                                led.setPixel(i - 1, 0, 0, 0);
+                            }
+                        }
+                },
+                led);
+    }
+
+    public Command chasingPatternAnimation(int start, int length, double frameTime, boolean isInverted, int r, int g, int b) {
         return Commands.run(
                 () -> {
                     int currentFrame = frame;
@@ -82,7 +93,35 @@ public class LEDStripPatterns {
                 led);
     }
 
-    public Command movingForwardBlocksAnimation( int start, int length, double frameTime, boolean isInverted, int r, int g, int b) {
+    public Command chasingAlernatingColorAnimation(
+        int start, int length, 
+        int r1, int g1, int b1, int r2, int g2, int b2, double frameTime, boolean isInverted) {
+        return Commands.run(
+                () -> {
+                    int currentFrame = frame;
+                    if (isInverted) currentFrame = 2 - currentFrame;
+
+                    for (int i = start; i < start + length; i++) {
+                        if ((i - 1) % 3 == currentFrame) {
+                            led.setPixel(i, r1, g1, b1);
+                        } else {
+                            led.setPixel(i, r2, g2, b2);
+                        }
+                    }
+
+                    if (frameTime <= timer.get()) {
+                        timer.reset();
+                        if (frame == 2) {
+                            frame = 0;
+                        } else {
+                            frame++;
+                        }
+                    }
+                },
+                led);
+    }
+
+    public Command chasingBlocksAnimation( int start, int length, double frameTime, boolean isInverted, int r, int g, int b) {
         return Commands.run(
                 () -> {
                     int currentFrame = frame;
@@ -108,7 +147,7 @@ public class LEDStripPatterns {
                 led);
     }
 
-    public Command movingForwardChainAnimation(int start, int length, double frameTime, boolean isInverted, int r, int g, int b) {
+    public Command chasingChainAnimation(int start, int length, double frameTime, boolean isInverted, int r, int g, int b) {
         return Commands.run(
                 () -> {
                     int currentFrame = frame;
@@ -146,11 +185,17 @@ public class LEDStripPatterns {
     }
 
     public Command blueWavesLightCommand(int start, int length, double frameTime, boolean isInverted) {
-        return movingForwardAnimation(start, length, frameTime, isInverted,0, 20, 50); // RGB matching team blue for 2025
+        return chasingAlernatingColorAnimation(
+            0, LEDConstants.TOTAL_PIXELS, 0, 118, 147, 0, 0, LEDConstants.FULL_BLUE_RGB / 2, 
+            0.1, false);
     }
 
     public Command fullBlueCommand(int start, int length) {
-        return constantColorAnimation(start, length, 0, 128, 157).ignoringDisable(true);
+        return constantColorAnimation(start, length, 0, 5, 25).ignoringDisable(true);
+    }
+
+    public Command chasingBlueCommand(int start, int length, double frameTime, boolean isInverted){
+        return chasingPatternAnimation(start, length, frameTime, isInverted, 0, 5, 25);
     }
 
     public Command allianceColor(int start, int length) {
@@ -163,24 +208,24 @@ public class LEDStripPatterns {
 
     public Command boltAllianceColor(int start, int length, double frameTime, boolean isInverted) {
         if (DriverStation.getAlliance().get() == Alliance.Red) {
-            return movingForwardAnimation(
+            return chasingPatternAnimation(
                     start, length, frameTime, isInverted, LEDConstants.FULL_RED_RGB, 0, 0);
         } else {
-            return movingForwardAnimation(start, length, frameTime, isInverted, 23, 29, 79);
+            return chasingPatternAnimation(start, length, frameTime, isInverted, 23, 29, 79);
         }
     }
 
     public Command blockAllianceColor(int start, int length, double frameTime, boolean isInverted) {
         if (DriverStation.getAlliance().get() == Alliance.Red) {
-            return movingForwardBlocksAnimation(
+            return chasingBlocksAnimation(
                     start, length, frameTime, isInverted, LEDConstants.FULL_RED_RGB, 0, 0);
         } else {
-            return movingForwardBlocksAnimation(start, length, frameTime, isInverted, 23, 29, 79);
+            return chasingBlocksAnimation(start, length, frameTime, isInverted, 23, 29, 79);
         }
     }
 
     public Command noteInRobotCommand(int start, int length, double frameTime, boolean isInverted) {
-        return movingForwardBlocksAnimation(
+        return chasingBlocksAnimation(
                 start, length, frameTime, isInverted, LEDConstants.FULL_RED_RGB, 40, 0);
     }
 
@@ -190,7 +235,7 @@ public class LEDStripPatterns {
 
     public Command noteShootingCommand(
             int start, int length, double frameTime, boolean isInverted) {
-        return movingForwardAnimation(
+        return chasingPatternAnimation(
                 start, length, frameTime, isInverted, LEDConstants.FULL_RED_RGB, 40, 0);
     }
 
@@ -199,12 +244,12 @@ public class LEDStripPatterns {
     }
 
     public Command blockGreenCommand(int start, int length, double frameTime, boolean isInverted) {
-        return movingForwardBlocksAnimation(
+        return chasingBlocksAnimation(
                 start, length, frameTime, isInverted, 0, LEDConstants.FULL_GREEN_RGB, 0);
     }
 
     public Command endGameCommand(int start, int length, double frameTime, boolean isInverted) {
-        return movingForwardChainAnimation(
+        return chasingChainAnimation(
                 0,
                 LEDConstants.TOTAL_PIXELS,
                 frameTime,
