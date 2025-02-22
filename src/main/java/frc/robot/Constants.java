@@ -234,8 +234,8 @@ public final class Constants {
   }
 
   public static final class VisionConstants {
-    public static final Pose3d LEFT_REEF = new Pose3d(new Translation3d(-.215, 0, -.75), new Rotation3d());
-    public static final Pose3d RIGHT_REEF = new Pose3d(new Translation3d(.115, 0, -.75), new Rotation3d());
+    public static final Pose3d LEFT_REEF = new Pose3d(new Translation3d(-.215, 0, -.65), new Rotation3d());
+    public static final Pose3d RIGHT_REEF = new Pose3d(new Translation3d(.115, 0, -.65), new Rotation3d());
     public static final List<Pose3d> REEF_POSES = Arrays.asList(LEFT_REEF, RIGHT_REEF);
     public static final List<Double> REEF_TAG_IDS = Arrays.asList(
       (double)6, 
@@ -252,8 +252,8 @@ public final class Constants {
       (double)22
     );
 
-    public static final Pose3d LEFT_STATION = new Pose3d(new Translation3d(-.215, 0, -.65), new Rotation3d());
-    public static final Pose3d RIGHT_STATION = new Pose3d(new Translation3d(.115, 0, -.65), new Rotation3d());
+    public static final Pose3d LEFT_STATION = new Pose3d(new Translation3d(-.215, 0, -.75), new Rotation3d());
+    public static final Pose3d RIGHT_STATION = new Pose3d(new Translation3d(.115, 0, -.75), new Rotation3d());
     public static final List<Pose3d> STATION_POSES = Arrays.asList(LEFT_REEF, RIGHT_REEF);
     public static final List<Double> STATION_TAG_IDS = Arrays.asList(
       (double)1, 
