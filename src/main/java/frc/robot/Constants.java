@@ -265,5 +265,8 @@ public final class Constants {
 
     public static final double TRANSLATION_TOLERANCE = 0.01; //METERS
     public static final double ROTATION_TOLERANCE = 1; //DEGREES?
+
+    // CORAL STATION CONSTANTS
+    public static final double STATION_DISTANCE = .2;
   }
 }
