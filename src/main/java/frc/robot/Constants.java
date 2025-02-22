@@ -4,13 +4,10 @@
 
 package frc.robot;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Pose3d;
-import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Rotation3d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.geometry.Translation3d;
@@ -34,7 +31,7 @@ public final class Constants {
   public static final class DriveConstants {
     // Driving Parameters - Note that these are not the maximum capable speeds of
     // the robot, rather the allowed maximum speeds
-    public static final double kMaxSpeedMetersPerSecond = 2.4;  // default: 4.8
+    public static final double kMaxSpeedMetersPerSecond = 4;  // default: 4.8
     public static final double kMaxAngularSpeed = 2 * Math.PI; // default: 2*pi. radians per second
 
     // Chassis configuration
@@ -119,28 +116,28 @@ public final class Constants {
     public static final int kS = 0; // Add output to overcome static friction
     public static final int kV = 0; // A velocity target of 1 rps results in output
     public static final int kA = 0; // An acceleration of 1 rps/s requires output
-    public static final int kP = 3; // A position error of 0.2 rotations results in output
+    public static final double kP = 1.65; // A position error of 0.2 rotations results in output
     public static final int kI = 0; // No output for integrated error
     public static final int kD = 0; // A velocity error of 1 rps results in output
-    public static final int kG = 0; // A velocity error of 1 rps results in output
+    public static final double kG = -2; // A velocity error of 1 rps results in output
 
-    public static final int MOTIONMAGIC_VELOCITY = 90; // Target cruise velocity of 80 rps
-    public static final int MOTIONMAGIC_ACCELERATION = 240; // Target acceleration of 160 rps/s (0.5 seconds)
-    public static final int MOTIONMAGIC_JERK = 600; // Target jerk of 1600 rps/s/s (0.1 seconds)
+    public static final int MOTIONMAGIC_VELOCITY = 100; // Target cruise velocity of 80 rps
+    public static final int MOTIONMAGIC_ACCELERATION = 480; // Target acceleration of 160 rps/s (0.5 seconds)
+    public static final int MOTIONMAGIC_JERK = 2400; // Target jerk of 1600 rps/s/s (0.1 seconds) Robin H.
 
     // measurements in meters the carriage rises. (end effector raises twice these values)
     public static final double POSITION_GROUND = 0;
     public static final double POSITION_L1 = 0.07;
-    public static final double POSITION_L2 = 0.271;
-    public static final double POSITION_L3 = 0.491;
-    public static final double POSITION_L4 = 0.78;
+    public static final double POSITION_L2 = 0.242;
+    public static final double POSITION_L3 = 0.452;
+    public static final double POSITION_L4 = 0.775;
     public static final double POSITION_INTAKE = 0.1;
 
     // SLOW RISE/FALL
     public static final double SETPOINT_INCREMENT = .01; // how much the setpoint changes per robot loop in manual control
 
     // CONVERSIONS
-    public static final double metersToRotations = 178.95;
+    public static final double metersToRotations = 107.37;
     public static final double RotationsToMeters = 1.0 / metersToRotations;
 
     // MAXIMUMs/MINIMUMs (meters)
@@ -157,25 +154,26 @@ public final class Constants {
     public static final int ENCODER_CAN_ID  = 12;
 
     // Maximums and Minimums Allowed
-    public static final double MAXIMUM_VOLTAGE = 7;
+    public static final double MAXIMUM_VOLTAGE = 9;
     public static final double MINIMUM_VOLTAGE = -MAXIMUM_VOLTAGE;
 
-    public static final double MAXIMUM_ANGLE = 0.88;
-    public static final double MINIMUM_ANGLE = 0.25;
+    // DO NOT SET VALUES BETWEEN 0.29 AND 0.876!!!!!!!!!!
+    public static final double MAXIMUM_ANGLE = 0.876;
+    public static final double MINIMUM_ANGLE = 0.29;
 
     public static final int CURRENT_LIMIT = 30;
 
     // angle setpoints for scoring, intake, stowing
     public static final double L1_ANGLE = 0;
-    public static final double L2_ANGLE = 0.9;
+    public static final double L2_ANGLE = 0.91;
     public static final double L3_ANGLE = L2_ANGLE;
-    public static final double L4_ANGLE = 0.92;
-    public static final double STOW_ANGLE = 0.16;
+    public static final double L4_ANGLE = 0.9;
+    public static final double STOW_ANGLE = 0.165;
     public static final double INTAKE_ANGLE = 0.11;
 
     // PID + Feedforward
-    public static final double kG = 0;  // constant multiplied by angle of arm to maintain position
-    public static final double kP = 64;
+    public static final double kG = 0.5;  // constant multiplied by angle of arm to maintain position
+    public static final double kP = 50;
     public static final double kI = 0;
     public static final double kD = 0;
 
@@ -271,11 +269,11 @@ public final class Constants {
     public static final double TRANSLATION_I = 0;
     public static final double TRANSLATION_D = 0;
 
-    public static final double ROTATION_P = 0.03;
+    public static final double ROTATION_P = 0.025;
     public static final double ROTATION_I = 0;
     public static final double ROTATION_D = 0;
 
-    public static final double MAX_VISION_SPEED = 0.2; //JOYSTICK
+    public static final double MAX_VISION_SPEED = 0.1; //JOYSTICK
 
     public static final double TRANSLATION_TOLERANCE = 0.01; //METERS
     public static final double ROTATION_TOLERANCE = 1; //DEGREES?

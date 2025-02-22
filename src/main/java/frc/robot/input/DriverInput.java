@@ -64,11 +64,11 @@ public class DriverInput {
         return controller.getLeftTriggerAxis() > IOConstants.TRIGGER_THRESHOLD;
     }
 
-    public boolean slowRise(){
+    public boolean deployClimb(){
         return controller.getPOV() == 0;
     }
 
-    public boolean slowFall(){
+    public boolean retractClimb(){
         return controller.getPOV() == 180;
     }
 

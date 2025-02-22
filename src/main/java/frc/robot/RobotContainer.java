@@ -5,10 +5,12 @@
 package frc.robot;
 
 import com.pathplanner.lib.auto.AutoBuilder;
+import com.pathplanner.lib.auto.NamedCommands;
 import com.pathplanner.lib.commands.PathPlannerAuto;
 
 import edu.wpi.first.epilogue.Logged;
 import edu.wpi.first.math.MathUtil;
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -23,10 +25,11 @@ import frc.robot.Constants.ElevatorConstants;
 import frc.robot.Constants.IOConstants;
 import frc.robot.Constants.IntakeConstants;
 import frc.robot.Constants.WristConstants;
+import frc.robot.commands.LEDStripPatterns;
 import frc.robot.commands.ReefAlign;
 import frc.robot.commands.Sequencing;
 import frc.robot.input.DriverInput;
-import frc.robot.input.OperatorInput;
+import frc.robot.subsystems.ClimbSubsystem;
 import frc.robot.subsystems.ElevatorSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.subsystems.WristSubsystem;
@@ -45,25 +48,39 @@ public class RobotContainer {
 
   // The robot's subsystems
   private final DriveSubsystem m_robotDrive = new DriveSubsystem();
-  ElevatorSubsystem m_elevator = new ElevatorSubsystem();
-  WristSubsystem  m_wrist = new WristSubsystem();
-  IntakeSubsystem m_intake = new IntakeSubsystem();
+  private final ElevatorSubsystem m_elevator = new ElevatorSubsystem();
+  private final WristSubsystem  m_wrist = new WristSubsystem();
+  private final IntakeSubsystem m_intake = new IntakeSubsystem();
+  private final ClimbSubsystem m_climber = new ClimbSubsystem();
 
-  ReefAlign reefAlign = new ReefAlign();
+  // Command classes
+  final ReefAlign reefAlign = new ReefAlign();
+  final LEDStripPatterns led = new LEDStripPatterns();
 
   // Controllers
   DriverInput m_driver = new DriverInput();
-  OperatorInput m_operator = new OperatorInput();
 
   /**
    * The container for the robot. Contains subsystems, OI devices, and commands.
    */
   public RobotContainer() {
 
+    NamedCommands.registerCommand("Score L1", Sequencing.L1(m_elevator, m_wrist, m_intake));
+    NamedCommands.registerCommand("Stow", Sequencing.stow(m_elevator, m_wrist, m_intake));
+    NamedCommands.registerCommand("Eject", m_intake.autoEject(IntakeConstants.EJECT_SPEED).withTimeout(.75));
+    NamedCommands.registerCommand("Vision Align", reefAlign.alignNearestReef(m_robotDrive));
+    NamedCommands.registerCommand("Score L4", Sequencing.L4(m_elevator, m_wrist, m_intake));
+
     autoChooser = AutoBuilder.buildAutoChooser();
     SmartDashboard.putData("Auto Chooser", autoChooser);
-    autoChooser.addOption("Test Auto", new PathPlannerAuto("Test Auto"));
+    //autoChooser.addOption("Test Auto", new PathPlannerAuto("Test Auto"));
     autoChooser.addOption("Nothing", new InstantCommand());
+    autoChooser.addOption("B Test Auto", new PathPlannerAuto("B Test Auto"));
+    autoChooser.addOption("Straight Near L1 Auto", new PathPlannerAuto("Straight Near L1 Auto"));
+    autoChooser.addOption("Near L4", new PathPlannerAuto("Near L4 Auto"));
+    autoChooser.addOption("Just Leave", new PathPlannerAuto("Just Leave"));
+
+    //configureNamedCommands();
 
     // Configure the button bindings
     configureButtonBindings();
@@ -76,7 +93,8 @@ public class RobotContainer {
       .andThen(Commands.run(() -> m_driver.setRumble(false))));
 
     // stops intake when coral leaves
-    Trigger coralLeft = new Trigger(() -> !m_intake.checkToF() && m_intake.getVoltage() == IntakeConstants.EJECT_SPEED);
+    Trigger coralLeft = new Trigger(() -> !m_intake.checkToF() && m_intake.getVoltage() == IntakeConstants.EJECT_SPEED
+    && !DriverStation.isAutonomous());
     coralLeft.onTrue(new WaitCommand(.5).andThen(m_intake.stopIntakeCommand()));
 
     // automatically sends robot to stow after intaking
@@ -147,19 +165,24 @@ public class RobotContainer {
     new Trigger(() -> m_driver.stow())
       .onTrue(Sequencing.stow(m_elevator, m_wrist, m_intake));
 
-    // manual control for slowly lifting elevator
-    new Trigger(() -> m_driver.slowRise())
-      .whileTrue(m_elevator.slowRise());
-
-    // manual control for slowly descending elevator
-    new Trigger(() -> m_driver.slowFall())
-      .whileTrue(m_elevator.slowFall());
-
     //temporary vision align testing
     new Trigger(() -> m_driver.tempVision())
     .whileTrue(reefAlign.alignNearestReef(m_robotDrive));
     
-    // OPERATOR CONTROLS (implement once climber is implemented)
+    // climbs while up on d-pad is held
+    new Trigger(() -> m_driver.deployClimb())
+      .whileTrue(m_climber.extend())
+      .onFalse(m_climber.stopCommand());
+      
+    // retracts climber while down on d-pad is held
+    new Trigger(() -> m_driver.retractClimb())
+      .whileTrue(m_climber.retract())
+      .onFalse(m_climber.stopCommand());
+  }
+
+  public void configureNamedCommands(){
+    NamedCommands.registerCommand("Score L1", Sequencing.L1(m_elevator, m_wrist, m_intake));
+    NamedCommands.registerCommand("Stow", Sequencing.stow(m_elevator, m_wrist, m_intake));
   }
 
   /**

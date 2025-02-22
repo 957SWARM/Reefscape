@@ -5,21 +5,15 @@
     "data": {
       "commands": [
         {
-          "type": "path",
+          "type": "named",
           "data": {
-            "pathName": "Example Path"
-          }
-        },
-        {
-          "type": "wait",
-          "data": {
-            "waitTime": 2.0
+            "name": "Stow"
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "Copy of Example Path"
+            "pathName": "Straight Near"
           }
         },
         {
@@ -27,11 +21,23 @@
           "data": {
             "name": "Score L1"
           }
+        },
+        {
+          "type": "wait",
+          "data": {
+            "waitTime": 0.75
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "Eject"
+          }
         }
       ]
     }
   },
   "resetOdom": true,
   "folder": null,
-  "choreoAuto": false
+  "choreoAuto": true
 }
