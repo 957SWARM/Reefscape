@@ -30,7 +30,7 @@ public class ClimbSubsystem extends SubsystemBase{
     }
 
     public void periodic(){
-        neo.setVoltage(appliedVoltage);
+        //neo.setVoltage(appliedVoltage);
     }
 
     public Command stopCommand(){
