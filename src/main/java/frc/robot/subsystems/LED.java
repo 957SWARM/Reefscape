@@ -32,6 +32,19 @@ public class LED implements Subsystem {
         ledBuffer.setRGB(selectedPixel, r, g, b);
     }
 
+    public int getRed(int selectedPixel) {
+        return ledBuffer.getRed(selectedPixel);
+    }
+
+    public int getGreen(int selectedPixel) {
+        return ledBuffer.getGreen(selectedPixel);
+    }
+
+    public int getBlue(int selectedPixel) {
+        return ledBuffer.getBlue(selectedPixel);
+    }
+
+
     @Override
     public void periodic() {
         led.setData(ledBuffer);
