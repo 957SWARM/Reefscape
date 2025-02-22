@@ -5,6 +5,12 @@
     "data": {
       "commands": [
         {
+          "type": "named",
+          "data": {
+            "name": "Stow"
+          }
+        },
+        {
           "type": "path",
           "data": {
             "pathName": "Get Close"
@@ -13,7 +19,13 @@
         {
           "type": "named",
           "data": {
-            "name": "Vision Align"
+            "name": "Reef Align"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "Go L4"
           }
         },
         {
@@ -25,19 +37,7 @@
         {
           "type": "named",
           "data": {
-            "name": "Score L4"
-          }
-        },
-        {
-          "type": "wait",
-          "data": {
-            "waitTime": 2.5
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "Eject"
+            "name": "Score"
           }
         },
         {
