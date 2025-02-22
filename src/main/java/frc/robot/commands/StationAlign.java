@@ -40,7 +40,7 @@ public class StationAlign {
 
     public StationAlign(){}
     
-    public Command alignNearestReef(DriveSubsystem drive){
+    public Command alignNearestStation(DriveSubsystem drive){
 
         updatePoses();
 
@@ -85,15 +85,6 @@ public class StationAlign {
         return rotPID.calculate(getRotDiff());
     }
 
-    // public Pose2d getPoseDifferential(){
-    //     Pose2d currentPose = LimelightHelpers.getBotPose3d_TargetSpace(VisionConstants.STATION_LIMELIGHT_NAME).toPose2d();
-
-    //     return new Pose2d(
-    //         findNearestReef().minus(currentPose).getTranslation(),
-    //         findNearestReef().getRotation().minus(currentPose.getRotation())
-    //     );
-    // }
-
     public double getXDiff(){
         double robotX = currentPose.getZ();
         double targetX = nearestStationPose.getZ();
@@ -124,7 +115,7 @@ public class StationAlign {
     }
 
     public Pose3d getNearestPose(){
-        return findNearestPose(currentPose, VisionConstants.REEF_POSES);
+        return findNearestPose(currentPose, VisionConstants.STATION_POSES);
 
     }
 
@@ -149,7 +140,7 @@ public class StationAlign {
         boolean valid = false;
         if(
             LimelightHelpers.getTV(VisionConstants.STATION_LIMELIGHT_NAME)
-            && VisionConstants.REEF_TAG_IDS.contains(LimelightHelpers.getFiducialID(VisionConstants.STATION_LIMELIGHT_NAME))
+            && VisionConstants.STATION_TAG_IDS.contains(LimelightHelpers.getFiducialID(VisionConstants.STATION_LIMELIGHT_NAME))
             ){
             valid = true;
         }
@@ -161,7 +152,8 @@ public class StationAlign {
         && Math.abs(getYDiff()) <= VisionConstants.TRANSLATION_TOLERANCE
         && Math.abs(getRotDiff()) <= VisionConstants.ROTATION_TOLERANCE;
 
-        return aligned;
+        //return aligned;
+        return false;
     }
 
     //DEBUGGING LOGGING FUNCTIONS

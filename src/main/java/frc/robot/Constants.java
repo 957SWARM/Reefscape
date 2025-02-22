@@ -252,9 +252,9 @@ public final class Constants {
       (double)22
     );
 
-    public static final Pose3d LEFT_STATION = new Pose3d(new Translation3d(-.215, 0, -.75), new Rotation3d());
-    public static final Pose3d RIGHT_STATION = new Pose3d(new Translation3d(.115, 0, -.75), new Rotation3d());
-    public static final List<Pose3d> STATION_POSES = Arrays.asList(LEFT_REEF, RIGHT_REEF);
+    public static final Pose3d LEFT_STATION = new Pose3d(new Translation3d(-.6, 0, -.6), new Rotation3d());
+    public static final Pose3d MID_STATION = new Pose3d(new Translation3d(0, 0, -.6), new Rotation3d());
+    public static final List<Pose3d> STATION_POSES = Arrays.asList(LEFT_STATION, MID_STATION);
     public static final List<Double> STATION_TAG_IDS = Arrays.asList(
       (double)1, 
       (double)2, 
@@ -265,7 +265,7 @@ public final class Constants {
     public static final String REEF_LIMELIGHT_NAME = "limelight-reef";
     public static final String STATION_LIMELIGHT_NAME = "limelight-station";
 
-    public static final double TRANSLATION_P = 2;
+    public static final double TRANSLATION_P = .65;
     public static final double TRANSLATION_I = 0;
     public static final double TRANSLATION_D = 0;
 
@@ -273,7 +273,7 @@ public final class Constants {
     public static final double ROTATION_I = 0;
     public static final double ROTATION_D = 0;
 
-    public static final double MAX_VISION_SPEED = 0.1; //JOYSTICK
+    public static final double MAX_VISION_SPEED = 0.6; //JOYSTICK
 
     public static final double TRANSLATION_TOLERANCE = 0.01; //METERS
     public static final double ROTATION_TOLERANCE = 1; //DEGREES?

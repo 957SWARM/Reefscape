@@ -28,6 +28,7 @@ import frc.robot.Constants.WristConstants;
 import frc.robot.commands.LEDStripPatterns;
 import frc.robot.commands.ReefAlign;
 import frc.robot.commands.Sequencing;
+import frc.robot.commands.StationAlign;
 import frc.robot.input.DriverInput;
 import frc.robot.subsystems.ClimbSubsystem;
 import frc.robot.subsystems.ElevatorSubsystem;
@@ -55,6 +56,7 @@ public class RobotContainer {
 
   // Command classes
   final ReefAlign reefAlign = new ReefAlign();
+  final StationAlign stationAlign = new StationAlign();
   final LEDStripPatterns led = new LEDStripPatterns();
 
   // Controllers
@@ -165,9 +167,12 @@ public class RobotContainer {
     new Trigger(() -> m_driver.stow())
       .onTrue(Sequencing.stow(m_elevator, m_wrist, m_intake));
 
-    //temporary vision align testing
-    new Trigger(() -> m_driver.tempVision())
+    // dynamic vision align
+    new Trigger(() -> m_driver.visionAlign() && reefAlign.checkReefTag())
     .whileTrue(reefAlign.alignNearestReef(m_robotDrive));
+
+    new Trigger(() -> m_driver.visionAlign() && stationAlign.checkStationTag())
+    .whileTrue(stationAlign.alignNearestStation(m_robotDrive));
     
     // climbs while up on d-pad is held
     new Trigger(() -> m_driver.deployClimb())

@@ -57,7 +57,7 @@ public class ElevatorSubsystem extends SubsystemBase{
 
     public void periodic(){
         if (bottomLimitSwitch.get() && !isReset) {
-            //kraken.setPosition(0);
+            kraken.setPosition(0);
             isReset = !isReset;
         }
 
