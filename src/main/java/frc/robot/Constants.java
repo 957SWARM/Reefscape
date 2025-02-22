@@ -254,7 +254,18 @@ public final class Constants {
       (double)22
     );
 
+    public static final Pose3d LEFT_STATION = new Pose3d(new Translation3d(-.215, 0, -.65), new Rotation3d());
+    public static final Pose3d RIGHT_STATION = new Pose3d(new Translation3d(.115, 0, -.65), new Rotation3d());
+    public static final List<Pose3d> STATION_POSES = Arrays.asList(LEFT_REEF, RIGHT_REEF);
+    public static final List<Double> STATION_TAG_IDS = Arrays.asList(
+      (double)1, 
+      (double)2, 
+      (double)12, 
+      (double)13 
+    );
+
     public static final String REEF_LIMELIGHT_NAME = "limelight";
+    public static final String STATION_LIMELIGHT_NAME = "limelight";
 
     public static final double TRANSLATION_P = 2;
     public static final double TRANSLATION_I = 0;
