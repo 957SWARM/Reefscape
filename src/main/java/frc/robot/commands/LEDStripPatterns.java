@@ -93,6 +93,8 @@ public class LEDStripPatterns {
                 led);
     }
 
+    // TODO: Create new command with single chasing pixel
+
     public Command chasingAlernatingColorAnimation(
         int start, int length, 
         int r1, int g1, int b1, int r2, int g2, int b2, double frameTime, boolean isInverted) {
@@ -184,6 +186,36 @@ public class LEDStripPatterns {
                 led);
     }
 
+    public Command fillThenEmptyCommand(int start, int length, double frameTime, boolean isInverted, int r, int g, int b) {
+        return Commands.run(
+                () -> {
+                    int currentFrame = frame;
+                    if (isInverted) currentFrame = 2 * length - currentFrame;
+                    boolean isFirstHalf;
+                    
+                    for (int i = start; i < start + length + 1; i++) {
+                        isFirstHalf = currentFrame < (length);
+                        if ((i - 1) == currentFrame % length) {
+                            if (isFirstHalf){
+                                led.setPixel(i, r, g, b);
+                            } else {
+                                led.setPixel(i, 0, 0, 0);
+                            }
+                        }
+                    }    
+
+                    if (frameTime <= timer.get()) {
+                        timer.reset();
+                        if (frame == 2 * length) {
+                            frame = 0;
+                        } else {
+                            frame++;
+                        }
+                    }
+                },
+                led);
+    }
+
     public Command blueWavesLightCommand(int start, int length, double frameTime, boolean isInverted) {
         return chasingAlernatingColorAnimation(
             0, LEDConstants.TOTAL_PIXELS, 0, 118, 147, 0, 0, LEDConstants.FULL_BLUE_RGB / 2, 
@@ -191,11 +223,15 @@ public class LEDStripPatterns {
     }
 
     public Command fullBlueCommand(int start, int length) {
-        return constantColorAnimation(start, length, 0, 5, 25).ignoringDisable(true);
+        return constantColorAnimation(start, length, 0, 5, 25);
     }
 
     public Command chasingBlueCommand(int start, int length, double frameTime, boolean isInverted){
         return chasingPatternAnimation(start, length, frameTime, isInverted, 0, 5, 25);
+    }
+
+    public Command chasingSingleBlueCommand(int start, int length, double frameTime, boolean isInverted){
+        return fillThenEmptyCommand(start, length, frameTime, isInverted, 0, 5, 25);
     }
 
     public Command allianceColor(int start, int length) {

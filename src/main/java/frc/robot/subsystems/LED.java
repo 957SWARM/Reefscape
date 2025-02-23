@@ -15,12 +15,12 @@ public class LED implements Subsystem {
     public LED(int totalPixels) {
         register();
 
-        this.totalPixels = totalPixels;
+        this.totalPixels = totalPixels + 1; // +1 to account for zero-indexing
 
         led = new AddressableLED(LEDConstants.LED_PORT);
 
-        ledBuffer = new AddressableLEDBuffer(totalPixels);
-        led.setLength(totalPixels);
+        ledBuffer = new AddressableLEDBuffer(this.totalPixels);
+        led.setLength(this.totalPixels);
 
         // Set the data
         led.setData(ledBuffer);
@@ -29,7 +29,7 @@ public class LED implements Subsystem {
 
     public void setPixel(int selectedPixel, int r, int g, int b) {
         if (selectedPixel < 0 || selectedPixel > totalPixels - 1) return;
-        ledBuffer.setRGB(selectedPixel, r, g, b);
+        ledBuffer.setRGB(selectedPixel - 1, r, g, b); // -1 to account for zero indexing
     }
 
     public int getRed(int selectedPixel) {

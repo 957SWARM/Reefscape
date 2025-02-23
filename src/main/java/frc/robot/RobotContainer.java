@@ -118,7 +118,8 @@ public class RobotContainer {
 
     //m_wrist.setDefaultCommand(m_wrist.toStow());
 
-    led.scheduleDefaultCommand(led.blueWavesLightCommand(0, LEDConstants.TOTAL_PIXELS, 0.2, false));
+    // led.scheduleDefaultCommand(led.blueWavesLightCommand(0, LEDConstants.TOTAL_PIXELS, 0.2, false));
+    led.scheduleDefaultCommand(led.fillThenEmptyCommand(0, LEDConstants.TOTAL_PIXELS, 0.0333 , false, 76, 234, 8));
 
   }
 
