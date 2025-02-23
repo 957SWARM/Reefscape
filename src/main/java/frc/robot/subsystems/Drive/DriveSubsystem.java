@@ -153,6 +153,10 @@ public class DriveSubsystem extends SubsystemBase {
     return DriveConstants.kDriveKinematics.toChassisSpeeds(swerveStates);
   }
 
+  public double getLinearSpeed(){
+    return Math.hypot(getRobotRelativeSpeeds().vxMetersPerSecond, getRobotRelativeSpeeds().vyMetersPerSecond);
+  }
+
   //Same as drive function but for auto. Accepts chassisSpeeds directly instead of generating it from other arguments
   //Always robot relative
   public void autoDrive(ChassisSpeeds speeds) {

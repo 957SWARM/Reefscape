@@ -177,9 +177,8 @@ public final class Constants {
     public static final double kI = 0;
     public static final double kD = 0;
 
-    // SLOW FALL/RISE VOLTAGE. Voltage that slowly moves the motor intended for manual adjustment
-    public static final double SLOW_RISE_VOLTAGE = .5;
-    public static final double SLOW_FALL_VOLTAGE = -SLOW_RISE_VOLTAGE;
+    // Tolerance. Used for checking if wrist is at target angle
+    public static final double TOLERANCE = 0.005;
 
   }
 
@@ -267,7 +266,7 @@ public final class Constants {
 
     public static final double TRANSLATION_P = .55;
     public static final double TRANSLATION_I = 0;
-    public static final double TRANSLATION_D = 
+    public static final double TRANSLATION_D = 0;
 
     public static final double ROTATION_P = 0.025;
     public static final double ROTATION_I = 0;
@@ -277,6 +276,15 @@ public final class Constants {
 
     public static final double TRANSLATION_TOLERANCE = 0.015; //METERS
     public static final double ROTATION_TOLERANCE = 1; //DEGREES?
-    public static final double TOLERANCE_DEBOUNCE_SECONDS = .01; 
+    public static final double SPEED_TOLERANCE = 0.25; //METERS PER SECOND
   }
+
+  public static final class SequencingConstants {
+    public static final double STOW_DELAY = 0.25;
+    public static final double L1_WRIST_DELAY = .4;
+    public static final double L2_WRIST_DELAY = .1;
+    public static final double L3_WRIST_DELAY = .3;
+    public static final double L4_WRIST_DELAY = .8;
+  }
+
 }

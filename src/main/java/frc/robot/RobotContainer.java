@@ -145,19 +145,19 @@ public class RobotContainer {
 
     // sends elevator and wrist to L1 position
     new Trigger(() -> m_driver.L1())
-      .onTrue(Sequencing.L1(m_elevator, m_wrist, m_intake));
+      .onTrue(Sequencing.L1Fancy(m_elevator, m_wrist, m_intake));
 
     // sends elevator and wrist to L2 position
     new Trigger(() -> m_driver.L2())
-      .onTrue(Sequencing.L2(m_elevator, m_wrist, m_intake));
+      .onTrue(Sequencing.L2Fancy(m_elevator, m_wrist, m_intake));
 
     // sends elevator and wrist to L3 position
     new Trigger(() -> m_driver.L3())
-      .onTrue(Sequencing.L3(m_elevator, m_wrist, m_intake));
+      .onTrue(Sequencing.L3Fancy(m_elevator, m_wrist, m_intake));
 
     // sends elevator and wrist to L4 position
     new Trigger(() -> m_driver.L4())
-      .onTrue(Sequencing.L4(m_elevator, m_wrist, m_intake));
+      .onTrue(Sequencing.L4Fancy(m_elevator, m_wrist, m_intake));
 
     // while holding trigger, runs intake backwards for scoring
     new Trigger(() -> m_driver.score())
@@ -172,7 +172,7 @@ public class RobotContainer {
     .whileTrue(reefAlign.alignNearestReef(m_robotDrive));
 
     new Trigger(() -> m_driver.visionAlign() && stationAlign.checkStationTag())
-    .whileTrue(stationAlign.alignNearestStation(m_robotDrive));
+    .whileTrue(stationAlign.alignNearestStation(m_robotDrive).andThen(Sequencing.intake(m_elevator, m_wrist, m_intake)));
     
     // climbs while up on d-pad is held
     new Trigger(() -> m_driver.deployClimb())
