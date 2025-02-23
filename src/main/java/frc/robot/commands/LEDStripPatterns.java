@@ -230,7 +230,7 @@ public class LEDStripPatterns {
         return chasingPatternAnimation(start, length, frameTime, isInverted, 0, 5, 25);
     }
 
-    public Command chasingSingleBlueCommand(int start, int length, double frameTime, boolean isInverted){
+    public Command fillEmptyBlueCommand(int start, int length, double frameTime, boolean isInverted){
         return fillThenEmptyCommand(start, length, frameTime, isInverted, 0, 5, 25);
     }
 
