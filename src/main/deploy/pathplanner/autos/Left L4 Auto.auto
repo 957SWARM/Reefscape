@@ -13,13 +13,7 @@
         {
           "type": "path",
           "data": {
-            "pathName": "Near L4"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "Reef Align"
+            "pathName": "Left L4"
           }
         },
         {
@@ -31,7 +25,7 @@
         {
           "type": "wait",
           "data": {
-            "waitTime": 1.0
+            "waitTime": 0.75
           }
         },
         {
@@ -43,7 +37,7 @@
         {
           "type": "wait",
           "data": {
-            "waitTime": 1.0
+            "waitTime": 0.5
           }
         },
         {
