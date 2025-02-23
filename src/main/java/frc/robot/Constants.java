@@ -265,17 +265,18 @@ public final class Constants {
     public static final String REEF_LIMELIGHT_NAME = "limelight-reef";
     public static final String STATION_LIMELIGHT_NAME = "limelight-station";
 
-    public static final double TRANSLATION_P = .65;
+    public static final double TRANSLATION_P = .55;
     public static final double TRANSLATION_I = 0;
-    public static final double TRANSLATION_D = 0;
+    public static final double TRANSLATION_D = 
 
     public static final double ROTATION_P = 0.025;
     public static final double ROTATION_I = 0;
     public static final double ROTATION_D = 0;
 
-    public static final double MAX_VISION_SPEED = 0.6; //JOYSTICK
+    public static final double MAX_VISION_SPEED = 0.5; //JOYSTICK
 
-    public static final double TRANSLATION_TOLERANCE = 0.01; //METERS
+    public static final double TRANSLATION_TOLERANCE = 0.015; //METERS
     public static final double ROTATION_TOLERANCE = 1; //DEGREES?
+    public static final double TOLERANCE_DEBOUNCE_SECONDS = .01; 
   }
 }

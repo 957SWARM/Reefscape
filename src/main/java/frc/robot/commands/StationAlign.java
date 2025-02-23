@@ -5,6 +5,7 @@ import java.util.List;
 import edu.wpi.first.epilogue.Logged;
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.controller.PIDController;
+import edu.wpi.first.math.filter.Debouncer;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Pose3d;
 import edu.wpi.first.math.geometry.Transform2d;
@@ -33,10 +34,10 @@ public class StationAlign {
         VisionConstants.ROTATION_D
     );
 
-    
-
     Pose3d currentPose;
     Pose3d nearestStationPose;
+
+    private final Debouncer toleranceDebouncer = new Debouncer(VisionConstants.TOLERANCE_DEBOUNCE_SECONDS);
 
     public StationAlign(){}
     
@@ -152,8 +153,7 @@ public class StationAlign {
         && Math.abs(getYDiff()) <= VisionConstants.TRANSLATION_TOLERANCE
         && Math.abs(getRotDiff()) <= VisionConstants.ROTATION_TOLERANCE;
 
-        //return aligned;
-        return false;
+        return toleranceDebouncer.calculate(aligned);
     }
 
     //DEBUGGING LOGGING FUNCTIONS
