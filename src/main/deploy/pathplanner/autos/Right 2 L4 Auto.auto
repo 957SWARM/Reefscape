@@ -33,12 +33,6 @@
                 }
               },
               {
-                "type": "wait",
-                "data": {
-                  "waitTime": 0.75
-                }
-              },
-              {
                 "type": "named",
                 "data": {
                   "name": "Score"
@@ -47,19 +41,13 @@
               {
                 "type": "wait",
                 "data": {
-                  "waitTime": 0.5
+                  "waitTime": 0.35
                 }
               },
               {
                 "type": "named",
                 "data": {
                   "name": "Stow"
-                }
-              },
-              {
-                "type": "wait",
-                "data": {
-                  "waitTime": 0.5
                 }
               }
             ]
@@ -86,12 +74,6 @@
                 "data": {
                   "name": "Intake"
                 }
-              },
-              {
-                "type": "wait",
-                "data": {
-                  "waitTime": 1.0
-                }
               }
             ]
           }
@@ -100,12 +82,6 @@
           "type": "sequential",
           "data": {
             "commands": [
-              {
-                "type": "named",
-                "data": {
-                  "name": "Stow"
-                }
-              },
               {
                 "type": "path",
                 "data": {
@@ -125,12 +101,6 @@
                 }
               },
               {
-                "type": "wait",
-                "data": {
-                  "waitTime": 0.75
-                }
-              },
-              {
                 "type": "named",
                 "data": {
                   "name": "Score"
@@ -139,7 +109,7 @@
               {
                 "type": "wait",
                 "data": {
-                  "waitTime": 0.5
+                  "waitTime": 0.35
                 }
               },
               {
