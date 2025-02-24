@@ -93,7 +93,32 @@ public class LEDStripPatterns {
                 led);
     }
 
-    // TODO: Create new command with single chasing pixel
+    // TODO: Test this command
+    public Command chasingSinglePatternCommand(int start, int length, double frameTime, boolean isInverted, int r, int g, int b) {
+        return Commands.run(
+                () -> {
+                    int currentFrame = frame;
+                    if (isInverted) currentFrame = length - currentFrame;
+                    
+                    for (int i = start; i < start + length + 1; i++) {
+                        if ((i - 1) == currentFrame % length) {
+                            getBlankPatternCommand(start, length);
+                            led.setPixel(i, r, g, b);
+                        }
+                    }    
+
+                    if (frameTime <= timer.get()) {
+                        timer.reset();
+                        if (frame == length) {
+                            frame = 0;
+                        } else {
+                            frame++;
+                        }
+                    }
+                },
+                led);
+    }
+
 
     public Command chasingAlernatingColorAnimation(
         int start, int length, 
