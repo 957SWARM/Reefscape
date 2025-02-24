@@ -51,7 +51,7 @@ public class Sequencing {
         .alongWith(
             new WaitCommand(SequencingConstants.L1_WRIST_DELAY)
             .andThen(wrist.toL1())
-            .andThen(new WaitUntilCommand(() -> wrist.atSetpoint()))
+            .andThen(new WaitUntilCommand(() -> wrist.atSetpoint() && elevator.atSetpoint()))
             .andThen(intake.ejectCommand(IntakeConstants.EJECT_SPEED))
             .andThen(new WaitUntilCommand(() -> !intake.checkToF()))
             .andThen(new WaitCommand(SequencingConstants.STOW_DELAY)
@@ -66,7 +66,7 @@ public class Sequencing {
         .alongWith(
             new WaitCommand(SequencingConstants.L2_WRIST_DELAY)
             .andThen(wrist.toL2())
-            .andThen(new WaitUntilCommand(() -> wrist.atSetpoint()))
+            .andThen(new WaitUntilCommand(() -> wrist.atSetpoint() && elevator.atSetpoint()))
             .andThen(intake.ejectCommand(IntakeConstants.EJECT_SPEED))
             .andThen(new WaitUntilCommand(() -> !intake.checkToF()))
             .andThen(new WaitCommand(SequencingConstants.STOW_DELAY)
@@ -81,7 +81,7 @@ public class Sequencing {
         .alongWith(
             new WaitCommand(SequencingConstants.L3_WRIST_DELAY)
             .andThen(wrist.toL3())
-            .andThen(new WaitUntilCommand(() -> wrist.atSetpoint()))
+            .andThen(new WaitUntilCommand(() -> wrist.atSetpoint() && elevator.atSetpoint()))
             .andThen(intake.ejectCommand(IntakeConstants.EJECT_SPEED))
             .andThen(new WaitUntilCommand(() -> !intake.checkToF()))
             .andThen(new WaitCommand(SequencingConstants.STOW_DELAY)
@@ -96,7 +96,7 @@ public class Sequencing {
         .alongWith(
             new WaitCommand(SequencingConstants.L4_WRIST_DELAY)
             .andThen(wrist.toL4())
-            .andThen(new WaitUntilCommand(() -> wrist.atSetpoint()))
+            .andThen(new WaitUntilCommand(() -> wrist.atSetpoint() && elevator.atSetpoint()))
             .andThen(intake.ejectCommand(IntakeConstants.EJECT_SPEED))
             .andThen(new WaitUntilCommand(() -> !intake.checkToF()))
             .andThen(new WaitCommand(SequencingConstants.STOW_DELAY)

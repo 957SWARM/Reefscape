@@ -145,6 +145,8 @@ public final class Constants {
     public static final double MIN_HEIGHT = 0;
     public static final int CURRENT_LIMIT = 30;
 
+    public static final double SETPOINT_TOLERANCE = 0.005;
+
   }
 
   // angles measured in rotations. 0 defined as straight out from robot
