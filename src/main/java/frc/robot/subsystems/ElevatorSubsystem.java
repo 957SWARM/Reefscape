@@ -89,8 +89,7 @@ public class ElevatorSubsystem extends SubsystemBase{
     }
 
     public boolean atSetpoint(){
-        // targetSetpoint multiplied by 2 to convert carriage height to end effector height
-        return Math.abs(getHeight() - targetSetpoint * 2) < ElevatorConstants.SETPOINT_TOLERANCE;
+        return Math.abs(getPosition() - targetSetpoint) < ElevatorConstants.SETPOINT_TOLERANCE;
     }
 
     private void assignSetpoint(double assignSetpoint){

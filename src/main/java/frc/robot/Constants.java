@@ -145,7 +145,8 @@ public final class Constants {
     public static final double MIN_HEIGHT = 0;
     public static final int CURRENT_LIMIT = 30;
 
-    public static final double SETPOINT_TOLERANCE = 0.01;
+    // tolerance of end effector is twice this value (meters)
+    public static final double SETPOINT_TOLERANCE = 0.005;
 
   }
 
