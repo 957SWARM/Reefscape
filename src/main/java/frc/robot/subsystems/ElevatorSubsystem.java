@@ -93,6 +93,7 @@ public class ElevatorSubsystem extends SubsystemBase{
     }
 
     public boolean atSetpoint(){
+        // targetSetpoint added instead of subtracted because targetSetpoint gets inverted later
         return Math.abs(getCarriageHeight() + targetSetpoint) < ElevatorConstants.SETPOINT_TOLERANCE;
     }
 

@@ -28,6 +28,7 @@ import frc.robot.Constants.WristConstants;
 import frc.robot.commands.LEDStripPatterns;
 import frc.robot.commands.ReefAlign;
 import frc.robot.commands.Sequencing;
+import frc.robot.commands.StationAlign;
 import frc.robot.input.DriverInput;
 import frc.robot.subsystems.ClimbSubsystem;
 import frc.robot.subsystems.ElevatorSubsystem;
@@ -55,6 +56,7 @@ public class RobotContainer {
 
   // Command classes
   final ReefAlign reefAlign = new ReefAlign();
+  final StationAlign stationAlign = new StationAlign();
   final LEDStripPatterns led = new LEDStripPatterns();
 
   // Controllers
@@ -95,9 +97,9 @@ public class RobotContainer {
       .andThen(Commands.run(() -> m_driver.setRumble(false))));
 
     // stops intake when coral leaves
-    Trigger coralLeft = new Trigger(() -> !m_intake.checkToF() && m_intake.getVoltage() == IntakeConstants.EJECT_SPEED
-    && !DriverStation.isAutonomous());
-    coralLeft.onTrue(new WaitCommand(.5).andThen(m_intake.stopIntakeCommand()));
+    // Trigger coralLeft = new Trigger(() -> !m_intake.checkToF() && m_intake.getVoltage() == IntakeConstants.EJECT_SPEED
+    // && !DriverStation.isAutonomous());
+    // coralLeft.onTrue(new WaitCommand(.5).andThen(m_intake.stopIntakeCommand()));
 
     // automatically sends robot to stow after intaking
     Trigger coralIn = new Trigger(
@@ -146,19 +148,19 @@ public class RobotContainer {
 
     // sends elevator and wrist to L1 position
     new Trigger(() -> m_driver.L1())
-      .onTrue(Sequencing.L1(m_elevator, m_wrist, m_intake));
+      .onTrue(Sequencing.L1Fancy(m_elevator, m_wrist, m_intake));
 
     // sends elevator and wrist to L2 position
     new Trigger(() -> m_driver.L2())
-      .onTrue(Sequencing.L2(m_elevator, m_wrist, m_intake));
+      .onTrue(Sequencing.L2Fancy(m_elevator, m_wrist, m_intake));
 
     // sends elevator and wrist to L3 position
     new Trigger(() -> m_driver.L3())
-      .onTrue(Sequencing.L3(m_elevator, m_wrist, m_intake));
+      .onTrue(Sequencing.L3Fancy(m_elevator, m_wrist, m_intake));
 
     // sends elevator and wrist to L4 position
     new Trigger(() -> m_driver.L4())
-      .onTrue(Sequencing.L4(m_elevator, m_wrist, m_intake));
+      .onTrue(Sequencing.L4Fancy(m_elevator, m_wrist, m_intake));
 
     // while holding trigger, runs intake backwards for scoring
     new Trigger(() -> m_driver.score())
@@ -168,9 +170,12 @@ public class RobotContainer {
     new Trigger(() -> m_driver.stow())
       .onTrue(Sequencing.stow(m_elevator, m_wrist, m_intake));
 
-    //temporary vision align testing
-    new Trigger(() -> m_driver.tempVision())
+    // dynamic vision align
+    new Trigger(() -> m_driver.visionAlign() && reefAlign.checkReefTag())
     .whileTrue(reefAlign.alignNearestReef(m_robotDrive));
+
+    new Trigger(() -> m_driver.visionAlign() && stationAlign.checkStationTag())
+    .whileTrue(stationAlign.alignNearestStation(m_robotDrive).andThen(Sequencing.intake(m_elevator, m_wrist, m_intake)));
     
     // climbs while up on d-pad is held
     new Trigger(() -> m_driver.deployClimb())
