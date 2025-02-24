@@ -51,12 +51,11 @@ public class Sequencing {
 
     // full automatic L1 sequence
     public static Command L1Fancy(ElevatorSubsystem elevator, WristSubsystem wrist, IntakeSubsystem intake){
-        return L1(elevator, wrist, intake)
-            .andThen(intake.ejectCommand(IntakeConstants.EJECT_SPEED))
-            .andThen(new WaitUntilCommand(() -> !intake.checkToF()))
-            .andThen(new WaitCommand(SequencingConstants.STOW_DELAY)
-            .andThen(intake.stopIntakeCommand()))
-            .andThen(stow(elevator, wrist, intake));
+        return L1(elevator, wrist, intake)  // brings elevator and wrist to L1
+            .andThen(intake.ejectCommand(IntakeConstants.EJECT_SPEED))  // scores coral
+            .andThen(new WaitUntilCommand(() -> !intake.checkToF()))    // waits until coral leaves intake
+            .andThen(new WaitCommand(SequencingConstants.STOW_DELAY))   // waits a bit to make sure coral is out of intake
+            .andThen(stow(elevator, wrist, intake));    // stows elevator and wrist
     }
 
     // full automatic L2 sequence
@@ -64,8 +63,7 @@ public class Sequencing {
         return L2(elevator, wrist, intake)
             .andThen(intake.ejectCommand(IntakeConstants.EJECT_SPEED))
             .andThen(new WaitUntilCommand(() -> !intake.checkToF()))
-            .andThen(new WaitCommand(SequencingConstants.STOW_DELAY)
-            .andThen(intake.stopIntakeCommand()))
+            .andThen(new WaitCommand(SequencingConstants.STOW_DELAY))
             .andThen(stow(elevator, wrist, intake));
     }
 
@@ -74,8 +72,7 @@ public class Sequencing {
         return L3(elevator, wrist, intake)
             .andThen(intake.ejectCommand(IntakeConstants.EJECT_SPEED))
             .andThen(new WaitUntilCommand(() -> !intake.checkToF()))
-            .andThen(new WaitCommand(SequencingConstants.STOW_DELAY)
-            .andThen(intake.stopIntakeCommand()))
+            .andThen(new WaitCommand(SequencingConstants.STOW_DELAY))
             .andThen(stow(elevator, wrist, intake));
     }
 
@@ -84,8 +81,7 @@ public class Sequencing {
         return L4(elevator, wrist, intake)
             .andThen(intake.ejectCommand(IntakeConstants.EJECT_SPEED))
             .andThen(new WaitUntilCommand(() -> !intake.checkToF()))
-            .andThen(new WaitCommand(SequencingConstants.STOW_DELAY)
-            .andThen(intake.stopIntakeCommand()))
+            .andThen(new WaitCommand(SequencingConstants.STOW_DELAY))
             .andThen(stow(elevator, wrist, intake));
     }
 
