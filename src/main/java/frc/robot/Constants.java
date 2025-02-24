@@ -267,7 +267,7 @@ public final class Constants {
 
     public static final double TRANSLATION_P = .55;
     public static final double TRANSLATION_I = 0;
-    public static final double TRANSLATION_D = 
+    public static final double TRANSLATION_D = 0;
 
     public static final double ROTATION_P = 0.025;
     public static final double ROTATION_I = 0;
