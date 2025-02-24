@@ -80,6 +80,10 @@ public class ElevatorSubsystem extends SubsystemBase{
         return kraken.getPosition().getValueAsDouble() * ElevatorConstants.RotationsToMeters * 2;
     }
 
+    public double getCarriageHeight(){
+        return kraken.getPosition().getValueAsDouble() * ElevatorConstants.RotationsToMeters;
+    }
+
     public double getPosition(){
         return kraken.getPosition().getValueAsDouble();
     }
@@ -89,7 +93,7 @@ public class ElevatorSubsystem extends SubsystemBase{
     }
 
     public boolean atSetpoint(){
-        return Math.abs(getPosition() - targetSetpoint) < ElevatorConstants.SETPOINT_TOLERANCE;
+        return Math.abs(getCarriageHeight() - targetSetpoint) < ElevatorConstants.SETPOINT_TOLERANCE;
     }
 
     private void assignSetpoint(double assignSetpoint){
