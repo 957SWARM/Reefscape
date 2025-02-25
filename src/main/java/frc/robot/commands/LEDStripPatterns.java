@@ -34,6 +34,15 @@ public class LEDStripPatterns {
         }
     }
 
+    public boolean isSelectedColor(int selectedPixel, int r, int g, int b){
+        boolean isRed = r == led.getRed(selectedPixel);
+        boolean isGreen = g == led.getGreen(selectedPixel);
+        boolean isBlue = b == led.getGreen(selectedPixel);
+
+        if (isRed && isGreen && isBlue) return true;
+        return false;
+    }
+
     public Command getBlankPatternCommand(int start, int length) {
         return Commands.run(
                 () -> {
