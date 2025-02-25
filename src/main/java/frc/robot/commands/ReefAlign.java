@@ -17,18 +17,18 @@ import frc.robot.subsystems.Drive.DriveSubsystem;
 public class ReefAlign {
 
     PIDController xPID = new PIDController(
-        VisionConstants.TRANSLATION_P, 
-        VisionConstants.TRANSLATION_I, 
-        VisionConstants.TRANSLATION_D);
+        VisionConstants.REEF_TRANSLATION_P, 
+        VisionConstants.REEF_TRANSLATION_I, 
+        VisionConstants.REEF_TRANSLATION_D);
     PIDController yPID = new PIDController(
-        VisionConstants.TRANSLATION_P, 
-        VisionConstants.TRANSLATION_I, 
-        VisionConstants.TRANSLATION_D
+        VisionConstants.REEF_TRANSLATION_P, 
+        VisionConstants.REEF_TRANSLATION_I, 
+        VisionConstants.REEF_TRANSLATION_D
     );
     PIDController rotPID = new PIDController(
-        VisionConstants.ROTATION_P, 
-        VisionConstants.ROTATION_I, 
-        VisionConstants.ROTATION_D
+        VisionConstants.REEF_ROTATION_P, 
+        VisionConstants.REEF_ROTATION_I, 
+        VisionConstants.REEF_ROTATION_D
     );
 
     
