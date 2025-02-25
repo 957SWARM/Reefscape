@@ -116,14 +116,14 @@ public final class Constants {
     public static final int kS = 0; // Add output to overcome static friction
     public static final int kV = 0; // A velocity target of 1 rps results in output
     public static final int kA = 0; // An acceleration of 1 rps/s requires output
-    public static final int kP = 4; // A position error of 0.2 rotations results in output
+    public static final double kP = 1.65; // A position error of 0.2 rotations results in output
     public static final int kI = 0; // No output for integrated error
     public static final int kD = 0; // A velocity error of 1 rps results in output
-    public static final int kG = 0; // A velocity error of 1 rps results in output
+    public static final double kG = -2; // A velocity error of 1 rps results in output
 
     public static final int MOTIONMAGIC_VELOCITY = 100; // Target cruise velocity of 80 rps
     public static final int MOTIONMAGIC_ACCELERATION = 480; // Target acceleration of 160 rps/s (0.5 seconds)
-    public static final int MOTIONMAGIC_JERK = 1200; // Target jerk of 1600 rps/s/s (0.1 seconds) Robin H.
+    public static final int MOTIONMAGIC_JERK = 2400; // Target jerk of 1600 rps/s/s (0.1 seconds) Robin H.
 
     // measurements in meters the carriage rises. (end effector raises twice these values)
     public static final double POSITION_GROUND = 0;
@@ -137,7 +137,7 @@ public final class Constants {
     public static final double SETPOINT_INCREMENT = .01; // how much the setpoint changes per robot loop in manual control
 
     // CONVERSIONS
-    public static final double metersToRotations = 178.95;
+    public static final double metersToRotations = 107.37;
     public static final double RotationsToMeters = 1.0 / metersToRotations;
 
     // MAXIMUMs/MINIMUMs (meters)
@@ -254,9 +254,20 @@ public final class Constants {
       (double)22
     );
 
-    public static final String REEF_LIMELIGHT_NAME = "limelight";
+    public static final Pose3d LEFT_STATION = new Pose3d(new Translation3d(-.6, 0, -.6), new Rotation3d());
+    public static final Pose3d MID_STATION = new Pose3d(new Translation3d(0, 0, -.6), new Rotation3d());
+    public static final List<Pose3d> STATION_POSES = Arrays.asList(LEFT_STATION, MID_STATION);
+    public static final List<Double> STATION_TAG_IDS = Arrays.asList(
+      (double)1, 
+      (double)2, 
+      (double)12, 
+      (double)13 
+    );
 
-    public static final double TRANSLATION_P = 2;
+    public static final String REEF_LIMELIGHT_NAME = "limelight-reef";
+    public static final String STATION_LIMELIGHT_NAME = "limelight-station";
+
+    public static final double TRANSLATION_P = .55;
     public static final double TRANSLATION_I = 0;
     public static final double TRANSLATION_D = 0;
 
@@ -264,9 +275,10 @@ public final class Constants {
     public static final double ROTATION_I = 0;
     public static final double ROTATION_D = 0;
 
-    public static final double MAX_VISION_SPEED = 0.1; //JOYSTICK
+    public static final double MAX_VISION_SPEED = 0.5; //JOYSTICK
 
-    public static final double TRANSLATION_TOLERANCE = 0.01; //METERS
+    public static final double TRANSLATION_TOLERANCE = 0.015; //METERS
     public static final double ROTATION_TOLERANCE = 1; //DEGREES?
+    public static final double TOLERANCE_DEBOUNCE_SECONDS = .01; 
   }
 }

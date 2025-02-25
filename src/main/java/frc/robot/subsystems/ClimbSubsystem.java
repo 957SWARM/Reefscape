@@ -5,6 +5,7 @@ import com.revrobotics.spark.SparkBase.ResetMode;
 import com.revrobotics.spark.SparkLowLevel.MotorType;
 import com.revrobotics.spark.SparkMax;
 import com.revrobotics.spark.config.SparkMaxConfig;
+import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
 
 import edu.wpi.first.epilogue.Logged;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -24,6 +25,7 @@ public class ClimbSubsystem extends SubsystemBase{
 
         // Current Limit
         motorConfig.smartCurrentLimit(ClimberConstants.CURRENT_LIMIT);
+        motorConfig.idleMode(IdleMode.kBrake);
         neo.configure(motorConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
 
         appliedVoltage = 0;

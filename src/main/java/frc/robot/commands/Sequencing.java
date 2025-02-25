@@ -6,6 +6,7 @@ import frc.robot.Constants.IntakeConstants;
 import frc.robot.subsystems.ElevatorSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.subsystems.WristSubsystem;
+import frc.robot.subsystems.Drive.DriveSubsystem;
 
 public class Sequencing {
 
@@ -18,25 +19,25 @@ public class Sequencing {
 
     public static Command L1(ElevatorSubsystem elevator, WristSubsystem wrist, IntakeSubsystem intake){
         return elevator.toL1()
-        .alongWith(new WaitCommand(.5).andThen(wrist.toL1()))
+        .alongWith(new WaitCommand(.4).andThen(wrist.toL1()))
         .alongWith(intake.stopIntakeCommand());
     }
 
     public static Command L2(ElevatorSubsystem elevator, WristSubsystem wrist, IntakeSubsystem intake){
         return elevator.toL2()
-        .alongWith(new WaitCommand(.5).andThen(wrist.toL2()))
+        .alongWith(new WaitCommand(0.1).andThen(wrist.toL2()))
         .alongWith(intake.stopIntakeCommand());
     }
 
     public static Command L3(ElevatorSubsystem elevator, WristSubsystem wrist, IntakeSubsystem intake){
         return elevator.toL3()
-        .alongWith(new WaitCommand(.8).andThen(wrist.toL3()))
+        .alongWith(new WaitCommand(.3).andThen(wrist.toL3()))
         .alongWith(intake.stopIntakeCommand());
     }
 
     public static Command L4(ElevatorSubsystem elevator, WristSubsystem wrist, IntakeSubsystem intake){
         return elevator.toL4()
-        .alongWith(new WaitCommand(1.5).andThen(wrist.toL4()))
+        .alongWith(new WaitCommand(.8).andThen(wrist.toL4()))
         .alongWith(intake.stopIntakeCommand());
     }
 
