@@ -97,7 +97,7 @@ public class RobotContainer {
     // stops intake when coral leaves
     // Trigger coralLeft = new Trigger(() -> !m_intake.checkToF() && m_intake.getVoltage() == IntakeConstants.EJECT_SPEED
     // && !DriverStation.isAutonomous());
-    // coralLeft.onTrue(new WaitCommand(.5).andThen(m_intake.stopIntakeCommand()));
+    // coralLeft.onTrue(new WaitCommand(.25).andThen(m_intake.stopIntakeCommand()).andThen(Sequencing.stow(m_elevator, m_wrist, m_intake)));
 
     // automatically sends robot to stow after intaking
     Trigger coralIn = new Trigger(
@@ -172,7 +172,9 @@ public class RobotContainer {
     .whileTrue(reefAlign.alignNearestReef(m_robotDrive));
 
     new Trigger(() -> m_driver.visionAlign() && stationAlign.checkStationTag())
-    .whileTrue(stationAlign.alignNearestStation(m_robotDrive).andThen(Sequencing.intake(m_elevator, m_wrist, m_intake)));
+    .whileTrue(stationAlign.alignNearestStation(m_robotDrive)
+    .andThen(Sequencing.intake(m_elevator, m_wrist, m_intake)
+    .alongWith(Commands.run(() -> m_robotDrive.setX()))));
     
     // climbs while up on d-pad is held
     new Trigger(() -> m_driver.deployClimb())
