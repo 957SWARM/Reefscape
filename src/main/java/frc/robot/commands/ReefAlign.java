@@ -155,8 +155,8 @@ public class ReefAlign {
     }
 
     public boolean checkAligned(){
-        boolean aligned = Math.abs(getXDiff()) <= VisionConstants.TRANSLATION_TOLERANCE
-        && Math.abs(getYDiff()) <= VisionConstants.TRANSLATION_TOLERANCE
+        boolean aligned = Math.abs(getXDiff()) <= VisionConstants.REEF_TRANSLATION_TOLERANCE
+        && Math.abs(getYDiff()) <= VisionConstants.REEF_TRANSLATION_TOLERANCE
         && Math.abs(getRotDiff()) <= VisionConstants.ROTATION_TOLERANCE;
 
         return aligned;
