@@ -28,11 +28,17 @@ public class LEDStripPatterns {
         CommandScheduler.getInstance().setDefaultCommand(led, command);
     }
 
+    public void blankPattern(int start, int length){
+        for (int i = start; i < start + length; i++) {
+            led.setPixel(i, 0, 0, 0);
+        }
+    }
+
     public Command getBlankPatternCommand(int start, int length) {
         return Commands.run(
                 () -> {
                     for (int i = start; i < start + length; i++) {
-                        led.setPixel(i - 1, 0, 0, 0);
+                        led.setPixel(i, 0, 0, 0);
                     }
                 },
                 led);
@@ -43,7 +49,7 @@ public class LEDStripPatterns {
                 () -> {
                     // Sets LEDs to a specific color constantly
                     for (int i = start; i < start + length; i++) {
-                        led.setPixel(i - 1, r, g, b);
+                        led.setPixel(i, r, g, b);
                     }
                 },
                 led);
@@ -56,11 +62,11 @@ public class LEDStripPatterns {
                     boolean rslState = RobotController.getRSLState();
                     if (rslState) {
                         for (int i = start; i < start + length; i++) {
-                            led.setPixel(i - 1, r, g, b);
+                            led.setPixel(i, r, g, b);
                          }
                         } else {
                             for (int i = start; i < start + length; i++) {
-                                led.setPixel(i - 1, 0, 0, 0);
+                                led.setPixel(i, 0, 0, 0);
                             }
                         }
                 },
@@ -74,7 +80,7 @@ public class LEDStripPatterns {
                     if (isInverted) currentFrame = 2 - currentFrame;
 
                     for (int i = start; i < start + length; i++) {
-                        if ((i - 1) % 3 == currentFrame) {
+                        if (i % 3 == currentFrame) {
                             led.setPixel(i, r, g, b);
                         } else {
                             led.setPixel(i, 0, 0, 0);
@@ -93,7 +99,7 @@ public class LEDStripPatterns {
                 led);
     }
 
-    // TODO: Test this command
+    // Fast command; run with 0.0333 frameTime
     public Command chasingSinglePatternCommand(int start, int length, double frameTime, boolean isInverted, int r, int g, int b) {
         return Commands.run(
                 () -> {
@@ -101,8 +107,8 @@ public class LEDStripPatterns {
                     if (isInverted) currentFrame = length - currentFrame;
                     
                     for (int i = start; i < start + length + 1; i++) {
-                        if ((i - 1) == currentFrame % length) {
-                            getBlankPatternCommand(start, length);
+                        if (i == currentFrame % length) {
+                            blankPattern(start, length);
                             led.setPixel(i, r, g, b);
                         }
                     }    
@@ -119,7 +125,7 @@ public class LEDStripPatterns {
                 led);
     }
 
-
+    // TODO: Inversion doesn't look like it works
     public Command chasingAlernatingColorAnimation(
         int start, int length, 
         int r1, int g1, int b1, int r2, int g2, int b2, double frameTime, boolean isInverted) {
@@ -129,7 +135,7 @@ public class LEDStripPatterns {
                     if (isInverted) currentFrame = 2 - currentFrame;
 
                     for (int i = start; i < start + length; i++) {
-                        if ((i - 1) % 3 == currentFrame) {
+                        if (i % 3 == currentFrame) {
                             led.setPixel(i, r1, g1, b1);
                         } else {
                             led.setPixel(i, r2, g2, b2);
@@ -155,7 +161,7 @@ public class LEDStripPatterns {
                     if (isInverted) currentFrame = 2 - currentFrame;
 
                     for (int i = start; i < start + length; i++) {
-                        if ((i - 1) % 2 == currentFrame || (i - 1) % 3 == currentFrame) {
+                        if (i % 2 == currentFrame || i % 3 == currentFrame) {
                             led.setPixel(i, r, g, b);
                         } else {
                             led.setPixel(i, 0, 0, 0);
@@ -211,16 +217,17 @@ public class LEDStripPatterns {
                 led);
     }
 
+    // Fast command; run with 0.0333 frameTime 
     public Command fillThenEmptyCommand(int start, int length, double frameTime, boolean isInverted, int r, int g, int b) {
         return Commands.run(
                 () -> {
                     int currentFrame = frame;
-                    if (isInverted) currentFrame = 2 * length - currentFrame;
+                    if (isInverted) currentFrame = 2 * length - currentFrame; // TODO: Pixel 0 bugs out when interverted
                     boolean isFirstHalf;
                     
-                    for (int i = start; i < start + length + 1; i++) {
+                    for (int i = start; i < start + length; i++) {
                         isFirstHalf = currentFrame < (length);
-                        if ((i - 1) == currentFrame % length) {
+                        if (i == currentFrame % length) {
                             if (isFirstHalf){
                                 led.setPixel(i, r, g, b);
                             } else {
@@ -253,6 +260,10 @@ public class LEDStripPatterns {
 
     public Command chasingBlueCommand(int start, int length, double frameTime, boolean isInverted){
         return chasingPatternAnimation(start, length, frameTime, isInverted, 0, 5, 25);
+    }
+
+    public Command chasingSingleBlueCommand(int start, int length, double frameTime, boolean isInverted){
+        return chasingSinglePatternCommand(start, length, frameTime, isInverted, 0, 5, 25);
     }
 
     public Command fillEmptyBlueCommand(int start, int length, double frameTime, boolean isInverted){
@@ -301,7 +312,7 @@ public class LEDStripPatterns {
     }
 
     public Command fullGreenCommand(int start, int length) {
-        return constantColorAnimation(start, length, 0, LEDConstants.FULL_GREEN_RGB, 0);
+        return constantColorAnimation(start, length, 0, LEDConstants.FULL_GREEN_RGB, 10);
     }
 
     public Command blockGreenCommand(int start, int length, double frameTime, boolean isInverted) {

@@ -29,7 +29,7 @@ public class LED implements Subsystem {
 
     public void setPixel(int selectedPixel, int r, int g, int b) {
         if (selectedPixel < 0 || selectedPixel > totalPixels - 1) return;
-        ledBuffer.setRGB(selectedPixel - 1, r, g, b); // -1 to account for zero indexing
+        ledBuffer.setRGB(selectedPixel, r, g, b);
     }
 
     public int getRed(int selectedPixel) {
@@ -43,7 +43,6 @@ public class LED implements Subsystem {
     public int getBlue(int selectedPixel) {
         return ledBuffer.getBlue(selectedPixel);
     }
-
 
     @Override
     public void periodic() {

@@ -118,8 +118,12 @@ public class RobotContainer {
 
     //m_wrist.setDefaultCommand(m_wrist.toStow());
 
-    // led.scheduleDefaultCommand(led.blueWavesLightCommand(0, LEDConstants.TOTAL_PIXELS, 0.2, false));
-    led.scheduleDefaultCommand(led.fillThenEmptyCommand(0, LEDConstants.TOTAL_PIXELS, 0.0333 , false, 76, 234, 8));
+    // led.scheduleDefaultCommand(led.blueWavesLightCommand(0, LEDConstants.TOTAL_PIXELS, 0.1, true));
+    // led.scheduleDefaultCommand(led.chasingSingleBlueCommand(0, LEDConstants.TOTAL_PIXELS, 0.0333333, true));
+    led.scheduleDefaultCommand(led.fillEmptyBlueCommand(0, LEDConstants.TOTAL_PIXELS, 0.0333333, false));
+    // led.scheduleDefaultCommand(led.endGameCommand(0, LEDConstants.TOTAL_PIXELS, 0.1, false));
+    // led.scheduleDefaultCommand(led.fullBlueCommand(0, LEDConstants.TOTAL_PIXELS));
+    // led.scheduleDefaultCommand((led.blockGreenCommand(0, LEDConstants.TOTAL_PIXELS, 0.1, false))); (Bad pattern)
 
   }
 
