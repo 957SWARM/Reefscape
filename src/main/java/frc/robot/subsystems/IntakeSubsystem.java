@@ -13,7 +13,10 @@ import edu.wpi.first.math.filter.LinearFilter;
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import edu.wpi.first.wpilibj2.command.WaitCommand;
+import edu.wpi.first.wpilibj2.command.WaitUntilCommand;
 import frc.robot.Constants.IntakeConstants;
+import frc.robot.Constants.SequencingConstants;
 
 @Logged
 public class IntakeSubsystem extends SubsystemBase{
@@ -89,6 +92,7 @@ public class IntakeSubsystem extends SubsystemBase{
     public Command autoEject(double ejectSpeed){
         return runOnce(() -> {
             appliedVoltage = ejectSpeed;
-        });
+        }).andThen(new WaitUntilCommand(() -> !checkToF()))
+        .andThen(new WaitCommand(SequencingConstants.STOW_DELAY));
     }
 }

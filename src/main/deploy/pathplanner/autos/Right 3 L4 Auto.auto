@@ -17,7 +17,7 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "Right 2 L4.0"
+                  "pathName": "Right 3 L4.0"
                 }
               },
               {
@@ -54,7 +54,7 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "Right 2 L4.1"
+                  "pathName": "Right 3 L4.1"
                 }
               },
               {
@@ -79,7 +79,69 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "Right 2 L4.2"
+                  "pathName": "Right 3 L4.2"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "Reef Align"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "Go L4"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "Score"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "Stow"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "sequential",
+          "data": {
+            "commands": [
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "Right 3 L4.3"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "Station Align"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "Intake"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "sequential",
+          "data": {
+            "commands": [
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "Right 3 L4.4"
                 }
               },
               {

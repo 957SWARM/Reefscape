@@ -292,7 +292,7 @@ public final class Constants {
   }
 
   public static final class SequencingConstants {
-    public static final double STOW_DELAY = 0.25;
+    public static final double STOW_DELAY = 0.15;
     public static final double L1_WRIST_DELAY = .4;
     public static final double L2_WRIST_DELAY = .1;
     public static final double L3_WRIST_DELAY = .3;

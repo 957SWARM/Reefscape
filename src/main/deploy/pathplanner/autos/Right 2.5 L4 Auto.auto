@@ -17,7 +17,7 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "Right 2+1 L4.0"
+                  "pathName": "Right 2 L4.0"
                 }
               },
               {
@@ -33,33 +33,15 @@
                 }
               },
               {
-                "type": "wait",
-                "data": {
-                  "waitTime": 0.75
-                }
-              },
-              {
                 "type": "named",
                 "data": {
                   "name": "Score"
                 }
               },
               {
-                "type": "wait",
-                "data": {
-                  "waitTime": 0.5
-                }
-              },
-              {
                 "type": "named",
                 "data": {
                   "name": "Stow"
-                }
-              },
-              {
-                "type": "wait",
-                "data": {
-                  "waitTime": 0.5
                 }
               }
             ]
@@ -72,7 +54,7 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "Right 2+1 L4.1"
+                  "pathName": "Right 2 L4.1"
                 }
               },
               {
@@ -86,12 +68,6 @@
                 "data": {
                   "name": "Intake"
                 }
-              },
-              {
-                "type": "wait",
-                "data": {
-                  "waitTime": 1.0
-                }
               }
             ]
           }
@@ -101,15 +77,9 @@
           "data": {
             "commands": [
               {
-                "type": "named",
-                "data": {
-                  "name": "Stow"
-                }
-              },
-              {
                 "type": "path",
                 "data": {
-                  "pathName": "Right 2+1 L4.2"
+                  "pathName": "Right 2 L4.2"
                 }
               },
               {
@@ -125,21 +95,9 @@
                 }
               },
               {
-                "type": "wait",
-                "data": {
-                  "waitTime": 0.75
-                }
-              },
-              {
                 "type": "named",
                 "data": {
                   "name": "Score"
-                }
-              },
-              {
-                "type": "wait",
-                "data": {
-                  "waitTime": 0.5
                 }
               },
               {
@@ -158,7 +116,7 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "Right 2+1 L4.3"
+                  "pathName": "Right 2 L4.3"
                 }
               },
               {
@@ -171,12 +129,6 @@
                 "type": "named",
                 "data": {
                   "name": "Intake"
-                }
-              },
-              {
-                "type": "wait",
-                "data": {
-                  "waitTime": 1.0
                 }
               }
             ]

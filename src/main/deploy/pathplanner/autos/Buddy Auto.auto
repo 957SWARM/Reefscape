@@ -7,25 +7,31 @@
         {
           "type": "path",
           "data": {
-            "pathName": "Example Path"
-          }
-        },
-        {
-          "type": "wait",
-          "data": {
-            "waitTime": 2.0
-          }
-        },
-        {
-          "type": "path",
-          "data": {
-            "pathName": "Copy of Example Path"
+            "pathName": "Buddy Auto"
           }
         },
         {
           "type": "named",
           "data": {
-            "name": "Score L1"
+            "name": "Reef Align"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "Go L4"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "Score"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "Stow"
           }
         }
       ]
@@ -33,5 +39,5 @@
   },
   "resetOdom": true,
   "folder": null,
-  "choreoAuto": false
+  "choreoAuto": true
 }

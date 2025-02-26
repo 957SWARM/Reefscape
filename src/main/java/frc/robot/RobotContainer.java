@@ -69,7 +69,7 @@ public class RobotContainer {
 
     NamedCommands.registerCommand("Go L1", Sequencing.L1(m_elevator, m_wrist, m_intake));
     NamedCommands.registerCommand("Stow", Sequencing.stow(m_elevator, m_wrist, m_intake));
-    NamedCommands.registerCommand("Score", m_intake.autoEject(IntakeConstants.EJECT_SPEED).withTimeout(.75));
+    NamedCommands.registerCommand("Score", m_intake.autoEject(IntakeConstants.EJECT_SPEED));
     NamedCommands.registerCommand("Reef Align", reefAlign.alignNearestReef(m_robotDrive));
     NamedCommands.registerCommand("Go L4", Sequencing.L4(m_elevator, m_wrist, m_intake));
     NamedCommands.registerCommand("Station Align", stationAlign.alignNearestStation(m_robotDrive));
@@ -83,6 +83,9 @@ public class RobotContainer {
     autoChooser.addOption("Near L4", new PathPlannerAuto("Near L4 Auto"));
     autoChooser.addOption("Right 2 L4", new PathPlannerAuto("Right 2 L4 Auto"));
     autoChooser.addOption("Left 2 L4", new PathPlannerAuto("Left 2 L4 Auto"));
+    autoChooser.addOption("Right 2.5 L4", new PathPlannerAuto("Right 2.5 L4 Auto"));
+    autoChooser.addOption("Right 3 L4 Auto", new PathPlannerAuto("Right 3 L4 Auto"));
+    autoChooser.addOption("Buddy Auto", new PathPlannerAuto("Buddy Auto"));
 
     //configureNamedCommands();
 
@@ -148,19 +151,19 @@ public class RobotContainer {
 
     // sends elevator and wrist to L1 position
     new Trigger(() -> m_driver.L1())
-      .onTrue(Sequencing.L1Fancy(m_elevator, m_wrist, m_intake));
+      .onTrue(Sequencing.L1(m_elevator, m_wrist, m_intake));
 
     // sends elevator and wrist to L2 position
     new Trigger(() -> m_driver.L2())
-      .onTrue(Sequencing.L2Fancy(m_elevator, m_wrist, m_intake));
+      .onTrue(Sequencing.L2(m_elevator, m_wrist, m_intake));
 
     // sends elevator and wrist to L3 position
     new Trigger(() -> m_driver.L3())
-      .onTrue(Sequencing.L3Fancy(m_elevator, m_wrist, m_intake));
+      .onTrue(Sequencing.L3(m_elevator, m_wrist, m_intake));
 
     // sends elevator and wrist to L4 position
     new Trigger(() -> m_driver.L4())
-      .onTrue(Sequencing.L4Fancy(m_elevator, m_wrist, m_intake));
+      .onTrue(Sequencing.L4(m_elevator, m_wrist, m_intake));
 
     // while holding trigger, runs intake backwards for scoring
     new Trigger(() -> m_driver.score())
