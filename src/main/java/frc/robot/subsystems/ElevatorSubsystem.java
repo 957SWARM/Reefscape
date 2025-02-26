@@ -154,4 +154,16 @@ public class ElevatorSubsystem extends SubsystemBase{
         });
     }
 
+    public Command toLowRemove(double increment){
+        return Commands.runOnce(() -> {
+            assignSetpoint(ElevatorConstants.POSITION_LOW_REMOVE + increment);
+        });
+    }
+
+    public Command toHighRemove(double increment){
+        return Commands.runOnce(() -> {
+            assignSetpoint(ElevatorConstants.POSITION_HIGH_REMOVE + increment);
+        });
+    }
+
 }

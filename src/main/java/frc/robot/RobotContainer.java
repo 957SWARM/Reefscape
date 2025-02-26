@@ -191,6 +191,14 @@ public class RobotContainer {
     new Trigger(() -> m_driver.retractClimb())
       .whileTrue(m_climber.retract())
       .onFalse(m_climber.stopCommand());
+
+    new Trigger(() -> m_driver.lowRemove())
+      .whileTrue(Sequencing.removeLow(m_elevator, m_wrist, m_robotDrive))
+      .onFalse(Sequencing.stow(m_elevator, m_wrist, m_intake));
+
+      new Trigger(() -> m_driver.highRemove())
+      .whileTrue(Sequencing.removeHigh(m_elevator, m_wrist, m_robotDrive))
+      .onFalse(Sequencing.stow(m_elevator, m_wrist, m_intake));
   }
 
   public void configureNamedCommands(){

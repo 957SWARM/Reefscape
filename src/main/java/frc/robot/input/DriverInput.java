@@ -2,6 +2,7 @@ package frc.robot.input;
 
 import edu.wpi.first.math.filter.SlewRateLimiter;
 import edu.wpi.first.wpilibj.GenericHID.RumbleType;
+import edu.wpi.first.wpilibj.event.EventLoop;
 import edu.wpi.first.wpilibj.XboxController;
 import frc.robot.Constants.IOConstants;
 
@@ -78,6 +79,14 @@ public class DriverInput {
 
     public boolean visionAlign(){
         return controller.getRightBumperButton();
+    }
+
+    public boolean lowRemove(){
+        return controller.getPOV() == 270;
+    }
+
+    public boolean highRemove(){
+        return controller.getPOV() == 90;
     }
 
 

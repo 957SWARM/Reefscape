@@ -1,8 +1,10 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 import edu.wpi.first.wpilibj2.command.WaitUntilCommand;
+import frc.robot.Constants.ElevatorConstants;
 import frc.robot.Constants.IntakeConstants;
 import frc.robot.Constants.SequencingConstants;
 import frc.robot.subsystems.ElevatorSubsystem;
@@ -100,5 +102,29 @@ public class Sequencing {
         .alongWith(wrist.toStow())
         .alongWith(intake.stopIntakeCommand())
         .andThen(new WaitUntilCommand(() -> elevator.atSetpoint() && wrist.atSetpoint()));
+    }
+
+    public static Command removeLow(ElevatorSubsystem elevator, WristSubsystem wrist, DriveSubsystem drive){
+        return elevator.toLowRemove(0)
+        .alongWith(wrist.toL1())
+        .andThen(new WaitCommand(0.5))
+        .andThen(wrist.toIntake())
+        .alongWith(elevator.toLowRemove(ElevatorConstants.REMOVAL_INCREMENT))
+        .andThen(Commands.run(() -> drive.drive(-0.1, 0, 0, false, 0)))
+        .withTimeout(0.5)
+        .andThen(wrist.toStow())
+        .alongWith(elevator.toStow());
+    }
+
+    public static Command removeHigh(ElevatorSubsystem elevator, WristSubsystem wrist, DriveSubsystem drive){
+        return elevator.toHighRemove(0)
+        .alongWith(wrist.toL1())
+        .andThen(new WaitCommand(0.5))
+        .andThen(wrist.toIntake())
+        .alongWith(elevator.toLowRemove(ElevatorConstants.REMOVAL_INCREMENT))
+        .andThen(Commands.run(() -> drive.drive(-0.1, 0, 0, false, 0)))
+        .withTimeout(0.5)
+        .andThen(wrist.toStow())
+        .alongWith(elevator.toStow());
     }
 }
