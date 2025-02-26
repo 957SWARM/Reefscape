@@ -28,19 +28,37 @@ public class LEDStripPatterns {
         CommandScheduler.getInstance().setDefaultCommand(led, command);
     }
 
+    public boolean isSelectedColor(int selectedPixel, int r, int g, int b){
+        boolean isRed = (led.getRed(selectedPixel) == r);
+        boolean isGreen = (led.getGreen(selectedPixel) == g);
+        boolean isBlue = (led.getGreen(selectedPixel) == b);
+
+        if (isRed && isGreen && isBlue) return true;
+        return false;
+    }
+
+    public boolean isBlank(int selectedPixel){
+        boolean isRedEmpty = (led.getRed(selectedPixel) == 0);
+        boolean isGreenEmpty = (led.getGreen(selectedPixel) == 0);
+        boolean isBlueEmpty = (led.getBlue(selectedPixel) == 0);
+        
+        if (isRedEmpty && isGreenEmpty && isBlueEmpty) return true;
+        return false;
+    }
+
+    public boolean isFull(int selectedPixel){
+        boolean isRedFull = (led.getRed(selectedPixel) == LEDConstants.FULL_RED_RGB);
+        boolean isGreenFull = (led.getGreen(selectedPixel) == LEDConstants.FULL_GREEN_RGB);
+        boolean isBlueFull = (led.getBlue(selectedPixel) == LEDConstants.FULL_BLUE_RGB);
+        
+        if (isRedFull && isGreenFull && isBlueFull) return true;
+        return false;
+    }
+
     public void blankPattern(int start, int length){
         for (int i = start; i < start + length; i++) {
             led.setPixel(i, 0, 0, 0);
         }
-    }
-
-    public boolean isSelectedColor(int selectedPixel, int r, int g, int b){
-        boolean isRed = r == led.getRed(selectedPixel);
-        boolean isGreen = g == led.getGreen(selectedPixel);
-        boolean isBlue = b == led.getGreen(selectedPixel);
-
-        if (isRed && isGreen && isBlue) return true;
-        return false;
     }
 
     public Command getBlankPatternCommand(int start, int length) {
@@ -256,6 +274,8 @@ public class LEDStripPatterns {
                 },
                 led);
     }
+
+    //TODO: Make a breathing pattern
 
     public Command blueWavesLightCommand(int start, int length, double frameTime, boolean isInverted) {
         return chasingAlernatingColorAnimation(
