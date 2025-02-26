@@ -9,15 +9,22 @@
           "data": {
             "commands": [
               {
-                "type": "named",
+                "type": "parallel",
                 "data": {
-                  "name": "Stow"
-                }
-              },
-              {
-                "type": "path",
-                "data": {
-                  "pathName": "Right 2 L4.0"
+                  "commands": [
+                    {
+                      "type": "named",
+                      "data": {
+                        "name": "Go L2"
+                      }
+                    },
+                    {
+                      "type": "path",
+                      "data": {
+                        "pathName": "Right 2 L4.0"
+                      }
+                    }
+                  ]
                 }
               },
               {
@@ -72,7 +79,7 @@
                     {
                       "type": "named",
                       "data": {
-                        "name": "Stow"
+                        "name": "Go L2"
                       }
                     },
                     {

@@ -24,8 +24,7 @@ public class Sequencing {
         return elevator.toIntake()
         .alongWith(wrist.toIntake())
         .alongWith(intake.intakeCommand(IntakeConstants.INTAKE_SPEED))
-        .andThen(new WaitUntilCommand(() -> intake.checkToF()))
-        .andThen(stow(elevator, wrist, intake));
+        .andThen(new WaitUntilCommand(() -> intake.checkToF()));
     }
 
     public static Command L1(ElevatorSubsystem elevator, WristSubsystem wrist, IntakeSubsystem intake){
