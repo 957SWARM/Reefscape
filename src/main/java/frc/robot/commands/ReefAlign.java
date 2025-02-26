@@ -49,7 +49,7 @@ public class ReefAlign {
             else{
                 drive.drive(0, 0, 0, false, 0);
             }
-        }, drive).until(this::checkAligned);
+        }, drive).until(() -> checkAligned(drive));
     }
 
     //FORWARD: 
@@ -154,10 +154,11 @@ public class ReefAlign {
         return valid;
     }
 
-    public boolean checkAligned(){
+    public boolean checkAligned(DriveSubsystem drive){
         boolean aligned = Math.abs(getXDiff()) <= VisionConstants.REEF_TRANSLATION_TOLERANCE
         && Math.abs(getYDiff()) <= VisionConstants.REEF_TRANSLATION_TOLERANCE
-        && Math.abs(getRotDiff()) <= VisionConstants.ROTATION_TOLERANCE;
+        && Math.abs(getRotDiff()) <= VisionConstants.ROTATION_TOLERANCE
+        && drive.getLinearSpeed() <= VisionConstants.SPEED_TOLERANCE;
 
         return aligned;
     }
