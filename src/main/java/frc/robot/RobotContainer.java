@@ -69,9 +69,12 @@ public class RobotContainer {
 
     NamedCommands.registerCommand("Score L1", Sequencing.L1(m_elevator, m_wrist, m_intake));
     NamedCommands.registerCommand("Stow", Sequencing.stow(m_elevator, m_wrist, m_intake));
-    NamedCommands.registerCommand("Eject", m_intake.autoEject(IntakeConstants.EJECT_SPEED).withTimeout(.75));
-    NamedCommands.registerCommand("Vision Align", reefAlign.alignNearestReef(m_robotDrive));
-    NamedCommands.registerCommand("Score L4", Sequencing.L4(m_elevator, m_wrist, m_intake));
+    NamedCommands.registerCommand("Score", m_intake.autoEject(IntakeConstants.EJECT_SPEED));
+    NamedCommands.registerCommand("Reef Align", reefAlign.alignNearestReef(m_robotDrive));
+    NamedCommands.registerCommand("Go L4", Sequencing.L4(m_elevator, m_wrist, m_intake));
+    NamedCommands.registerCommand("Go L2", Sequencing.L2(m_elevator, m_wrist, m_intake));
+    NamedCommands.registerCommand("Station Align", stationAlign.alignNearestStation(m_robotDrive));
+    NamedCommands.registerCommand("Intake", Sequencing.autoIntake(m_elevator, m_wrist, m_intake));
 
     autoChooser = AutoBuilder.buildAutoChooser();
     SmartDashboard.putData("Auto Chooser", autoChooser);

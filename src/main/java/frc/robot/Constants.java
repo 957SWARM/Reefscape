@@ -127,7 +127,7 @@ public final class Constants {
 
     // measurements in meters the carriage rises. (end effector raises twice these values)
     public static final double POSITION_GROUND = 0;
-    public static final double POSITION_L1 = 0.07;
+    public static final double POSITION_L1 = 0.07; 
     public static final double POSITION_L2 = 0.242;
     public static final double POSITION_L3 = 0.452;
     public static final double POSITION_L4 = 0.775;
@@ -234,8 +234,8 @@ public final class Constants {
   }
 
   public static final class VisionConstants {
-    public static final Pose3d LEFT_REEF = new Pose3d(new Translation3d(-.215, 0, -.65), new Rotation3d());
-    public static final Pose3d RIGHT_REEF = new Pose3d(new Translation3d(.115, 0, -.65), new Rotation3d());
+    public static final Pose3d LEFT_REEF = new Pose3d(new Translation3d(-.215, 0, -.63), new Rotation3d());
+    public static final Pose3d RIGHT_REEF = new Pose3d(new Translation3d(.125, 0, -.63), new Rotation3d());
     public static final List<Pose3d> REEF_POSES = Arrays.asList(LEFT_REEF, RIGHT_REEF);
     public static final List<Double> REEF_TAG_IDS = Arrays.asList(
       (double)6, 
@@ -277,6 +277,16 @@ public final class Constants {
 
     public static final double TRANSLATION_TOLERANCE = 0.015; //METERS
     public static final double ROTATION_TOLERANCE = 1; //DEGREES?
-    public static final double TOLERANCE_DEBOUNCE_SECONDS = .01; 
+    public static final double SPEED_TOLERANCE = 0.1; //METERS PER SECOND
+
+    public static final double STATION_TRANSLATION_TOLERANCE = 0.040;
+  }
+
+  public static final class SequencingConstants {
+    public static final double STOW_DELAY = 0.15;
+    public static final double L1_WRIST_DELAY = .4;
+    public static final double L2_WRIST_DELAY = .1;
+    public static final double L3_WRIST_DELAY = .3;
+    public static final double L4_WRIST_DELAY = .8;
   }
 }
