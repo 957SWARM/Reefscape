@@ -100,4 +100,11 @@ public class Sequencing {
         .alongWith(intake.stopIntakeCommand())
         .andThen(new WaitUntilCommand(() -> elevator.atSetpoint() && wrist.atSetpoint()));
     }
+
+    public static Command autoStow(ElevatorSubsystem elevator, WristSubsystem wrist, IntakeSubsystem intake){
+        return elevator.toL2()
+        .alongWith(wrist.toStow())
+        .alongWith(intake.stopIntakeCommand())
+        .andThen(new WaitUntilCommand(()-> wrist.atSetpoint() && elevator.atSetpoint()));
+    }
 }

@@ -15,7 +15,7 @@
                     {
                       "type": "named",
                       "data": {
-                        "name": "Go L2"
+                        "name": "High Stow"
                       }
                     },
                     {
@@ -79,7 +79,7 @@
                     {
                       "type": "named",
                       "data": {
-                        "name": "Go L2"
+                        "name": "High Stow"
                       }
                     },
                     {
@@ -137,7 +137,7 @@
                     {
                       "type": "named",
                       "data": {
-                        "name": "Go L2"
+                        "name": "High Stow"
                       }
                     },
                     {
@@ -188,7 +188,7 @@
                     {
                       "type": "named",
                       "data": {
-                        "name": "Go L2"
+                        "name": "High Stow"
                       }
                     },
                     {
@@ -246,7 +246,7 @@
                     {
                       "type": "named",
                       "data": {
-                        "name": "Go L2"
+                        "name": "High Stow"
                       }
                     },
                     {
@@ -262,6 +262,12 @@
                 "type": "named",
                 "data": {
                   "name": "Reef Align"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "Go L2"
                 }
               },
               {
