@@ -122,10 +122,11 @@ public class RobotContainer {
 
     // led.scheduleDefaultCommand(led.blueWavesLightCommand(0, LEDConstants.TOTAL_PIXELS, 0.1, true));
     // led.scheduleDefaultCommand(led.chasingSingleBlueCommand(0, LEDConstants.TOTAL_PIXELS, 0.0333333, true));
-    led.scheduleDefaultCommand(led.fillEmptyBlueCommand(0, LEDConstants.TOTAL_PIXELS, 0.0333333, false));
+    // led.scheduleDefaultCommand(led.fillEmptyBlueCommand(0, LEDConstants.TOTAL_PIXELS, 0.0333333, false));
     // led.scheduleDefaultCommand(led.endGameCommand(0, LEDConstants.TOTAL_PIXELS, 0.1, false));
     // led.scheduleDefaultCommand(led.fullBlueCommand(0, LEDConstants.TOTAL_PIXELS));
     // led.scheduleDefaultCommand((led.blockGreenCommand(0, LEDConstants.TOTAL_PIXELS, 0.1, false))); (Bad pattern)
+    led.scheduleDefaultCommand(led.breatheBlueCommand(0, LEDConstants.TOTAL_PIXELS, 1, false));
 
   }
 

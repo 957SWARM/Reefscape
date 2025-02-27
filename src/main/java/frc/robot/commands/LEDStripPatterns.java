@@ -276,6 +276,23 @@ public class LEDStripPatterns {
     }
 
     //TODO: Make a breathing pattern
+    public Command breathingPatternCommand(int start, int length, double breathRate, boolean isInverted, int r, int g, int b){
+        return Commands.run(
+            () -> {
+                double angle = timer.get() * (2 * Math.PI);
+                double brightness = (!isInverted) ? (Math.cos(angle) + 1) * 127.5 : (Math.sin(angle) + 1) * 127.5;
+                
+                for (int i = start; i < start + length; i++) {
+                    led.setPixel(i, (int) (r * brightness), (int) (g * brightness), (int) (b * brightness));
+                }
+
+                if (breathRate <= timer.get()){
+                    timer.reset();
+                }
+
+        }, 
+        led);
+    }
 
     public Command blueWavesLightCommand(int start, int length, double frameTime, boolean isInverted) {
         return chasingAlernatingColorAnimation(
@@ -297,6 +314,10 @@ public class LEDStripPatterns {
 
     public Command fillEmptyBlueCommand(int start, int length, double frameTime, boolean isInverted){
         return fillThenEmptyCommand(start, length, frameTime, isInverted, 0, 5, 25);
+    }
+
+    public Command breatheBlueCommand(int start, int length, double breathRate, boolean isInverted){
+        return breathingPatternCommand(start, length, breathRate, isInverted, 0, 5, 25);
     }
 
     public Command allianceColor(int start, int length) {
