@@ -21,27 +21,41 @@
                 }
               },
               {
-                "type": "named",
+                "type": "parallel",
                 "data": {
-                  "name": "Reef Align"
-                }
-              },
-              {
-                "type": "named",
-                "data": {
-                  "name": "Go L4"
+                  "commands": [
+                    {
+                      "type": "named",
+                      "data": {
+                        "name": "Reef Align"
+                      }
+                    },
+                    {
+                      "type": "sequential",
+                      "data": {
+                        "commands": [
+                          {
+                            "type": "wait",
+                            "data": {
+                              "waitTime": 0.3
+                            }
+                          },
+                          {
+                            "type": "named",
+                            "data": {
+                              "name": "Go L4"
+                            }
+                          }
+                        ]
+                      }
+                    }
+                  ]
                 }
               },
               {
                 "type": "named",
                 "data": {
                   "name": "Score"
-                }
-              },
-              {
-                "type": "named",
-                "data": {
-                  "name": "Stow"
                 }
               }
             ]
@@ -52,58 +66,54 @@
           "data": {
             "commands": [
               {
-                "type": "path",
+                "type": "parallel",
                 "data": {
-                  "pathName": "Right 2 L4.1"
+                  "commands": [
+                    {
+                      "type": "named",
+                      "data": {
+                        "name": "Stow"
+                      }
+                    },
+                    {
+                      "type": "sequential",
+                      "data": {
+                        "commands": [
+                          {
+                            "type": "wait",
+                            "data": {
+                              "waitTime": 0.3
+                            }
+                          },
+                          {
+                            "type": "path",
+                            "data": {
+                              "pathName": "Right 2 L4.2"
+                            }
+                          }
+                        ]
+                      }
+                    }
+                  ]
                 }
               },
               {
-                "type": "named",
+                "type": "parallel",
                 "data": {
-                  "name": "Station Align"
-                }
-              },
-              {
-                "type": "named",
-                "data": {
-                  "name": "Intake"
-                }
-              }
-            ]
-          }
-        },
-        {
-          "type": "sequential",
-          "data": {
-            "commands": [
-              {
-                "type": "path",
-                "data": {
-                  "pathName": "Right 2 L4.2"
-                }
-              },
-              {
-                "type": "named",
-                "data": {
-                  "name": "Reef Align"
-                }
-              },
-              {
-                "type": "named",
-                "data": {
-                  "name": "Go L4"
-                }
-              },
-              {
-                "type": "named",
-                "data": {
-                  "name": "Score"
-                }
-              },
-              {
-                "type": "named",
-                "data": {
-                  "name": "Stow"
+                  "commands": [
+                    {
+                      "type": "named",
+                      "data": {
+                        "name": "Station Align"
+                      }
+                    },
+                    {
+                      "type": "named",
+                      "data": {
+                        "name": "Intake"
+                      }
+                    }
+                  ]
                 }
               }
             ]
@@ -120,15 +130,130 @@
                 }
               },
               {
-                "type": "named",
+                "type": "parallel",
                 "data": {
-                  "name": "Station Align"
+                  "commands": [
+                    {
+                      "type": "named",
+                      "data": {
+                        "name": "Reef Align"
+                      }
+                    },
+                    {
+                      "type": "named",
+                      "data": {
+                        "name": "Go L4"
+                      }
+                    }
+                  ]
                 }
               },
               {
                 "type": "named",
                 "data": {
-                  "name": "Intake"
+                  "name": "Score"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "sequential",
+          "data": {
+            "commands": [
+              {
+                "type": "parallel",
+                "data": {
+                  "commands": [
+                    {
+                      "type": "named",
+                      "data": {
+                        "name": "Stow"
+                      }
+                    },
+                    {
+                      "type": "sequential",
+                      "data": {
+                        "commands": [
+                          {
+                            "type": "wait",
+                            "data": {
+                              "waitTime": 0.3
+                            }
+                          },
+                          {
+                            "type": "path",
+                            "data": {
+                              "pathName": "Right 2 L4.4"
+                            }
+                          }
+                        ]
+                      }
+                    }
+                  ]
+                }
+              },
+              {
+                "type": "parallel",
+                "data": {
+                  "commands": [
+                    {
+                      "type": "named",
+                      "data": {
+                        "name": "Station Align"
+                      }
+                    },
+                    {
+                      "type": "named",
+                      "data": {
+                        "name": "Intake"
+                      }
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "sequential",
+          "data": {
+            "commands": [
+              {
+                "type": "parallel",
+                "data": {
+                  "commands": [
+                    {
+                      "type": "path",
+                      "data": {
+                        "pathName": "Right 2 L4.5"
+                      }
+                    },
+                    {
+                      "type": "named",
+                      "data": {
+                        "name": "Go L2"
+                      }
+                    }
+                  ]
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "Reef Align"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "Score"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "Stow"
                 }
               }
             ]
