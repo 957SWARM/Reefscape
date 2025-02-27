@@ -32,7 +32,7 @@ public class ElevatorSubsystem extends SubsystemBase{
         kraken = new TalonFX(ElevatorConstants.MOTOR_ID);
         
         TalonFXConfiguration configs = new TalonFXConfiguration();
-        kraken.setNeutralMode(NeutralModeValue.Brake);
+        configs.MotorOutput.NeutralMode = NeutralModeValue.Brake;
 
         Slot0Configs slot0 = configs.Slot0;
         slot0.kS = ElevatorConstants.kS;
