@@ -89,6 +89,6 @@ public class IntakeSubsystem extends SubsystemBase{
     public Command autoEject(double ejectSpeed){
         return runOnce(() -> {
             appliedVoltage = ejectSpeed;
-        }).andThen(new WaitUntilCommand(() -> !checkToF()));
+        });
     }
 }
