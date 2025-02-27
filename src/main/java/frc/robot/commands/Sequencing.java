@@ -27,7 +27,7 @@ public class Sequencing {
         .alongWith(wrist.toIntake())
         .alongWith(intake.intakeCommand(IntakeConstants.INTAKE_SPEED))
         .andThen(new WaitUntilCommand(() -> intake.checkToF()))
-        .andThen(stow(elevator, wrist, intake));
+        .andThen(autoStow(elevator, wrist, intake));
     }
 
     public static Command L1(ElevatorSubsystem elevator, WristSubsystem wrist, IntakeSubsystem intake){
@@ -102,6 +102,12 @@ public class Sequencing {
         .alongWith(wrist.toStow())
         .alongWith(intake.stopIntakeCommand())
         .andThen(new WaitUntilCommand(() -> elevator.atSetpoint() && wrist.atSetpoint()));
+    }
+
+    public static Command autoStow(ElevatorSubsystem elevator, WristSubsystem wrist, IntakeSubsystem intake){
+        return elevator.toL2()
+        .alongWith(wrist.toStow())
+        .alongWith(intake.stopIntakeCommand());
     }
 
     public static Command removeLow(ElevatorSubsystem elevator, WristSubsystem wrist, DriveSubsystem drive){
