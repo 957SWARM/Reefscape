@@ -132,10 +132,10 @@ public final class Constants {
     public static final double POSITION_L3 = 0.452;
     public static final double POSITION_L4 = 0.775;
     public static final double POSITION_INTAKE = 0.1;
-    public static final double POSITION_LOW_REMOVE = 0.04;
-    public static final double POSITION_HIGH_REMOVE = 0.4;
+    public static final double POSITION_LOW_REMOVE = 0.03;
+    public static final double POSITION_HIGH_REMOVE = 0.24;
 
-    public static final double REMOVAL_INCREMENT = 0.2;
+    public static final double REMOVAL_INCREMENT = 0.05;
 
     // SLOW RISE/FALL
     public static final double SETPOINT_INCREMENT = .01; // how much the setpoint changes per robot loop in manual control
@@ -224,6 +224,8 @@ public final class Constants {
     // Thresholds
     public static final double TRIGGER_THRESHOLD = .8;
     public static final double DRIVE_DEADBAND = 0.05;
+
+    public static final double DEBOUNCE_TIME = 0.2;
 
     // BUTTON PORTS
     public static final int LEFT_CENTER_BUTTON = 7;

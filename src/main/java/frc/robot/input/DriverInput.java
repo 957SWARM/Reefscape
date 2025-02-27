@@ -1,5 +1,6 @@
 package frc.robot.input;
 
+import edu.wpi.first.math.filter.Debouncer;
 import edu.wpi.first.math.filter.SlewRateLimiter;
 import edu.wpi.first.wpilibj.GenericHID.RumbleType;
 import edu.wpi.first.wpilibj.event.EventLoop;
@@ -14,6 +15,8 @@ public class DriverInput {
     SlewRateLimiter xLimiter = new SlewRateLimiter(20);
     SlewRateLimiter yLimiter = new SlewRateLimiter(20);
     SlewRateLimiter turnLimiter = new SlewRateLimiter(20);
+
+    Debouncer removalDebouncer = new Debouncer(IOConstants.DEBOUNCE_TIME);
 
     // input squared to improve fine movement at slow speeds
     public double driveX(){
@@ -82,7 +85,7 @@ public class DriverInput {
     }
 
     public boolean lowRemove(){
-        return controller.getPOV() == 270;
+        return removalDebouncer.calculate(controller.getPOV() == 270);
     }
 
     public boolean highRemove(){

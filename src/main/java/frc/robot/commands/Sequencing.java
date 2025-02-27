@@ -107,24 +107,25 @@ public class Sequencing {
     public static Command removeLow(ElevatorSubsystem elevator, WristSubsystem wrist, DriveSubsystem drive){
         return elevator.toLowRemove(0)
         .alongWith(wrist.toL1())
-        .andThen(new WaitCommand(0.5))
-        .andThen(wrist.toIntake())
+        .andThen(Commands.run(() -> drive.drive(0.1, 0, 0, false, 0))
+        .withTimeout(0.55))
+        .andThen(new WaitCommand(.25))
+        .andThen(wrist.toStow()
         .alongWith(elevator.toLowRemove(ElevatorConstants.REMOVAL_INCREMENT))
-        .andThen(Commands.run(() -> drive.drive(-0.1, 0, 0, false, 0)))
-        .withTimeout(0.5)
-        .andThen(wrist.toStow())
-        .alongWith(elevator.toStow());
+        .alongWith(Commands.run(() -> drive.drive(-0.25, 0, 0, false, 0)))
+        .withTimeout(0.75));
     }
 
     public static Command removeHigh(ElevatorSubsystem elevator, WristSubsystem wrist, DriveSubsystem drive){
         return elevator.toHighRemove(0)
         .alongWith(wrist.toL1())
-        .andThen(new WaitCommand(0.5))
-        .andThen(wrist.toIntake())
-        .alongWith(elevator.toLowRemove(ElevatorConstants.REMOVAL_INCREMENT))
-        .andThen(Commands.run(() -> drive.drive(-0.1, 0, 0, false, 0)))
-        .withTimeout(0.5)
-        .andThen(wrist.toStow())
-        .alongWith(elevator.toStow());
+        .andThen(new WaitCommand(0.25))
+        .andThen(Commands.run(() -> drive.drive(0.1, 0, 0, false, 0))
+        .withTimeout(0.55))
+        .andThen(new WaitCommand(.25))
+        .andThen(wrist.toStow()
+        .alongWith(elevator.toHighRemove(ElevatorConstants.REMOVAL_INCREMENT))
+        .alongWith(Commands.run(() -> drive.drive(-0.25, 0, 0, false, 0)))
+        .withTimeout(0.75));
     }
 }

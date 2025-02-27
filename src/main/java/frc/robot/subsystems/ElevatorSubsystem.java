@@ -6,6 +6,7 @@ import com.ctre.phoenix6.configs.Slot0Configs;
 import com.ctre.phoenix6.configs.TalonFXConfiguration;
 import com.ctre.phoenix6.controls.MotionMagicVoltage;
 import com.ctre.phoenix6.hardware.TalonFX;
+import com.ctre.phoenix6.signals.NeutralModeValue;
 
 import edu.wpi.first.epilogue.Logged;
 import edu.wpi.first.math.MathUtil;
@@ -31,6 +32,7 @@ public class ElevatorSubsystem extends SubsystemBase{
         kraken = new TalonFX(ElevatorConstants.MOTOR_ID);
         
         TalonFXConfiguration configs = new TalonFXConfiguration();
+        configs.MotorOutput.NeutralMode = NeutralModeValue.Brake;
 
         Slot0Configs slot0 = configs.Slot0;
         slot0.kS = ElevatorConstants.kS;
