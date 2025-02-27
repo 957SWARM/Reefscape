@@ -249,7 +249,7 @@ public class LEDStripPatterns {
         return Commands.run(
                 () -> {
                     int currentFrame = frame;
-                    if (isInverted) currentFrame = 2 * length - currentFrame; // TODO: Pixel 0 bugs out when interverted
+                    if (isInverted) currentFrame = 2 * length - currentFrame - 1;
                     boolean isFirstHalf;
                     
                     for (int i = start; i < start + length; i++) {
