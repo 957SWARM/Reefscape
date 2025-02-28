@@ -189,11 +189,13 @@ public final class Constants {
   }
 
   public static final class LEDConstants {
-    public static final int TOTAL_PIXELS = 60;
+    public static final int LED_PORT = 0;
+    
+    public static final int TOTAL_PIXELS = 31;
 
-    public static final int FULL_RED_RGB = 0;
-    public static final int FULL_GREEN_RGB = 0;
-    public static final int FULL_BLUE_RGB = 0;
+    public static final int FULL_RED_RGB = 255;
+    public static final int FULL_GREEN_RGB = 255;
+    public static final int FULL_BLUE_RGB = 255;
   }
 
   public static final class IntakeConstants {
