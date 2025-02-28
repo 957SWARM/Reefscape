@@ -69,6 +69,7 @@ public class RobotContainer {
 
     NamedCommands.registerCommand("Go L1", Sequencing.L1(m_elevator, m_wrist, m_intake));
     NamedCommands.registerCommand("Stow", Sequencing.stow(m_elevator, m_wrist, m_intake));
+    NamedCommands.registerCommand("High Stow", Sequencing.autoStow(m_elevator, m_wrist, m_intake));
     NamedCommands.registerCommand("Score", m_intake.autoEject(IntakeConstants.EJECT_SPEED));
     NamedCommands.registerCommand("Reef Align", reefAlign.alignNearestReef(m_robotDrive));
     NamedCommands.registerCommand("Go L4", Sequencing.L4(m_elevator, m_wrist, m_intake));

@@ -9,15 +9,22 @@
           "data": {
             "commands": [
               {
-                "type": "named",
+                "type": "parallel",
                 "data": {
-                  "name": "Stow"
-                }
-              },
-              {
-                "type": "path",
-                "data": {
-                  "pathName": "Right 2 L4.0"
+                  "commands": [
+                    {
+                      "type": "named",
+                      "data": {
+                        "name": "High Stow"
+                      }
+                    },
+                    {
+                      "type": "path",
+                      "data": {
+                        "pathName": "Right 2 L4.0"
+                      }
+                    }
+                  ]
                 }
               },
               {
@@ -72,7 +79,7 @@
                     {
                       "type": "named",
                       "data": {
-                        "name": "Stow"
+                        "name": "High Stow"
                       }
                     },
                     {
@@ -98,19 +105,19 @@
                 }
               },
               {
-                "type": "parallel",
+                "type": "deadline",
                 "data": {
                   "commands": [
                     {
                       "type": "named",
                       "data": {
-                        "name": "Station Align"
+                        "name": "Intake"
                       }
                     },
                     {
                       "type": "named",
                       "data": {
-                        "name": "Intake"
+                        "name": "Station Align"
                       }
                     }
                   ]
@@ -168,7 +175,7 @@
                     {
                       "type": "named",
                       "data": {
-                        "name": "Stow"
+                        "name": "High Stow"
                       }
                     },
                     {
@@ -194,19 +201,19 @@
                 }
               },
               {
-                "type": "parallel",
+                "type": "deadline",
                 "data": {
                   "commands": [
                     {
                       "type": "named",
                       "data": {
-                        "name": "Station Align"
+                        "name": "Intake"
                       }
                     },
                     {
                       "type": "named",
                       "data": {
-                        "name": "Intake"
+                        "name": "Station Align"
                       }
                     }
                   ]
