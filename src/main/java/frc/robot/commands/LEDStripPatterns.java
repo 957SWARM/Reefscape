@@ -16,6 +16,8 @@ public class LEDStripPatterns {
     int frame;
     Timer timer;
 
+    double time;
+
     public LEDStripPatterns() {
         led = new LED(LEDConstants.TOTAL_PIXELS);
         frame = 0;
@@ -275,21 +277,15 @@ public class LEDStripPatterns {
                 led);
     }
 
-    //TODO: Make a breathing pattern
     public Command breathingPatternCommand(int start, int length, double breathRate, boolean isInverted, int r, int g, int b){
         return Commands.run(
             () -> {
-                double angle = timer.get() * (2 * Math.PI);
-                double brightness = (!isInverted) ? (Math.cos(angle) + 1) * 127.5 : (Math.sin(angle) + 1) * 127.5;
+                time++;
+                double brightness = (!isInverted) ? ((Math.cos(breathRate * time) + 1) / 2) : ((Math.sin(breathRate * time) + 1) / 2);
                 
                 for (int i = start; i < start + length; i++) {
                     led.setPixel(i, (int) (r * brightness), (int) (g * brightness), (int) (b * brightness));
                 }
-
-                if (breathRate <= timer.get()){
-                    timer.reset();
-                }
-
         }, 
         led);
     }
@@ -317,7 +313,7 @@ public class LEDStripPatterns {
     }
 
     public Command breatheBlueCommand(int start, int length, double breathRate, boolean isInverted){
-        return breathingPatternCommand(start, length, breathRate, isInverted, 0, 5, 25);
+        return breathingPatternCommand(start, length, breathRate, isInverted, 0, 45, 225);
     }
 
     public Command allianceColor(int start, int length) {
