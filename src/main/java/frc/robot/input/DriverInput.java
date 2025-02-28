@@ -16,7 +16,8 @@ public class DriverInput {
     SlewRateLimiter yLimiter = new SlewRateLimiter(20);
     SlewRateLimiter turnLimiter = new SlewRateLimiter(20);
 
-    Debouncer removalDebouncer = new Debouncer(IOConstants.DEBOUNCE_TIME);
+    Debouncer lowRemoveDebouncer = new Debouncer(IOConstants.DEBOUNCE_TIME);
+    Debouncer highRemoveDebouncer = new Debouncer(IOConstants.DEBOUNCE_TIME);
 
     // input squared to improve fine movement at slow speeds
     public double driveX(){
@@ -85,11 +86,11 @@ public class DriverInput {
     }
 
     public boolean lowRemove(){
-        return removalDebouncer.calculate(controller.getPOV() == 270);
+        return lowRemoveDebouncer.calculate(controller.getPOV() == 270);
     }
 
     public boolean highRemove(){
-        return controller.getPOV() == 90;
+        return highRemoveDebouncer.calculate(controller.getPOV() == 90);
     }
 
 
