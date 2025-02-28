@@ -20,24 +20,22 @@ import frc.robot.subsystems.Drive.DriveSubsystem;
 public class StationAlign {
 
     PIDController xPID = new PIDController(
-        VisionConstants.TRANSLATION_P, 
-        VisionConstants.TRANSLATION_I, 
-        VisionConstants.TRANSLATION_D);
+        VisionConstants.STATION_TRANSLATION_P, 
+        VisionConstants.STATION_TRANSLATION_I, 
+        VisionConstants.STATION_TRANSLATION_D);
     PIDController yPID = new PIDController(
-        VisionConstants.TRANSLATION_P, 
-        VisionConstants.TRANSLATION_I, 
-        VisionConstants.TRANSLATION_D
+        VisionConstants.STATION_TRANSLATION_P, 
+        VisionConstants.STATION_TRANSLATION_I, 
+        VisionConstants.STATION_TRANSLATION_D
     );
     PIDController rotPID = new PIDController(
-        VisionConstants.ROTATION_P, 
-        VisionConstants.ROTATION_I, 
-        VisionConstants.ROTATION_D
+        VisionConstants.STATION_ROTATION_P, 
+        VisionConstants.STATION_ROTATION_I, 
+        VisionConstants.STATION_ROTATION_D
     );
 
     Pose3d currentPose;
     Pose3d nearestStationPose;
-
-    private final Debouncer toleranceDebouncer = new Debouncer(VisionConstants.TOLERANCE_DEBOUNCE_SECONDS);
 
     public StationAlign(){}
     
@@ -52,7 +50,7 @@ public class StationAlign {
             else{
                 drive.drive(0, 0, 0, false, 0);
             }
-        }, drive).until(this::checkAligned);
+        }, drive).until(() -> checkAligned(drive));
     }
 
     //FORWARD: 
@@ -148,12 +146,14 @@ public class StationAlign {
         return valid;
     }
 
-    public boolean checkAligned(){
-        boolean aligned = Math.abs(getXDiff()) <= VisionConstants.TRANSLATION_TOLERANCE
-        && Math.abs(getYDiff()) <= VisionConstants.TRANSLATION_TOLERANCE
-        && Math.abs(getRotDiff()) <= VisionConstants.ROTATION_TOLERANCE;
+    // end condition for command. Finishes when close to target position and speed is low
+    public boolean checkAligned(DriveSubsystem drive){
+        boolean aligned = Math.abs(getXDiff()) <= VisionConstants.STATION_TRANSLATION_TOLERANCE
+        && Math.abs(getYDiff()) <= VisionConstants.STATION_TRANSLATION_TOLERANCE
+        && Math.abs(getRotDiff()) <= VisionConstants.ROTATION_TOLERANCE
+        && drive.getLinearSpeed() <= VisionConstants.SPEED_TOLERANCE;
 
-        return toleranceDebouncer.calculate(aligned);
+        return aligned;
     }
 
     //DEBUGGING LOGGING FUNCTIONS

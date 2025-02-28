@@ -153,6 +153,10 @@ public class DriveSubsystem extends SubsystemBase {
     return DriveConstants.kDriveKinematics.toChassisSpeeds(swerveStates);
   }
 
+  public double getLinearSpeed(){
+    return Math.hypot(getRobotRelativeSpeeds().vxMetersPerSecond, getRobotRelativeSpeeds().vyMetersPerSecond);
+  }
+
   //Same as drive function but for auto. Accepts chassisSpeeds directly instead of generating it from other arguments
   //Always robot relative
   public void autoDrive(ChassisSpeeds speeds) {
@@ -249,8 +253,8 @@ public class DriveSubsystem extends SubsystemBase {
             this::getRobotRelativeSpeeds, // ChassisSpeeds supplier. MUST BE ROBOT RELATIVE
             (speeds, feedforwards) -> autoDrive(speeds), // Method that will drive the robot given ROBOT RELATIVE ChassisSpeeds. Also optionally outputs individual module feedforwards
             new PPHolonomicDriveController( // PPHolonomicController is the built in path following controller for holonomic drive trains
-                    new PIDConstants(5.0, 0.0, 0.0), // Translation PID constants
-                    new PIDConstants(5.0, 0.0, 0.0) // Rotation PID constants
+                    new PIDConstants(7.0, 0.0, 0.0), // Translation PID constants
+                    new PIDConstants(6.0, 0.0, 0.0) // Rotation PID constants
             ),
             config, // The robot configuration
             () -> {

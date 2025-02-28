@@ -92,6 +92,11 @@ public class WristSubsystem extends SubsystemBase{
         return encoder.getAbsPosition();
     }
 
+    // purely for checking if at setpoint
+    public boolean atSetpoint(){
+        return Math.abs(getPosition() - targetSetpoint) < WristConstants.TOLERANCE;
+    }
+    
     // Helper function. feedforward = voltage to remain at current position
     private double getFeedForward(){
         // angle measured between straight down and current position
