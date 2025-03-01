@@ -82,10 +82,10 @@ public class RobotContainer {
     //autoChooser.addOption("Test Auto", new PathPlannerAuto("Test Auto"));
     autoChooser.addOption("Nothing", new InstantCommand());
     autoChooser.addOption("Just Leave", new PathPlannerAuto("Just Leave"));
-    autoChooser.addOption("Near L4", new PathPlannerAuto("Near L4 Auto"));
+    autoChooser.addOption("Near L4", setGyro(-180).andThen(new PathPlannerAuto("Near L4 Auto")));
     autoChooser.addOption("Right 2 L4", new PathPlannerAuto("Right 2 L4 Auto"));
     autoChooser.addOption("Left 2 L4", new PathPlannerAuto("Left 2 L4 Auto"));
-    autoChooser.addOption("Right 2.5 L4", new PathPlannerAuto("Right 2.5 L4 Auto"));
+    autoChooser.addOption("Right 2.5 L4", setGyro(-90).andThen(new PathPlannerAuto("Right 2.5 L4 Auto")));
     autoChooser.addOption("Right 3 L4 Auto", new PathPlannerAuto("Right 3 L4 Auto"));
     autoChooser.addOption("Buddy Auto", new PathPlannerAuto("Buddy Auto"));
 
@@ -217,8 +217,8 @@ public class RobotContainer {
     return autoChooser.getSelected();
   }
 
-  public void flipGyro(){
-    m_robotDrive.flipHeading();
+  public Command setGyro(double angle){
+    return new InstantCommand(() -> m_robotDrive.setHeading(angle), m_robotDrive);
   }
   
 }

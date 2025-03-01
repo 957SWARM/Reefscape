@@ -207,9 +207,8 @@ public class DriveSubsystem extends SubsystemBase {
     m_gyro.reset();
   }
 
-  // flips heading 180 degrees from current heading
-  public void flipHeading(){
-    m_gyro.setYaw(m_gyro.getYaw().getValueAsDouble() + 180);
+  public void setHeading(double angle){
+    m_gyro.setYaw(angle);
   }
 
   /**
