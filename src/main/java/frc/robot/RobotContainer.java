@@ -120,34 +120,7 @@ public class RobotContainer {
 
     //m_wrist.setDefaultCommand(m_wrist.toStow());
 
-    // Switch case statement for testing purposes
-    int count = 0;
-    switch (count) {
-      case 1:
-        led.scheduleDefaultCommand(led.chasingSingleBlueCommand(0, LEDConstants.TOTAL_PIXELS, 0.0333333, false));
-        break;
-      case 2:
-        led.scheduleDefaultCommand(led.fillEmptyBlueCommand(0, LEDConstants.TOTAL_PIXELS, 0.0333333, false));
-        break;
-      case 3:
-        led.scheduleDefaultCommand(led.endGameCommand(0, LEDConstants.TOTAL_PIXELS, 0.1, false));
-        break;
-      case 4:
-        led.scheduleDefaultCommand(led.fullBlueCommand(0, LEDConstants.TOTAL_PIXELS));
-        break;
-      case 5:
-        led.scheduleDefaultCommand(led.fullBlueCommand(0, LEDConstants.TOTAL_PIXELS));
-        break;
-      case 6:
-        led.scheduleDefaultCommand((led.blockGreenCommand(0, LEDConstants.TOTAL_PIXELS, 0.1, false))); // (Bad pattern)
-        break;
-      case 7:
-        led.scheduleDefaultCommand(led.breatheBlueCommand(0, LEDConstants.TOTAL_PIXELS, .1, false));
-        break;
-      default:
-        led.scheduleDefaultCommand(led.blueWavesLightCommand(0, LEDConstants.TOTAL_PIXELS, 0.1, true));  
-        break;
-    }
+    led.scheduleDefaultCommand(led.blueWavesLightCommand(0, LEDConstants.TOTAL_PIXELS, 0.1, false));
   }
 
   /**
