@@ -154,7 +154,6 @@ public class LEDStripPatterns {
                 led);
     }
 
-    // TODO: Inversion doesn't look like it works
     public Command chasingAlernatingColorAnimation(
         int start, int length, 
         int r1, int g1, int b1, int r2, int g2, int b2, double frameTime, boolean isInverted) {
@@ -293,7 +292,7 @@ public class LEDStripPatterns {
     public Command blueWavesLightCommand(int start, int length, double frameTime, boolean isInverted) {
         return chasingAlernatingColorAnimation(
             0, LEDConstants.TOTAL_PIXELS, 0, 118, 147, 0, 0, LEDConstants.FULL_BLUE_RGB / 2, 
-            0.1, false);
+            0.1, isInverted);
     }
 
     public Command fullBlueCommand(int start, int length) {
