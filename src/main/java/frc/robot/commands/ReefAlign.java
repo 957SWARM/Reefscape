@@ -17,18 +17,18 @@ import frc.robot.subsystems.Drive.DriveSubsystem;
 public class ReefAlign {
 
     PIDController xPID = new PIDController(
-        VisionConstants.TRANSLATION_P, 
-        VisionConstants.TRANSLATION_I, 
-        VisionConstants.TRANSLATION_D);
+        VisionConstants.REEF_TRANSLATION_P, 
+        VisionConstants.REEF_TRANSLATION_I, 
+        VisionConstants.REEF_TRANSLATION_D);
     PIDController yPID = new PIDController(
-        VisionConstants.TRANSLATION_P, 
-        VisionConstants.TRANSLATION_I, 
-        VisionConstants.TRANSLATION_D
+        VisionConstants.REEF_TRANSLATION_P, 
+        VisionConstants.REEF_TRANSLATION_I, 
+        VisionConstants.REEF_TRANSLATION_D
     );
     PIDController rotPID = new PIDController(
-        VisionConstants.ROTATION_P, 
-        VisionConstants.ROTATION_I, 
-        VisionConstants.ROTATION_D
+        VisionConstants.REEF_ROTATION_P, 
+        VisionConstants.REEF_ROTATION_I, 
+        VisionConstants.REEF_ROTATION_D
     );
 
     
@@ -49,7 +49,7 @@ public class ReefAlign {
             else{
                 drive.drive(0, 0, 0, false, 0);
             }
-        }, drive).until(this::checkAligned);
+        }, drive).until(() -> checkAligned(drive));
     }
 
     //FORWARD: 
@@ -154,10 +154,11 @@ public class ReefAlign {
         return valid;
     }
 
-    public boolean checkAligned(){
-        boolean aligned = Math.abs(getXDiff()) <= VisionConstants.TRANSLATION_TOLERANCE
-        && Math.abs(getYDiff()) <= VisionConstants.TRANSLATION_TOLERANCE
-        && Math.abs(getRotDiff()) <= VisionConstants.ROTATION_TOLERANCE;
+    public boolean checkAligned(DriveSubsystem drive){
+        boolean aligned = Math.abs(getXDiff()) <= VisionConstants.REEF_TRANSLATION_TOLERANCE
+        && Math.abs(getYDiff()) <= VisionConstants.REEF_TRANSLATION_TOLERANCE
+        && Math.abs(getRotDiff()) <= VisionConstants.ROTATION_TOLERANCE
+        && drive.getLinearSpeed() <= VisionConstants.SPEED_TOLERANCE;
 
         return aligned;
     }

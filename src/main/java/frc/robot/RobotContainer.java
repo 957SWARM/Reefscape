@@ -24,7 +24,6 @@ import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.Constants.ElevatorConstants;
 import frc.robot.Constants.IOConstants;
 import frc.robot.Constants.IntakeConstants;
-import frc.robot.Constants.LEDConstants;
 import frc.robot.Constants.WristConstants;
 import frc.robot.commands.LEDStripPatterns;
 import frc.robot.commands.ReefAlign;
@@ -68,20 +67,27 @@ public class RobotContainer {
    */
   public RobotContainer() {
 
-    NamedCommands.registerCommand("Score L1", Sequencing.L1(m_elevator, m_wrist, m_intake));
+    NamedCommands.registerCommand("Go L1", Sequencing.L1(m_elevator, m_wrist, m_intake));
     NamedCommands.registerCommand("Stow", Sequencing.stow(m_elevator, m_wrist, m_intake));
-    NamedCommands.registerCommand("Eject", m_intake.autoEject(IntakeConstants.EJECT_SPEED).withTimeout(.75));
-    NamedCommands.registerCommand("Vision Align", reefAlign.alignNearestReef(m_robotDrive));
-    NamedCommands.registerCommand("Score L4", Sequencing.L4(m_elevator, m_wrist, m_intake));
+    NamedCommands.registerCommand("High Stow", Sequencing.autoStow(m_elevator, m_wrist, m_intake));
+    NamedCommands.registerCommand("Score", m_intake.autoEject(IntakeConstants.EJECT_SPEED));
+    NamedCommands.registerCommand("Reef Align", reefAlign.alignNearestReef(m_robotDrive));
+    NamedCommands.registerCommand("Go L4", Sequencing.L4(m_elevator, m_wrist, m_intake));
+    NamedCommands.registerCommand("Go L2", Sequencing.L2(m_elevator, m_wrist, m_intake));
+    NamedCommands.registerCommand("Station Align", stationAlign.alignNearestStation(m_robotDrive));
+    NamedCommands.registerCommand("Intake", Sequencing.autoIntake(m_elevator, m_wrist, m_intake));
 
     autoChooser = AutoBuilder.buildAutoChooser();
     SmartDashboard.putData("Auto Chooser", autoChooser);
     //autoChooser.addOption("Test Auto", new PathPlannerAuto("Test Auto"));
     autoChooser.addOption("Nothing", new InstantCommand());
-    autoChooser.addOption("B Test Auto", new PathPlannerAuto("B Test Auto"));
-    autoChooser.addOption("Straight Near L1 Auto", new PathPlannerAuto("Straight Near L1 Auto"));
-    autoChooser.addOption("Near L4", new PathPlannerAuto("Near L4 Auto"));
     autoChooser.addOption("Just Leave", new PathPlannerAuto("Just Leave"));
+    autoChooser.addOption("Near L4", new PathPlannerAuto("Near L4 Auto"));
+    autoChooser.addOption("Right 2 L4", new PathPlannerAuto("Right 2 L4 Auto"));
+    autoChooser.addOption("Left 2 L4", new PathPlannerAuto("Left 2 L4 Auto"));
+    autoChooser.addOption("Right 2.5 L4", new PathPlannerAuto("Right 2.5 L4 Auto"));
+    autoChooser.addOption("Right 3 L4 Auto", new PathPlannerAuto("Right 3 L4 Auto"));
+    autoChooser.addOption("Buddy Auto", new PathPlannerAuto("Buddy Auto"));
 
     //configureNamedCommands();
 
@@ -96,18 +102,19 @@ public class RobotContainer {
       .andThen(Commands.run(() -> m_driver.setRumble(false))));
 
     // stops intake when coral leaves
-    Trigger coralLeft = new Trigger(() -> !m_intake.checkToF() && m_intake.getVoltage() == IntakeConstants.EJECT_SPEED
-    && !DriverStation.isAutonomous());
-    coralLeft.onTrue(new WaitCommand(.5).andThen(m_intake.stopIntakeCommand()));
+    // Trigger coralLeft = new Trigger(() -> !m_intake.checkToF() && m_intake.getVoltage() == IntakeConstants.EJECT_SPEED
+    // && !DriverStation.isAutonomous());
+    // coralLeft.onTrue(new WaitCommand(.25).andThen(m_intake.stopIntakeCommand()).andThen(Sequencing.stow(m_elevator, m_wrist, m_intake)));
 
     // automatically sends robot to stow after intaking
     Trigger coralIn = new Trigger(
       () -> m_elevator.getTargetSetpoint() == ElevatorConstants.POSITION_INTAKE 
       && m_wrist.getTargetSetpoint() == WristConstants.INTAKE_ANGLE
-      && m_intake.checkToF());
+      && m_intake.checkToF() && !DriverStation.isAutonomous());
     coralIn.onTrue(Sequencing.stow(m_elevator, m_wrist, m_intake));
 
     // Configure default commands
+
     m_robotDrive.setDefaultCommand(
         new RunCommand(
             () -> m_robotDrive.drive(
@@ -118,7 +125,7 @@ public class RobotContainer {
                 m_elevator.getHeight()),
             m_robotDrive));
 
-    //m_wrist.setDefaultCommand(m_wrist.toStow());
+    // m_wrist.setDefaultCommand(m_wrist.toStow());
 
     led.scheduleDefaultCommand(led.blueWavesLightCommand(0, LEDConstants.TOTAL_PIXELS, 0.1, false));
   }
@@ -174,7 +181,9 @@ public class RobotContainer {
     .whileTrue(reefAlign.alignNearestReef(m_robotDrive));
 
     new Trigger(() -> m_driver.visionAlign() && stationAlign.checkStationTag())
-    .whileTrue(stationAlign.alignNearestStation(m_robotDrive));
+    .whileTrue(stationAlign.alignNearestStation(m_robotDrive)
+    .andThen(Sequencing.intake(m_elevator, m_wrist, m_intake)
+    .alongWith(Commands.run(() -> m_robotDrive.setX()))));
     
     // climbs while up on d-pad is held
     new Trigger(() -> m_driver.deployClimb())
@@ -185,6 +194,14 @@ public class RobotContainer {
     new Trigger(() -> m_driver.retractClimb())
       .whileTrue(m_climber.retract())
       .onFalse(m_climber.stopCommand());
+
+    new Trigger(() -> m_driver.lowRemove())
+      .whileTrue(Sequencing.removeLow(m_elevator, m_wrist, m_robotDrive))
+      .onFalse(Sequencing.stow(m_elevator, m_wrist, m_intake));
+
+      new Trigger(() -> m_driver.highRemove())
+      .whileTrue(Sequencing.removeHigh(m_elevator, m_wrist, m_robotDrive))
+      .onFalse(Sequencing.stow(m_elevator, m_wrist, m_intake));
   }
 
   public void configureNamedCommands(){

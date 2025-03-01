@@ -23,7 +23,7 @@
  },
  "params":{
   "waypoints":[
-    {"x":{"exp":"7.584799289703369 m", "val":7.584799289703369}, "y":{"exp":"5.23318338394165 m", "val":5.23318338394165}, "heading":{"exp":"3.1374696502188897 rad", "val":3.1374696502188897}, "intervals":28, "split":false, "fixTranslation":true, "fixHeading":true, "overrideIntervals":false},
+    {"x":{"exp":"7.584799289703369 m", "val":7.584799289703369}, "y":{"exp":"5.23318338394165 m", "val":5.23318338394165}, "heading":{"exp":"3.1374696502188897 rad", "val":3.1374696502188897}, "intervals":29, "split":false, "fixTranslation":true, "fixHeading":true, "overrideIntervals":false},
     {"x":{"exp":"5.085434913635254 m", "val":5.085434913635254}, "y":{"exp":"5.388881206512451 m", "val":5.388881206512451}, "heading":{"exp":"-2.10101204807694 rad", "val":-2.10101204807694}, "intervals":12, "split":false, "fixTranslation":true, "fixHeading":true, "overrideIntervals":false},
     {"x":{"exp":"4.323333263397217 m", "val":4.323333263397217}, "y":{"exp":"5.77402925491333 m", "val":5.77402925491333}, "heading":{"exp":"-2.098871076717946 rad", "val":-2.098871076717946}, "intervals":34, "split":false, "fixTranslation":true, "fixHeading":true, "overrideIntervals":false},
     {"x":{"exp":"1.4634047746658325 m", "val":1.4634047746658323}, "y":{"exp":"7.134338855743408 m", "val":7.134338855743408}, "heading":{"exp":"2.2706893026122894 rad", "val":2.2706893026122894}, "intervals":36, "split":false, "fixTranslation":true, "fixHeading":true, "overrideIntervals":false},
@@ -38,7 +38,8 @@
     {"from":3, "to":null, "data":{"type":"StopPoint", "props":{}}, "enabled":true},
     {"from":6, "to":null, "data":{"type":"StopPoint", "props":{}}, "enabled":true},
     {"from":4, "to":null, "data":{"type":"StopPoint", "props":{}}, "enabled":true},
-    {"from":5, "to":null, "data":{"type":"StopPoint", "props":{}}, "enabled":true}],
+    {"from":5, "to":null, "data":{"type":"StopPoint", "props":{}}, "enabled":true},
+    {"from":0, "to":1, "data":{"type":"MaxAcceleration", "props":{"max":{"exp":"10 m / s ^ 2", "val":10.0}}}, "enabled":true}],
   "targetDt":{
    "exp":"0.05 s",
    "val":0.05
