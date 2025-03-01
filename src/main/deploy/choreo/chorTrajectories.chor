@@ -3,7 +3,22 @@
  "version":1,
  "type":"Swerve",
  "variables":{
-  "expressions":{},
+  "expressions":{
+   "A_L4":{
+    "dimension":"LinAcc",
+    "var":{
+     "exp":"5 m / s ^ 2",
+     "val":5.0
+    }
+   },
+   "V_L4":{
+    "dimension":"LinVel",
+    "var":{
+     "exp":"1 m / s",
+     "val":1.0
+    }
+   }
+  },
   "poses":{}
  },
  "config":{
@@ -32,8 +47,8 @@
    "val":56.69904625
   },
   "inertia":{
-   "exp":"6 kg m ^ 2",
-   "val":6.0
+   "exp":"7.3 kg m ^ 2",
+   "val":7.3
   },
   "gearing":{
    "exp":"4.71",

@@ -6,6 +6,7 @@ import com.ctre.phoenix6.configs.Slot0Configs;
 import com.ctre.phoenix6.configs.TalonFXConfiguration;
 import com.ctre.phoenix6.controls.MotionMagicVoltage;
 import com.ctre.phoenix6.hardware.TalonFX;
+import com.ctre.phoenix6.signals.NeutralModeValue;
 
 import edu.wpi.first.epilogue.Logged;
 import edu.wpi.first.math.MathUtil;
@@ -31,6 +32,7 @@ public class ElevatorSubsystem extends SubsystemBase{
         kraken = new TalonFX(ElevatorConstants.MOTOR_ID);
         
         TalonFXConfiguration configs = new TalonFXConfiguration();
+        configs.MotorOutput.NeutralMode = NeutralModeValue.Brake;
 
         Slot0Configs slot0 = configs.Slot0;
         slot0.kS = ElevatorConstants.kS;
@@ -57,7 +59,7 @@ public class ElevatorSubsystem extends SubsystemBase{
 
     public void periodic(){
         if (bottomLimitSwitch.get() && !isReset) {
-            //kraken.setPosition(0);
+            kraken.setPosition(0);
             isReset = !isReset;
         }
 
@@ -80,12 +82,21 @@ public class ElevatorSubsystem extends SubsystemBase{
         return kraken.getPosition().getValueAsDouble() * ElevatorConstants.RotationsToMeters * 2;
     }
 
+    public double getCarriageHeight(){
+        return kraken.getPosition().getValueAsDouble() * ElevatorConstants.RotationsToMeters;
+    }
+
     public double getPosition(){
         return kraken.getPosition().getValueAsDouble();
     }
 
     public double getTargetSetpoint(){
         return targetSetpoint;
+    }
+
+    public boolean atSetpoint(){
+        // targetSetpoint added instead of subtracted because targetSetpoint gets inverted later
+        return Math.abs(getCarriageHeight() + targetSetpoint) < ElevatorConstants.SETPOINT_TOLERANCE;
     }
 
     private void assignSetpoint(double assignSetpoint){
@@ -142,6 +153,18 @@ public class ElevatorSubsystem extends SubsystemBase{
     public Command slowFall(){
         return Commands.run(() -> {
             assignSetpoint(targetSetpoint -= ElevatorConstants.SETPOINT_INCREMENT);
+        });
+    }
+
+    public Command toLowRemove(double increment){
+        return Commands.runOnce(() -> {
+            assignSetpoint(ElevatorConstants.POSITION_LOW_REMOVE + increment);
+        });
+    }
+
+    public Command toHighRemove(double increment){
+        return Commands.runOnce(() -> {
+            assignSetpoint(ElevatorConstants.POSITION_HIGH_REMOVE + increment);
         });
     }
 

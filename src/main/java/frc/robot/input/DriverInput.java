@@ -1,7 +1,9 @@
 package frc.robot.input;
 
+import edu.wpi.first.math.filter.Debouncer;
 import edu.wpi.first.math.filter.SlewRateLimiter;
 import edu.wpi.first.wpilibj.GenericHID.RumbleType;
+import edu.wpi.first.wpilibj.event.EventLoop;
 import edu.wpi.first.wpilibj.XboxController;
 import frc.robot.Constants.IOConstants;
 
@@ -13,6 +15,9 @@ public class DriverInput {
     SlewRateLimiter xLimiter = new SlewRateLimiter(20);
     SlewRateLimiter yLimiter = new SlewRateLimiter(20);
     SlewRateLimiter turnLimiter = new SlewRateLimiter(20);
+
+    Debouncer lowRemoveDebouncer = new Debouncer(IOConstants.DEBOUNCE_TIME);
+    Debouncer highRemoveDebouncer = new Debouncer(IOConstants.DEBOUNCE_TIME);
 
     // input squared to improve fine movement at slow speeds
     public double driveX(){
@@ -76,8 +81,17 @@ public class DriverInput {
         controller.setRumble(RumbleType.kBothRumble, on ? 1 : 0);
     }
 
-    public boolean tempVision(){
-        return controller.getStartButton();
+    public boolean visionAlign(){
+        return controller.getRightBumperButton();
     }
+
+    public boolean lowRemove(){
+        return lowRemoveDebouncer.calculate(controller.getPOV() == 270);
+    }
+
+    public boolean highRemove(){
+        return highRemoveDebouncer.calculate(controller.getPOV() == 90);
+    }
+
 
 }
