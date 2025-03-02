@@ -174,7 +174,9 @@ public class RobotContainer {
 
     // while holding trigger, runs intake backwards for scoring
     new Trigger(() -> m_driver.score())
-      .whileTrue(m_intake.ejectCommand(IntakeConstants.EJECT_SPEED));
+      .whileTrue(m_intake.ejectCommand(IntakeConstants.EJECT_SPEED)
+      .andThen(led.shootingFillEmptyBlueCommand(0, LEDConstants.TOTAL_PIXELS, 0.03333, false)
+      .withTimeout(3)));
 
     // sends elevator and wrist to stow position
     new Trigger(() -> m_driver.stow())

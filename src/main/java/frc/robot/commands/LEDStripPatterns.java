@@ -309,7 +309,7 @@ public class LEDStripPatterns {
     }
 
     public Command coralOutChasingBlueCommand(int start, int length, double frameTime, boolean isInverted){
-        return chasingPatternAnimation(start, length, frameTime, isInverted, 0, 5, 25);
+        return chasingPatternAnimation(start, length, frameTime, isInverted, 0, 5, LEDConstants.FULL_BLUE_RGB / 2);
     }
 
     public Command fullBlueCommand(int start, int length) {

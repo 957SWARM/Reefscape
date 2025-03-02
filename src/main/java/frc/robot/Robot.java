@@ -28,7 +28,7 @@ public class Robot extends TimedRobot {
 
   private RobotContainer m_robotContainer;
 
-  private LEDStripPatterns led = m_robotContainer.led;
+  private LEDStripPatterns led;
 
   /**
    * This function is run when the robot is first started up and should be used for any
@@ -45,6 +45,7 @@ public class Robot extends TimedRobot {
     // Instantiate our RobotContainer.  This will perform all our button bindings, and put our
     // autonomous chooser on the dashboard.
     m_robotContainer = new RobotContainer();
+    led = m_robotContainer.led;
 
     FollowPathCommand.warmupCommand().schedule(); // For Path Planner. Supposedly speeds up followings paths
 
