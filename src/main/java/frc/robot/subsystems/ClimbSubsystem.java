@@ -43,13 +43,13 @@ public class ClimbSubsystem extends SubsystemBase{
     
     public Command extend(){
         return Commands.runOnce(() -> {
-            appliedVoltage = ClimberConstants.CLIMB_PULL_STRENGTH_VOLTS;
+            appliedVoltage = -ClimberConstants.CLIMB_PULL_STRENGTH_VOLTS;
         });
     }
 
     public Command retract(){
         return Commands.runOnce(() -> {
-            appliedVoltage = -ClimberConstants.CLIMB_PULL_STRENGTH_VOLTS;
+            appliedVoltage = ClimberConstants.CLIMB_PULL_STRENGTH_VOLTS;
         });
     }    
 }

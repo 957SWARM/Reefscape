@@ -101,7 +101,7 @@ public class RobotContainer {
       .withTimeout(.75)
       .andThen(Commands.run(() -> m_driver.setRumble(false))));
 
-    // stops intake when coral leaves
+    // stops intake when coral leavese
     // Trigger coralLeft = new Trigger(() -> !m_intake.checkToF() && m_intake.getVoltage() == IntakeConstants.EJECT_SPEED
     // && !DriverStation.isAutonomous());
     // coralLeft.onTrue(new WaitCommand(.25).andThen(m_intake.stopIntakeCommand()).andThen(Sequencing.stow(m_elevator, m_wrist, m_intake)));
