@@ -101,7 +101,7 @@ public class RobotContainer {
       .withTimeout(.75)
       .andThen(Commands.run(() -> m_driver.setRumble(false))));
 
-    // stops intake when coral leaves
+    // stops intake when coral leavese
     // Trigger coralLeft = new Trigger(() -> !m_intake.checkToF() && m_intake.getVoltage() == IntakeConstants.EJECT_SPEED
     // && !DriverStation.isAutonomous());
     // coralLeft.onTrue(new WaitCommand(.25).andThen(m_intake.stopIntakeCommand()).andThen(Sequencing.stow(m_elevator, m_wrist, m_intake)));
@@ -125,8 +125,9 @@ public class RobotContainer {
                 m_elevator.getHeight()),
             m_robotDrive));
 
-    //m_wrist.setDefaultCommand(m_wrist.toStow());
+    // m_wrist.setDefaultCommand(m_wrist.toStow());
 
+    led.scheduleDefaultCommand(led.blueWavesLightCommand(0, LEDConstants.TOTAL_PIXELS, 0.1, false));
   }
 
   /**

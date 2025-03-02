@@ -173,7 +173,7 @@ public final class Constants {
     public static final double L1_ANGLE = 0;
     public static final double L2_ANGLE = 0.91;
     public static final double L3_ANGLE = L2_ANGLE;
-    public static final double L4_ANGLE = 0.9;
+    public static final double L4_ANGLE = 0.905;
     public static final double STOW_ANGLE = 0.165;
     public static final double INTAKE_ANGLE = 0.11;
 
@@ -191,9 +191,9 @@ public final class Constants {
   public static final class LEDConstants {
     public static final int TOTAL_PIXELS = 60;
 
-    public static final int FULL_RED_RGB = 0;
-    public static final int FULL_GREEN_RGB = 0;
-    public static final int FULL_BLUE_RGB = 0;
+    public static final int FULL_RED_RGB = 255;
+    public static final int FULL_GREEN_RGB = 255;
+    public static final int FULL_BLUE_RGB = 255;
   }
 
   public static final class IntakeConstants {
@@ -241,8 +241,8 @@ public final class Constants {
   }
 
   public static final class VisionConstants {
-    public static final Pose3d LEFT_REEF = new Pose3d(new Translation3d(-.215, 0, -.63), new Rotation3d());
-    public static final Pose3d RIGHT_REEF = new Pose3d(new Translation3d(.125, 0, -.63), new Rotation3d());
+    public static final Pose3d LEFT_REEF = new Pose3d(new Translation3d(-.215, 0, -.61), new Rotation3d());
+    public static final Pose3d RIGHT_REEF = new Pose3d(new Translation3d(.125, 0, -.61), new Rotation3d());
     public static final List<Pose3d> REEF_POSES = Arrays.asList(LEFT_REEF, RIGHT_REEF);
     public static final List<Double> REEF_TAG_IDS = Arrays.asList(
       (double)6, 
