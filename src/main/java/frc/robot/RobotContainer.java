@@ -77,6 +77,7 @@ public class RobotContainer {
     NamedCommands.registerCommand("Go L2", Sequencing.L2(m_elevator, m_wrist, m_intake));
     NamedCommands.registerCommand("Station Align", stationAlign.alignNearestStation(m_robotDrive));
     NamedCommands.registerCommand("Intake", Sequencing.autoIntake(m_elevator, m_wrist, m_intake));
+    NamedCommands.registerCommand("Quick L4", Sequencing.quickL4(m_elevator, m_wrist, m_intake));
 
     autoChooser = AutoBuilder.buildAutoChooser();
     SmartDashboard.putData("Auto Chooser", autoChooser);
