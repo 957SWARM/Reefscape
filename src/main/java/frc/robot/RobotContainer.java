@@ -18,6 +18,7 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.RunCommand;
+import edu.wpi.first.wpilibj2.command.WaitCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.Constants.ElevatorConstants;
@@ -102,16 +103,20 @@ public class RobotContainer {
       .andThen(Commands.run(() -> m_driver.setRumble(false))));
 
     // stops intake when coral leaves
-    // Trigger coralLeft = new Trigger(() -> !m_intake.checkToF() && m_intake.getVoltage() == IntakeConstants.EJECT_SPEED
-    // && !DriverStation.isAutonomous());
-    // coralLeft.onTrue(new WaitCommand(.25).andThen(m_intake.stopIntakeCommand()).andThen(Sequencing.stow(m_elevator, m_wrist, m_intake)));
+    Trigger coralOut = new Trigger(() -> !m_intake.checkToF() && m_intake.getVoltage() == IntakeConstants.EJECT_SPEED
+    && !DriverStation.isAutonomous());
+    coralOut.onTrue(new WaitCommand(.25)
+    .andThen(m_intake.stopIntakeCommand())
+    .andThen(Sequencing.stow(m_elevator, m_wrist, m_intake))
+    .andThen(led.coralOutChasingBlueCommand(0, LEDConstants.TOTAL_PIXELS, 0.1, false).withTimeout(3)));
 
     // automatically sends robot to stow after intaking
     Trigger coralIn = new Trigger(
       () -> m_elevator.getTargetSetpoint() == ElevatorConstants.POSITION_INTAKE 
       && m_wrist.getTargetSetpoint() == WristConstants.INTAKE_ANGLE
       && m_intake.checkToF() && !DriverStation.isAutonomous());
-    coralIn.onTrue(Sequencing.stow(m_elevator, m_wrist, m_intake));
+    coralIn.onTrue(Sequencing.stow(m_elevator, m_wrist, m_intake)
+      .andThen(led.coralReceivedFlashingBlueCommand(0, LEDConstants.TOTAL_PIXELS).withTimeout(3)));
 
     // Configure default commands
 
@@ -126,8 +131,6 @@ public class RobotContainer {
             m_robotDrive));
 
     // m_wrist.setDefaultCommand(m_wrist.toStow());
-
-    led.scheduleDefaultCommand(led.blueWavesLightCommand(0, LEDConstants.TOTAL_PIXELS, 0.1, false));
   }
 
   /**
@@ -150,7 +153,8 @@ public class RobotContainer {
 
     // sends elevator, wrist, and intake ready to take in coral from loading station
     new Trigger(() -> m_driver.intake())
-      .onTrue(Sequencing.intake(m_elevator, m_wrist, m_intake));
+      .onTrue(Sequencing.intake(m_elevator, m_wrist, m_intake)
+      .andThen(led.intakeBreatheBlueCommand(0, LEDConstants.TOTAL_PIXELS, 0.0333, false).withTimeout(3)));
 
     // sends elevator and wrist to L1 position
     new Trigger(() -> m_driver.L1())

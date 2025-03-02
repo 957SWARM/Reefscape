@@ -13,6 +13,8 @@ import edu.wpi.first.wpilibj.DataLogManager;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import frc.robot.Constants.LEDConstants;
+import frc.robot.commands.LEDStripPatterns;
 
 /**
  * The VM is configured to automatically run this class, and to call the functions corresponding to
@@ -25,6 +27,8 @@ public class Robot extends TimedRobot {
   private Command m_autonomousCommand;
 
   private RobotContainer m_robotContainer;
+
+  private LEDStripPatterns led = m_robotContainer.led;
 
   /**
    * This function is run when the robot is first started up and should be used for any
@@ -46,6 +50,7 @@ public class Robot extends TimedRobot {
 
     CameraServer.startAutomaticCapture().setResolution(240, 180); // For end-effector camera
     
+    led.scheduleDefaultCommand(led.allianceColorBreatheCommand(0, LEDConstants.TOTAL_PIXELS, 0.03333, false));
   }
 
   /**
@@ -90,6 +95,8 @@ public class Robot extends TimedRobot {
     if (m_autonomousCommand != null) {
       m_autonomousCommand.schedule();
     }
+
+    led.scheduleDefaultCommand(led.autoPatternChasingSingleBlueCommand(0, LEDConstants.TOTAL_PIXELS, 0.03333, false));
   }
 
   /** This function is called periodically during autonomous. */
@@ -105,6 +112,8 @@ public class Robot extends TimedRobot {
     if (m_autonomousCommand != null) {
       m_autonomousCommand.cancel();
     }
+    
+    led.scheduleDefaultCommand(led.defaultBlueWavesLightCommand(0, LEDConstants.TOTAL_PIXELS, 0.1, false));
   }
 
   /** This function is called periodically during operator control. */
