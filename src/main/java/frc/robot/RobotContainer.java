@@ -24,6 +24,7 @@ import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.Constants.ElevatorConstants;
 import frc.robot.Constants.IOConstants;
 import frc.robot.Constants.IntakeConstants;
+import frc.robot.Constants.LEDConstants;
 import frc.robot.Constants.WristConstants;
 import frc.robot.commands.LEDStripPatterns;
 import frc.robot.commands.ReefAlign;
@@ -69,7 +70,7 @@ public class RobotContainer {
 
     NamedCommands.registerCommand("Go L1", Sequencing.L1(m_elevator, m_wrist, m_intake));
     NamedCommands.registerCommand("Stow", Sequencing.stow(m_elevator, m_wrist, m_intake));
-    NamedCommands.registerCommand("High Stow", Sequencing.autoStow(m_elevator, m_wrist, m_intake));
+    NamedCommands.registerCommand("High Stow", Sequencing.highStow(m_elevator, m_wrist, m_intake));
     NamedCommands.registerCommand("Score", m_intake.autoEject(IntakeConstants.EJECT_SPEED));
     NamedCommands.registerCommand("Reef Align", reefAlign.alignNearestReef(m_robotDrive));
     NamedCommands.registerCommand("Go L4", Sequencing.L4(m_elevator, m_wrist, m_intake));
@@ -127,7 +128,7 @@ public class RobotContainer {
 
     // m_wrist.setDefaultCommand(m_wrist.toStow());
 
-    led.scheduleDefaultCommand(led.blueWavesLightCommand(0, LEDConstants.TOTAL_PIXELS, 0.1, false));
+    //led.scheduleDefaultCommand(led.blueWavesLightCommand(0, LEDConstants.TOTAL_PIXELS, 0.1, false));
   }
 
   /**

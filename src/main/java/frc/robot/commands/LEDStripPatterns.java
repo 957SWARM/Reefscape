@@ -12,6 +12,7 @@ import frc.robot.subsystems.LED;
 
 public class LEDStripPatterns {
 
+    /*
     LED led;
     int frame;
     Timer timer;
@@ -375,4 +376,5 @@ public class LEDStripPatterns {
                 0,
                 0);
     }
+    */
 }

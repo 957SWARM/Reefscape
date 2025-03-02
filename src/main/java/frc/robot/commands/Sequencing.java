@@ -27,7 +27,7 @@ public class Sequencing {
         .alongWith(wrist.toIntake())
         .alongWith(intake.intakeCommand(IntakeConstants.INTAKE_SPEED))
         .andThen(new WaitUntilCommand(() -> intake.checkToF()))
-        .andThen(autoStow(elevator, wrist, intake));
+        .andThen(highStow(elevator, wrist, intake));
     }
 
     public static Command L1(ElevatorSubsystem elevator, WristSubsystem wrist, IntakeSubsystem intake){
@@ -58,45 +58,6 @@ public class Sequencing {
         .andThen(new WaitUntilCommand(()-> wrist.atSetpoint() && elevator.atSetpoint()));
     }
 
-    // fancy sequencing. Coordinates elevator and wrist to Level, then scores coral, then stows
-
-    // full automatic L1 sequence
-    public static Command L1Fancy(ElevatorSubsystem elevator, WristSubsystem wrist, IntakeSubsystem intake){
-        return L1(elevator, wrist, intake)  // brings elevator and wrist to L1
-            .andThen(intake.ejectCommand(IntakeConstants.EJECT_SPEED))  // scores coral
-            .andThen(new WaitUntilCommand(() -> !intake.checkToF()))    // waits until coral leaves intake
-            .andThen(new WaitCommand(SequencingConstants.STOW_DELAY))   // waits a bit to make sure coral is out of intake
-            .andThen(stow(elevator, wrist, intake));    // stows elevator and wrist
-    }
-
-    // full automatic L2 sequence
-    public static Command L2Fancy(ElevatorSubsystem elevator, WristSubsystem wrist, IntakeSubsystem intake){
-        return L2(elevator, wrist, intake)
-            .andThen(intake.ejectCommand(IntakeConstants.EJECT_SPEED))
-            .andThen(new WaitUntilCommand(() -> !intake.checkToF()))
-            .andThen(new WaitCommand(SequencingConstants.STOW_DELAY))
-            .andThen(stow(elevator, wrist, intake));
-    }
-
-    // full automatic L3 sequence
-    public static Command L3Fancy(ElevatorSubsystem elevator, WristSubsystem wrist, IntakeSubsystem intake){
-        return L3(elevator, wrist, intake)
-            .andThen(intake.ejectCommand(IntakeConstants.EJECT_SPEED))
-            .andThen(new WaitUntilCommand(() -> !intake.checkToF()))
-            .andThen(new WaitCommand(SequencingConstants.STOW_DELAY))
-            .andThen(stow(elevator, wrist, intake));
-    }
-
-    // full automatic L4 sequence
-    public static Command L4Fancy(ElevatorSubsystem elevator, WristSubsystem wrist, IntakeSubsystem intake){
-        return L4(elevator, wrist, intake)
-            .andThen(intake.ejectCommand(IntakeConstants.EJECT_SPEED))
-            .andThen(new WaitUntilCommand(() -> !intake.checkToF()))
-            .andThen(new WaitCommand(SequencingConstants.STOW_DELAY))
-            .andThen(stow(elevator, wrist, intake));
-    }
-
-
     public static Command stow(ElevatorSubsystem elevator, WristSubsystem wrist, IntakeSubsystem intake){
         return elevator.toStow()
         .alongWith(wrist.toStow())
@@ -104,10 +65,18 @@ public class Sequencing {
         .andThen(new WaitUntilCommand(() -> elevator.atSetpoint() && wrist.atSetpoint()));
     }
 
-    public static Command autoStow(ElevatorSubsystem elevator, WristSubsystem wrist, IntakeSubsystem intake){
+    public static Command highStow(ElevatorSubsystem elevator, WristSubsystem wrist, IntakeSubsystem intake){
         return elevator.toL2()
         .alongWith(wrist.toStow())
         .alongWith(intake.stopIntakeCommand());
+    }
+
+    // for use in auto when going up from high stow
+    public static Command quickL4(ElevatorSubsystem elevator, WristSubsystem wrist, IntakeSubsystem intake){
+        return elevator.toL4()
+        .alongWith(new WaitCommand(SequencingConstants.QUICK_L4_WRIST_DELAY).andThen(wrist.toL4()))
+        .alongWith(intake.stopIntakeCommand())
+        .andThen(new WaitUntilCommand(()-> wrist.atSetpoint() && elevator.atSetpoint()));
     }
 
     public static Command removeLow(ElevatorSubsystem elevator, WristSubsystem wrist, DriveSubsystem drive){
