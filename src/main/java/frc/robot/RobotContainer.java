@@ -125,8 +125,9 @@ public class RobotContainer {
                 m_elevator.getHeight()),
             m_robotDrive));
 
-    //m_wrist.setDefaultCommand(m_wrist.toStow());
+    // m_wrist.setDefaultCommand(m_wrist.toStow());
 
+    led.scheduleDefaultCommand(led.blueWavesLightCommand(0, LEDConstants.TOTAL_PIXELS, 0.1, false));
   }
 
   /**
