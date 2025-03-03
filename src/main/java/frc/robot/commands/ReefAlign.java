@@ -41,9 +41,47 @@ public class ReefAlign {
     public Command alignNearestReef(DriveSubsystem drive){
 
         updatePoses();
+        
 
         return Commands.run(() -> {
+            
+
             if(checkReefTag()){
+                drive.drive(getXOutput(), getYOutput(), getRotOutput(), false, 0);
+            }
+            else{
+                drive.drive(0, 0, 0, false, 0);
+            }
+        }, drive).until(() -> checkAligned(drive));
+    }
+
+    public Command alignRightReef(DriveSubsystem drive){
+
+        updatePoses();
+        nearestReefPose = VisionConstants.RIGHT_REEF;
+
+        return Commands.run(() -> {
+
+            if(checkReefTag()){
+                drive.drive(getXOutput(), getYOutput(), getRotOutput(), false, 0);
+            }
+            else{
+                drive.drive(0, 0, 0, false, 0);
+            }
+        }, drive).until(() -> checkAligned(drive));
+    }
+
+    public Command alignLeftReef(DriveSubsystem drive){
+
+        updatePoses();
+        nearestReefPose = VisionConstants.LEFT_REEF;
+
+        return Commands.run(() -> {
+
+            
+
+            if(checkReefTag()){
+
                 drive.drive(getXOutput(), getYOutput(), getRotOutput(), false, 0);
             }
             else{

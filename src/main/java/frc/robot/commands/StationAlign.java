@@ -5,11 +5,9 @@ import java.util.List;
 import edu.wpi.first.epilogue.Logged;
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.controller.PIDController;
-import edu.wpi.first.math.filter.Debouncer;
-import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Pose3d;
-import edu.wpi.first.math.geometry.Transform2d;
 import edu.wpi.first.math.util.Units;
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import frc.robot.Constants.VisionConstants;
@@ -36,6 +34,9 @@ public class StationAlign {
 
     Pose3d currentPose;
     Pose3d nearestStationPose;
+
+    Timer alignTimer = new Timer();
+    boolean timerReset = false;
 
     public StationAlign(){}
     
@@ -85,6 +86,7 @@ public class StationAlign {
     }
 
     public double getXDiff(){
+        
         double robotX = currentPose.getZ();
         double targetX = nearestStationPose.getZ();
         //return -(targetX - robotX);
@@ -105,6 +107,19 @@ public class StationAlign {
     }
 
     public void updatePoses(){
+        // if(!LimelightHelpers.getTV(VisionConstants.STATION_LIMELIGHT_NAME) && !timerReset){
+        //     timerReset = true;
+        //     alignTimer.reset();
+        // }
+        // if((alignTimer.get() >= VisionConstants.STATION_DROP_TOLERANCE && timerReset) || LimelightHelpers.getTV(VisionConstants.STATION_LIMELIGHT_NAME)){
+        //     timerReset = false;
+        //     currentPose = getCurrentPose();
+        //     nearestStationPose = getNearestPose();
+        // }
+        // if (currentPose == null || nearestStationPose == null){
+        //     currentPose = new Pose3d();
+        //     nearestStationPose = new Pose3d();
+        // }
         currentPose = getCurrentPose();
         nearestStationPose = getNearestPose();
     }

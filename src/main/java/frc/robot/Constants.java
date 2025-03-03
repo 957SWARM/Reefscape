@@ -237,6 +237,12 @@ public final class Constants {
     public static final int MOTOR_CAN_ID = 11;
 
     public static final int CURRENT_LIMIT = 30;
+
+    // in rotations of the motor
+    public static final double MAX_EXTENSION = -47; //-53
+    public static final double MAX_RETRACTION = 125; //123
+
+    public static final int SENSOR_PORT = 1;
     
   }
 
@@ -259,8 +265,8 @@ public final class Constants {
       (double)22
     );
 
-    public static final Pose3d LEFT_STATION = new Pose3d(new Translation3d(-.6, 0, -.6), new Rotation3d());
-    public static final Pose3d MID_STATION = new Pose3d(new Translation3d(0, 0, -.6), new Rotation3d());
+    public static final Pose3d LEFT_STATION = new Pose3d(new Translation3d(-.6, 0, -.65), new Rotation3d());
+    public static final Pose3d MID_STATION = new Pose3d(new Translation3d(0, 0, -.65), new Rotation3d());
     public static final List<Pose3d> STATION_POSES = Arrays.asList(LEFT_STATION, MID_STATION);
     public static final List<Double> STATION_TAG_IDS = Arrays.asList(
       (double)1, 
@@ -295,6 +301,8 @@ public final class Constants {
     public static final double SPEED_TOLERANCE = 0.1; //METERS PER SECOND
 
     public static final double STATION_TRANSLATION_TOLERANCE = 0.040;
+
+    public static final double STATION_DROP_TOLERANCE = 0.1; //SECONDS
   }
 
   public static final class SequencingConstants {
@@ -304,7 +312,7 @@ public final class Constants {
     public static final double L3_WRIST_DELAY = .3;
     public static final double L4_WRIST_DELAY = .8;
 
-    public static final double QUICK_L4_WRIST_DELAY = 0.55;
+    public static final double QUICK_L4_WRIST_DELAY = 0.45;
   }
 
 }
