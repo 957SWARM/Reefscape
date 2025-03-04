@@ -14,9 +14,9 @@ public class LEDStripPatterns {
 
     /*
     LED led;
-    int frame;
     Timer timer;
-
+    
+    int frame;
     double time;
 
     public LEDStripPatterns() {
@@ -64,7 +64,7 @@ public class LEDStripPatterns {
         }
     }
 
-    public Command getBlankPatternCommand(int start, int length) {
+    public Command blankPatternAnimation(int start, int length) {
         return Commands.run(
                 () -> {
                     for (int i = start; i < start + length; i++) {
@@ -85,7 +85,7 @@ public class LEDStripPatterns {
                 led);
     }
 
-    public Command flashingColorCommand(int start, int length, int r, int g, int b){
+    public Command flashingColorAnimation(int start, int length, int r, int g, int b){
         return Commands.run(
                 () -> {
                     // Sets LEDs to flash with the RSL light
@@ -130,7 +130,7 @@ public class LEDStripPatterns {
     }
 
     // Fast command; run with 0.0333 frameTime
-    public Command chasingSinglePatternCommand(int start, int length, double frameTime, boolean isInverted, int r, int g, int b) {
+    public Command chasingSinglePatternAnimation(int start, int length, double frameTime, boolean isInverted, int r, int g, int b) {
         return Commands.run(
                 () -> {
                     int currentFrame = frame;
@@ -246,14 +246,14 @@ public class LEDStripPatterns {
                 led);
     }
 
-    // Fast command; run with 0.0333 frameTime 
-    public Command fillThenEmptyCommand(int start, int length, double frameTime, boolean isInverted, int r, int g, int b) {
+    // Fast command; run with 0.01 frameTime 
+    public Command fillThenEmptyAnimation(int start, int length, double frameTime, boolean isInverted, int r, int g, int b) {
         return Commands.run(
                 () -> {
                     int currentFrame = frame;
                     if (isInverted) currentFrame = 2 * length - currentFrame - 1;
                     boolean isFirstHalf;
-                    
+
                     for (int i = start; i < start + length; i++) {
                         isFirstHalf = currentFrame < (length);
                         if (i == currentFrame % length) {
@@ -277,7 +277,8 @@ public class LEDStripPatterns {
                 led);
     }
 
-    public Command breathingPatternCommand(int start, int length, double breathRate, boolean isInverted, int r, int g, int b){
+    // Fast command; run with 0.0333 breathRate
+    public Command breathingPatternAnimation(int start, int length, double breathRate, boolean isInverted, int r, int g, int b){
         return Commands.run(
             () -> {
                 time++;
@@ -290,33 +291,37 @@ public class LEDStripPatterns {
         led);
     }
 
-    public Command blueWavesLightCommand(int start, int length, double frameTime, boolean isInverted) {
+    public Command defaultBlueWavesLightCommand(int start, int length, double frameTime, boolean isInverted) {
         return chasingAlernatingColorAnimation(
             0, LEDConstants.TOTAL_PIXELS, 0, 118, 147, 0, 0, LEDConstants.FULL_BLUE_RGB / 2, 
             0.1, isInverted);
     }
 
+    public Command intakeBreatheBlueCommand(int start, int length, double breathRate, boolean isInverted){
+        return breathingPatternAnimation(start, length, breathRate, isInverted, 0, 45, 225);
+    }
+
+    public Command shootingFillEmptyBlueCommand(int start, int length, double frameTime, boolean isInverted){
+        return fillThenEmptyAnimation(start, length, frameTime, isInverted, 0, 5, LEDConstants.FULL_BLUE_RGB / 2);
+    }
+
+    public Command coralReceivedFlashingBlueCommand(int start, int length){
+        return flashingColorAnimation(start, length, 0, 118, 147);
+    }
+
+    public Command coralOutChasingBlueCommand(int start, int length, double frameTime, boolean isInverted){
+        return chasingPatternAnimation(start, length, frameTime, isInverted, 0, 5, LEDConstants.FULL_BLUE_RGB / 2);
+    }
+
     public Command fullBlueCommand(int start, int length) {
-        return constantColorAnimation(start, length, 0, 5, 25);
+        return constantColorAnimation(start, length, 0, 5, LEDConstants.FULL_BLUE_RGB / 2);
     }
 
-    public Command chasingBlueCommand(int start, int length, double frameTime, boolean isInverted){
-        return chasingPatternAnimation(start, length, frameTime, isInverted, 0, 5, 25);
+    public Command autoPatternChasingSingleBlueCommand(int start, int length, double frameTime, boolean isInverted){
+        return chasingSinglePatternAnimation(start, length, frameTime, isInverted, 0, 5, 25);
     }
 
-    public Command chasingSingleBlueCommand(int start, int length, double frameTime, boolean isInverted){
-        return chasingSinglePatternCommand(start, length, frameTime, isInverted, 0, 5, 25);
-    }
-
-    public Command fillEmptyBlueCommand(int start, int length, double frameTime, boolean isInverted){
-        return fillThenEmptyCommand(start, length, frameTime, isInverted, 0, 5, 25);
-    }
-
-    public Command breatheBlueCommand(int start, int length, double breathRate, boolean isInverted){
-        return breathingPatternCommand(start, length, breathRate, isInverted, 0, 45, 225);
-    }
-
-    public Command allianceColor(int start, int length) {
+    public Command allianceColorCommand(int start, int length) {
         if (DriverStation.getAlliance().get() == Alliance.Red) {
             return constantColorAnimation(start, length, LEDConstants.FULL_RED_RGB, 0, 0);
         } else {
@@ -324,7 +329,7 @@ public class LEDStripPatterns {
         }
     }
 
-    public Command boltAllianceColor(int start, int length, double frameTime, boolean isInverted) {
+    public Command boltAllianceColorCommand(int start, int length, double frameTime, boolean isInverted) {
         if (DriverStation.getAlliance().get() == Alliance.Red) {
             return chasingPatternAnimation(
                     start, length, frameTime, isInverted, LEDConstants.FULL_RED_RGB, 0, 0);
@@ -333,7 +338,7 @@ public class LEDStripPatterns {
         }
     }
 
-    public Command blockAllianceColor(int start, int length, double frameTime, boolean isInverted) {
+    public Command blockAllianceColorCommand(int start, int length, double frameTime, boolean isInverted) {
         if (DriverStation.getAlliance().get() == Alliance.Red) {
             return chasingBlocksAnimation(
                     start, length, frameTime, isInverted, LEDConstants.FULL_RED_RGB, 0, 0);
@@ -342,19 +347,12 @@ public class LEDStripPatterns {
         }
     }
 
-    public Command noteInRobotCommand(int start, int length, double frameTime, boolean isInverted) {
-        return chasingBlocksAnimation(
-                start, length, frameTime, isInverted, LEDConstants.FULL_RED_RGB, 40, 0);
-    }
-
-    public Command notePickupCommand(int start, int length) {
-        return constantColorAnimation(start, length, LEDConstants.FULL_RED_RGB, 40, 0);
-    }
-
-    public Command noteShootingCommand(
-            int start, int length, double frameTime, boolean isInverted) {
-        return chasingPatternAnimation(
-                start, length, frameTime, isInverted, LEDConstants.FULL_RED_RGB, 40, 0);
+    public Command allianceColorBreatheCommand(int start, int length, double breathRate, boolean isInverted) {
+        if (DriverStation.getAlliance().get() == Alliance.Red) {
+            return breathingPatternAnimation(start, length, breathRate, isInverted, LEDConstants.FULL_RED_RGB, 0, 0);
+        } else {
+            return breathingPatternAnimation(start, length, breathRate, isInverted, 0, 0, LEDConstants.FULL_BLUE_RGB);
+        }
     }
 
     public Command fullGreenCommand(int start, int length) {
@@ -372,9 +370,9 @@ public class LEDStripPatterns {
                 LEDConstants.TOTAL_PIXELS,
                 frameTime,
                 isInverted,
-                LEDConstants.FULL_RED_RGB,
                 0,
-                0);
+                0,
+                LEDConstants.FULL_BLUE_RGB);
     }
     */
 }
