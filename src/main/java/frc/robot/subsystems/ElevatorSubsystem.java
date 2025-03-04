@@ -60,6 +60,7 @@ public class ElevatorSubsystem extends SubsystemBase{
     public void periodic(){
         if (bottomLimitSwitch.get() && !isReset) {
             kraken.setPosition(0);
+            targetSetpoint = ElevatorConstants.POSITION_GROUND;
             isReset = !isReset;
         }
 
@@ -150,7 +151,7 @@ public class ElevatorSubsystem extends SubsystemBase{
         });
     }
 
-    public Command slowFall(){
+    public Command fall(){
         return Commands.run(() -> {
             assignSetpoint(targetSetpoint -= ElevatorConstants.SETPOINT_INCREMENT);
         });

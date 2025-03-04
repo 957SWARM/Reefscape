@@ -31,18 +31,20 @@ public class ReefAlign {
         VisionConstants.REEF_ROTATION_D
     );
 
-    
-
     Pose3d currentPose;
     Pose3d nearestReefPose;
+
+    boolean biasLeft;
+    boolean biasRight;
 
     public ReefAlign(){}
     
     public Command alignNearestReef(DriveSubsystem drive){
 
+        biasLeft = false;
+        biasRight = false;
         updatePoses();
         
-
         return Commands.run(() -> {
             
 
@@ -57,8 +59,8 @@ public class ReefAlign {
 
     public Command alignRightReef(DriveSubsystem drive){
 
+        biasRight = true;
         updatePoses();
-        nearestReefPose = VisionConstants.RIGHT_REEF;
 
         return Commands.run(() -> {
 
@@ -73,8 +75,8 @@ public class ReefAlign {
 
     public Command alignLeftReef(DriveSubsystem drive){
 
+        biasLeft = true;
         updatePoses();
-        nearestReefPose = VisionConstants.LEFT_REEF;
 
         return Commands.run(() -> {
 
@@ -152,7 +154,17 @@ public class ReefAlign {
 
     public void updatePoses(){
         currentPose = getCurrentPose();
-        nearestReefPose = getNearestPose();
+        if(biasRight){
+            biasLeft = false;
+            nearestReefPose = VisionConstants.RIGHT_REEF;
+        }
+        else if(biasLeft){
+            biasRight = false;
+            nearestReefPose = VisionConstants.LEFT_REEF;
+        }else{
+            nearestReefPose = getNearestPose();
+        }
+        
     }
 
     public Pose3d getCurrentPose(){
@@ -167,17 +179,13 @@ public class ReefAlign {
     //MINIMIZES TARGET SPACE X: LEFT/RIGHT
     public Pose3d findNearestPose(Pose3d current, List<Pose3d> poses){
         Pose3d nearestPose = null;
-        double minDistance = Double.MAX_VALUE;
 
-        for (Pose3d pose : poses){
-            double distance = pose.getX()-currentPose.getX();
-
-            if (Math.abs(distance) < Math.abs(minDistance)){
-                minDistance = distance;
-                nearestPose = pose;
-            }
+        if(currentPose.getX() > VisionConstants.REEF_CENTER_OFFSET){
+            nearestPose = VisionConstants.RIGHT_REEF;
+        }else{
+            nearestPose = VisionConstants.LEFT_REEF;
         }
-
+    
         return nearestPose;
     }
 

@@ -69,14 +69,6 @@ public class DriverInput {
         return controller.getLeftTriggerAxis() > IOConstants.TRIGGER_THRESHOLD;
     }
 
-    public boolean deployClimb(){
-        return controller.getPOV() == 0;
-    }
-
-    public boolean retractClimb(){
-        return controller.getPOV() == 180;
-    }
-
     public void setRumble(boolean on) {
         controller.setRumble(RumbleType.kBothRumble, on ? 1 : 0);
     }
@@ -93,5 +85,11 @@ public class DriverInput {
         return highRemoveDebouncer.calculate(controller.getPOV() == 90);
     }
 
+    public boolean deployClimb(){
+        return controller.getPOV() == 0;
+    }
 
+    public boolean retractClimb(){
+        return controller.getPOV() == 180;
+    }
 }

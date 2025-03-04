@@ -18,19 +18,18 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.RunCommand;
-import edu.wpi.first.wpilibj2.command.WaitCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.Constants.ElevatorConstants;
 import frc.robot.Constants.IOConstants;
 import frc.robot.Constants.IntakeConstants;
-import frc.robot.Constants.LEDConstants;
 import frc.robot.Constants.WristConstants;
 import frc.robot.commands.LEDStripPatterns;
 import frc.robot.commands.ReefAlign;
 import frc.robot.commands.Sequencing;
 import frc.robot.commands.StationAlign;
 import frc.robot.input.DriverInput;
+import frc.robot.input.OperatorInput;
 import frc.robot.subsystems.ClimbSubsystem;
 import frc.robot.subsystems.ElevatorSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
@@ -62,6 +61,7 @@ public class RobotContainer {
 
   // Controllers
   DriverInput m_driver = new DriverInput();
+  OperatorInput m_operator = new OperatorInput();
 
   /**
    * The container for the robot. Contains subsystems, OI devices, and commands.
@@ -72,8 +72,8 @@ public class RobotContainer {
     NamedCommands.registerCommand("Stow", Sequencing.stow(m_elevator, m_wrist, m_intake));
     NamedCommands.registerCommand("High Stow", Sequencing.highStow(m_elevator, m_wrist, m_intake));
     NamedCommands.registerCommand("Score", m_intake.autoEject(IntakeConstants.EJECT_SPEED));
-    NamedCommands.registerCommand("Right Reef Align", reefAlign.alignRightReef(m_robotDrive));
-    NamedCommands.registerCommand("Left Reef Align", reefAlign.alignLeftReef(m_robotDrive));
+    // NamedCommands.registerCommand("Right Reef Align", reefAlign.alignRightReef(m_robotDrive));
+    // NamedCommands.registerCommand("Left Reef Align", reefAlign.alignLeftReef(m_robotDrive));
     NamedCommands.registerCommand("Near Reef Align", reefAlign.alignNearestReef(m_robotDrive));
     NamedCommands.registerCommand("Go L4", Sequencing.L4(m_elevator, m_wrist, m_intake));
     NamedCommands.registerCommand("Go L2", Sequencing.L2(m_elevator, m_wrist, m_intake));
@@ -189,16 +189,6 @@ public class RobotContainer {
     .whileTrue(stationAlign.alignNearestStation(m_robotDrive)
     .andThen(Sequencing.intake(m_elevator, m_wrist, m_intake)
     .alongWith(Commands.run(() -> m_robotDrive.setX()))));
-    
-    // climbs while up on d-pad is held
-    new Trigger(() -> m_driver.deployClimb())
-      .whileTrue(m_climber.extend())
-      .onFalse(m_climber.stopCommand());
-      
-    // retracts climber while down on d-pad is held
-    new Trigger(() -> m_driver.retractClimb())
-      .whileTrue(m_climber.retract())
-      .onFalse(m_climber.stopCommand());
 
     new Trigger(() -> m_driver.lowRemove())
       .whileTrue(Sequencing.removeLow(m_elevator, m_wrist, m_robotDrive))
@@ -207,6 +197,20 @@ public class RobotContainer {
       new Trigger(() -> m_driver.highRemove())
       .whileTrue(Sequencing.removeHigh(m_elevator, m_wrist, m_robotDrive))
       .onFalse(Sequencing.stow(m_elevator, m_wrist, m_intake));
+
+      // OPERATOR CONTROLS
+      new Trigger(() -> m_operator.fall())
+        .whileTrue(m_elevator.fall());
+
+      // climbs while up on d-pad is held
+    new Trigger(() -> m_operator.deployClimb() || m_driver.deployClimb())
+    .whileTrue(m_climber.extend())
+    .onFalse(m_climber.stopCommand());
+    
+  // retracts climber while down on d-pad is held
+  new Trigger(() -> m_operator.retractClimb() || m_driver.retractClimb())
+    .whileTrue(m_climber.retract())
+    .onFalse(m_climber.stopCommand());
   }
 
   public void configureNamedCommands(){
