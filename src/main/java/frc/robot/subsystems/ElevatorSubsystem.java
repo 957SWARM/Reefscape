@@ -100,6 +100,20 @@ public class ElevatorSubsystem extends SubsystemBase{
         return Math.abs(getCarriageHeight() + targetSetpoint) < ElevatorConstants.SETPOINT_TOLERANCE;
     }
 
+    public boolean isStalled(){
+        return (!atSetpoint() 
+        && Math.abs(kraken.getVelocity().getValueAsDouble()) <= 0.5
+        && Math.abs(kraken.getStatorCurrent().getValueAsDouble()) >= 20);
+    }
+
+    public double getVelocity(){
+        return kraken.getVelocity().getValueAsDouble();
+    }
+
+    public double getAppliedVoltage(){
+        return kraken.getMotorVoltage().getValueAsDouble();
+    }
+
     private void assignSetpoint(double assignSetpoint){
         // make sure setpoint is within safe range
         targetSetpoint = MathUtil.clamp(

@@ -112,7 +112,7 @@
                     {
                       "type": "named",
                       "data": {
-                        "name": "Station Align"
+                        "name": "Center Station Align"
                       }
                     }
                   ]
@@ -202,7 +202,7 @@
                     {
                       "type": "named",
                       "data": {
-                        "name": "Station Align"
+                        "name": "Center Station Align"
                       }
                     }
                   ]

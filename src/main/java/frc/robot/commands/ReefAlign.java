@@ -41,12 +41,13 @@ public class ReefAlign {
     
     public Command alignNearestReef(DriveSubsystem drive){
 
-        biasLeft = false;
-        biasRight = false;
-        updatePoses();
+        System.out.println("near?");
         
         return Commands.run(() -> {
             
+            biasLeft = false;
+            biasRight = false;
+            updatePoses();
 
             if(checkReefTag()){
                 drive.drive(getXOutput(), getYOutput(), getRotOutput(), false, 0);
@@ -59,10 +60,13 @@ public class ReefAlign {
 
     public Command alignRightReef(DriveSubsystem drive){
 
-        biasRight = true;
-        updatePoses();
+        System.out.println("RIGHTT");
 
         return Commands.run(() -> {
+
+            biasRight = true;
+            biasLeft = false;
+            updatePoses();
 
             if(checkReefTag()){
                 drive.drive(getXOutput(), getYOutput(), getRotOutput(), false, 0);
@@ -75,12 +79,13 @@ public class ReefAlign {
 
     public Command alignLeftReef(DriveSubsystem drive){
 
-        biasLeft = true;
-        updatePoses();
+        System.out.println("LEFT");
 
         return Commands.run(() -> {
 
-            
+            biasLeft = true;
+            biasRight = false;
+            updatePoses();
 
             if(checkReefTag()){
 
@@ -181,8 +186,10 @@ public class ReefAlign {
         Pose3d nearestPose = null;
 
         if(currentPose.getX() > VisionConstants.REEF_CENTER_OFFSET){
+            //System.out.println("RIGHTT");
             nearestPose = VisionConstants.RIGHT_REEF;
         }else{
+            //System.out.println("LEFTT");
             nearestPose = VisionConstants.LEFT_REEF;
         }
     
@@ -207,6 +214,10 @@ public class ReefAlign {
         && drive.getLinearSpeed() <= VisionConstants.SPEED_TOLERANCE;
 
         return aligned;
+    }
+
+    public void periodic(){
+        updatePoses();
     }
 
     //DEBUGGING LOGGING FUNCTIONS

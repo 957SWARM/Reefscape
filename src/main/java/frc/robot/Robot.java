@@ -29,11 +29,11 @@ public class Robot extends TimedRobot {
   private RobotContainer m_robotContainer;
 
   // Mentor built :c
-  // private MjpegServer driveCameraServer = new MjpegServer("drive_server", 1181);
-  // private MjpegServer climbCameraServer = new MjpegServer("climb_server", 1182);
+  private MjpegServer driveCameraServer = new MjpegServer("drive_server", 1181);
+  private MjpegServer climbCameraServer = new MjpegServer("climb_server", 1182);
 
-  // private UsbCamera driveCamera = new UsbCamera("drive_camera", 1);
-  // private UsbCamera climbCamera = new UsbCamera("climb_camera", 0);
+  private UsbCamera driveCamera = new UsbCamera("drive_camera", 1);
+  private UsbCamera climbCamera = new UsbCamera("climb_camera", 0);
 
   /**
    * This function is run when the robot is first started up and should be used for any
@@ -47,8 +47,9 @@ public class Robot extends TimedRobot {
     // driveCamera.setResolution(240, 180);
     // climbCamera.setResolution(240, 180);
 
-    // driveCameraServer.setSource(driveCamera);
-    // climbCameraServer.setSource(climbCamera);
+    driveCameraServer.setSource(driveCamera);
+    climbCameraServer.setSource(climbCamera);
+
   }
 
   @Override
@@ -59,7 +60,8 @@ public class Robot extends TimedRobot {
 
     FollowPathCommand.warmupCommand().schedule(); // For Path Planner. Supposedly speeds up followings paths
 
-    CameraServer.startAutomaticCapture().setResolution(240, 180); // For end-effector camera
+    CameraServer.startAutomaticCapture(0).setResolution(240, 180); // For end-effector camera
+    CameraServer.startAutomaticCapture(1).setResolution(240, 180);
     
   }
 

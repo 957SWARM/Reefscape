@@ -72,12 +72,13 @@ public class RobotContainer {
     NamedCommands.registerCommand("Stow", Sequencing.stow(m_elevator, m_wrist, m_intake));
     NamedCommands.registerCommand("High Stow", Sequencing.highStow(m_elevator, m_wrist, m_intake));
     NamedCommands.registerCommand("Score", m_intake.autoEject(IntakeConstants.EJECT_SPEED));
-    // NamedCommands.registerCommand("Right Reef Align", reefAlign.alignRightReef(m_robotDrive));
-    // NamedCommands.registerCommand("Left Reef Align", reefAlign.alignLeftReef(m_robotDrive));
+    NamedCommands.registerCommand("Right Reef Align", reefAlign.alignRightReef(m_robotDrive));
+    NamedCommands.registerCommand("Left Reef Align", reefAlign.alignLeftReef(m_robotDrive));
     NamedCommands.registerCommand("Near Reef Align", reefAlign.alignNearestReef(m_robotDrive));
     NamedCommands.registerCommand("Go L4", Sequencing.L4(m_elevator, m_wrist, m_intake));
     NamedCommands.registerCommand("Go L2", Sequencing.L2(m_elevator, m_wrist, m_intake));
-    NamedCommands.registerCommand("Station Align", stationAlign.alignNearestStation(m_robotDrive));
+    NamedCommands.registerCommand("Near Station Align", stationAlign.alignNearestStation(m_robotDrive));
+    NamedCommands.registerCommand("Center Station Align", stationAlign.alignCenterStation(m_robotDrive));
     NamedCommands.registerCommand("Intake", Sequencing.autoIntake(m_elevator, m_wrist, m_intake));
     NamedCommands.registerCommand("Quick L4", Sequencing.quickL4(m_elevator, m_wrist, m_intake));
 
@@ -87,8 +88,8 @@ public class RobotContainer {
     autoChooser.addOption("Nothing", new InstantCommand());
     autoChooser.addOption("Just Leave", new PathPlannerAuto("Just Leave"));
     autoChooser.addOption("Near L4", new PathPlannerAuto("Near L4 Auto"));
-    autoChooser.addOption("EZ Right 2 L4", new PathPlannerAuto("EZ Right 2 L4 Auto"));
-    autoChooser.addOption("EZ Left 2 L4", new PathPlannerAuto("EZ Left 2 L4 Auto"));
+    autoChooser.addOption("EZ Right 2 L4", new PathPlannerAuto("EZ Right 2 L4 Auto").andThen(m_robotDrive.setHeadingCommand(45)));
+    autoChooser.addOption("EZ Left 2 L4", new PathPlannerAuto("EZ Left 2 L4 Auto").andThen(m_robotDrive.setHeadingCommand(45)));
     autoChooser.addOption("Right 2.5 L4", new PathPlannerAuto("Right 2.5 L4 Auto"));
     autoChooser.addOption("Left 2.5 L4", new PathPlannerAuto("Left 2.5 L4 Auto"));
     autoChooser.addOption("Right 3 L4 Auto", new PathPlannerAuto("Right 3 L4 Auto"));
@@ -186,7 +187,7 @@ public class RobotContainer {
     .whileTrue(reefAlign.alignNearestReef(m_robotDrive));
 
     new Trigger(() -> m_driver.visionAlign() && stationAlign.checkStationTag())
-    .whileTrue(stationAlign.alignNearestStation(m_robotDrive)
+    .whileTrue(stationAlign.alignCenterStation(m_robotDrive)
     .andThen(Sequencing.intake(m_elevator, m_wrist, m_intake)
     .alongWith(Commands.run(() -> m_robotDrive.setX()))));
 

@@ -34,7 +34,7 @@
                     {
                       "type": "named",
                       "data": {
-                        "name": "Near Reef Align"
+                        "name": "Left Reef Align"
                       }
                     },
                     {
@@ -112,7 +112,7 @@
                     {
                       "type": "named",
                       "data": {
-                        "name": "Station Align"
+                        "name": "Center Station Align"
                       }
                     }
                   ]
@@ -138,7 +138,7 @@
                     {
                       "type": "named",
                       "data": {
-                        "name": "Near Reef Align"
+                        "name": "Left Reef Align"
                       }
                     },
                     {
@@ -180,7 +180,7 @@
                           {
                             "type": "path",
                             "data": {
-                              "pathName": "Left 2 L4.4"
+                              "pathName": "Left 2 L4.5"
                             }
                           }
                         ]
@@ -202,7 +202,7 @@
                     {
                       "type": "named",
                       "data": {
-                        "name": "Station Align"
+                        "name": "Center Station Align"
                       }
                     }
                   ]
@@ -222,7 +222,7 @@
                     {
                       "type": "path",
                       "data": {
-                        "pathName": "Left 2 L4.5"
+                        "pathName": "Left 2 L4.6"
                       }
                     },
                     {
@@ -248,7 +248,7 @@
                     {
                       "type": "named",
                       "data": {
-                        "name": "Near Reef Align"
+                        "name": "Right Reef Align"
                       }
                     },
                     {

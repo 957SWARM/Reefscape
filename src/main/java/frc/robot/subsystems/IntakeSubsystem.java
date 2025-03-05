@@ -7,6 +7,7 @@ import com.revrobotics.spark.SparkBase.ResetMode;
 import com.revrobotics.spark.SparkLowLevel.MotorType;
 import com.revrobotics.spark.SparkMax;
 import com.revrobotics.spark.config.SparkMaxConfig;
+import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
 
 import edu.wpi.first.epilogue.Logged;
 import edu.wpi.first.math.filter.LinearFilter;
@@ -45,6 +46,7 @@ public class IntakeSubsystem extends SubsystemBase{
 
         // Current Limit
         motorConfig.smartCurrentLimit(IntakeConstants.CURRENT_LIMIT);
+        motorConfig.idleMode(IdleMode.kBrake);
         neo.configure(motorConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
     }
 
@@ -93,5 +95,13 @@ public class IntakeSubsystem extends SubsystemBase{
         return runOnce(() -> {
             appliedVoltage = ejectSpeed;
         }).andThen(new WaitUntilCommand(() -> !checkToF()).andThen(new WaitCommand(.2)));
+    }
+
+    public double getAppliedVoltage(){
+        return neo.getAppliedOutput();
+    }
+
+    public double getCommandedVoltage(){
+        return appliedVoltage;
     }
 }

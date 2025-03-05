@@ -38,10 +38,28 @@ public class StationAlign {
     Timer alignTimer = new Timer();
     boolean timerReset = false;
 
+    boolean biasCenter = false;
+
     public StationAlign(){}
     
     public Command alignNearestStation(DriveSubsystem drive){
 
+        biasCenter = false;
+        updatePoses();
+
+        return Commands.run(() -> {
+            if(checkStationTag()){
+                drive.drive(getXOutput(), getYOutput(), getRotOutput(), false, 0);
+            }
+            else{
+                drive.drive(0, 0, 0, false, 0);
+            }
+        }, drive).until(() -> checkAligned(drive));
+    }
+
+    public Command alignCenterStation(DriveSubsystem drive){
+
+        biasCenter = true;
         updatePoses();
 
         return Commands.run(() -> {
@@ -121,7 +139,12 @@ public class StationAlign {
         //     nearestStationPose = new Pose3d();
         // }
         currentPose = getCurrentPose();
-        nearestStationPose = getNearestPose();
+        if(biasCenter){
+            nearestStationPose = VisionConstants.MID_STATION;
+        }else{
+            nearestStationPose = getNearestPose();
+        }
+        
     }
 
     public Pose3d getCurrentPose(){
@@ -169,6 +192,10 @@ public class StationAlign {
         && drive.getLinearSpeed() <= VisionConstants.SPEED_TOLERANCE;
 
         return aligned;
+    }
+
+    public void periodic(){
+        updatePoses();
     }
 
     //DEBUGGING LOGGING FUNCTIONS

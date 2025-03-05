@@ -78,4 +78,12 @@ public class ClimbSubsystem extends SubsystemBase{
     public boolean getLimitSwitch(){
         return limitSwitch.get();
     }
+
+    public double getAppliedVoltage(){
+        return neo.getAppliedOutput();
+    }
+
+    public double getCommandedVoltage(){
+        return appliedVoltage;
+    }
 }
