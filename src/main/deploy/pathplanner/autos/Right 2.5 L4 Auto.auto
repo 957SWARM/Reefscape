@@ -34,7 +34,7 @@
                     {
                       "type": "named",
                       "data": {
-                        "name": "Near Reef Align"
+                        "name": "Right Reef Align"
                       }
                     },
                     {
@@ -138,7 +138,7 @@
                     {
                       "type": "named",
                       "data": {
-                        "name": "Near Reef Align"
+                        "name": "Right Reef Align"
                       }
                     },
                     {
@@ -248,7 +248,7 @@
                     {
                       "type": "named",
                       "data": {
-                        "name": "Near Reef Align"
+                        "name": "Left Reef Align"
                       }
                     },
                     {

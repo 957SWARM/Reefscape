@@ -19,7 +19,7 @@
         {
           "type": "named",
           "data": {
-            "name": "Near Reef Align"
+            "name": "Right Reef Align"
           }
         },
         {
@@ -63,7 +63,7 @@
                     {
                       "type": "named",
                       "data": {
-                        "name": "Station Align"
+                        "name": "Center Station Align"
                       }
                     }
                   ]
@@ -85,7 +85,7 @@
               {
                 "type": "named",
                 "data": {
-                  "name": "Near Reef Align"
+                  "name": "Right Reef Align"
                 }
               },
               {
