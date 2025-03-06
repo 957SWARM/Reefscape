@@ -18,19 +18,18 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.RunCommand;
-import edu.wpi.first.wpilibj2.command.WaitCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.Constants.ElevatorConstants;
 import frc.robot.Constants.IOConstants;
 import frc.robot.Constants.IntakeConstants;
-import frc.robot.Constants.LEDConstants;
 import frc.robot.Constants.WristConstants;
 import frc.robot.commands.LEDStripPatterns;
 import frc.robot.commands.ReefAlign;
 import frc.robot.commands.Sequencing;
 import frc.robot.commands.StationAlign;
 import frc.robot.input.DriverInput;
+import frc.robot.input.OperatorInput;
 import frc.robot.subsystems.ClimbSubsystem;
 import frc.robot.subsystems.ElevatorSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
@@ -62,6 +61,7 @@ public class RobotContainer {
 
   // Controllers
   DriverInput m_driver = new DriverInput();
+  OperatorInput m_operator = new OperatorInput();
 
   /**
    * The container for the robot. Contains subsystems, OI devices, and commands.
@@ -77,7 +77,8 @@ public class RobotContainer {
     NamedCommands.registerCommand("Near Reef Align", reefAlign.alignNearestReef(m_robotDrive));
     NamedCommands.registerCommand("Go L4", Sequencing.L4(m_elevator, m_wrist, m_intake));
     NamedCommands.registerCommand("Go L2", Sequencing.L2(m_elevator, m_wrist, m_intake));
-    NamedCommands.registerCommand("Station Align", stationAlign.alignNearestStation(m_robotDrive));
+    NamedCommands.registerCommand("Near Station Align", stationAlign.alignNearestStation(m_robotDrive));
+    NamedCommands.registerCommand("Center Station Align", stationAlign.alignCenterStation(m_robotDrive));
     NamedCommands.registerCommand("Intake", Sequencing.autoIntake(m_elevator, m_wrist, m_intake));
     NamedCommands.registerCommand("Quick L4", Sequencing.quickL4(m_elevator, m_wrist, m_intake));
 
@@ -89,7 +90,7 @@ public class RobotContainer {
     autoChooser.addOption("Near L4", new PathPlannerAuto("Near L4 Auto"));
     autoChooser.addOption("EZ Right 2 L4", new PathPlannerAuto("EZ Right 2 L4 Auto"));
     autoChooser.addOption("EZ Left 2 L4", new PathPlannerAuto("EZ Left 2 L4 Auto"));
-    autoChooser.addOption("Right 2.5 L4", new PathPlannerAuto("Right 2.5 L4 Auto"));
+    autoChooser.addOption("Right 2.5 L4", new PathPlannerAuto("Right 2.5 L4 Auto").andThen(() -> m_robotDrive.zeroHeading()));
     autoChooser.addOption("Left 2.5 L4", new PathPlannerAuto("Left 2.5 L4 Auto"));
     autoChooser.addOption("Right 3 L4 Auto", new PathPlannerAuto("Right 3 L4 Auto"));
     autoChooser.addOption("Buddy Auto", new PathPlannerAuto("Buddy Auto"));
@@ -191,19 +192,9 @@ public class RobotContainer {
     .whileTrue(reefAlign.alignNearestReef(m_robotDrive));
 
     new Trigger(() -> m_driver.visionAlign() && stationAlign.checkStationTag())
-    .whileTrue(stationAlign.alignNearestStation(m_robotDrive)
+    .whileTrue(stationAlign.alignCenterStation(m_robotDrive)
     .andThen(Sequencing.intake(m_elevator, m_wrist, m_intake)
     .alongWith(Commands.run(() -> m_robotDrive.setX()))));
-    
-    // climbs while up on d-pad is held
-    new Trigger(() -> m_driver.deployClimb())
-      .whileTrue(m_climber.extend())
-      .onFalse(m_climber.stopCommand());
-      
-    // retracts climber while down on d-pad is held
-    new Trigger(() -> m_driver.retractClimb())
-      .whileTrue(m_climber.retract())
-      .onFalse(m_climber.stopCommand());
 
     new Trigger(() -> m_driver.lowRemove())
       .whileTrue(Sequencing.removeLow(m_elevator, m_wrist, m_robotDrive))
@@ -212,6 +203,20 @@ public class RobotContainer {
       new Trigger(() -> m_driver.highRemove())
       .whileTrue(Sequencing.removeHigh(m_elevator, m_wrist, m_robotDrive))
       .onFalse(Sequencing.stow(m_elevator, m_wrist, m_intake));
+
+      // OPERATOR CONTROLS
+      new Trigger(() -> m_operator.fall())
+        .whileTrue(m_elevator.fall());
+
+      // climbs while up on d-pad is held
+    new Trigger(() -> m_operator.deployClimb() || m_driver.deployClimb())
+    .whileTrue(m_climber.extend())
+    .onFalse(m_climber.stopCommand());
+    
+  // retracts climber while down on d-pad is held
+  new Trigger(() -> m_operator.retractClimb() || m_driver.retractClimb())
+    .whileTrue(m_climber.retract())
+    .onFalse(m_climber.stopCommand());
   }
 
   public void configureNamedCommands(){

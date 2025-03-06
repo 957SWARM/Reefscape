@@ -60,6 +60,7 @@ public class ElevatorSubsystem extends SubsystemBase{
     public void periodic(){
         if (bottomLimitSwitch.get() && !isReset) {
             kraken.setPosition(0);
+            targetSetpoint = ElevatorConstants.POSITION_GROUND;
             isReset = !isReset;
         }
 
@@ -97,6 +98,20 @@ public class ElevatorSubsystem extends SubsystemBase{
     public boolean atSetpoint(){
         // targetSetpoint added instead of subtracted because targetSetpoint gets inverted later
         return Math.abs(getCarriageHeight() + targetSetpoint) < ElevatorConstants.SETPOINT_TOLERANCE;
+    }
+
+    public boolean isStalled(){
+        return (!atSetpoint() 
+        && Math.abs(kraken.getVelocity().getValueAsDouble()) <= 0.5
+        && Math.abs(kraken.getStatorCurrent().getValueAsDouble()) >= 20);
+    }
+
+    public double getVelocity(){
+        return kraken.getVelocity().getValueAsDouble();
+    }
+
+    public double getAppliedVoltage(){
+        return kraken.getMotorVoltage().getValueAsDouble();
     }
 
     private void assignSetpoint(double assignSetpoint){
@@ -150,7 +165,7 @@ public class ElevatorSubsystem extends SubsystemBase{
         });
     }
 
-    public Command slowFall(){
+    public Command fall(){
         return Commands.run(() -> {
             assignSetpoint(targetSetpoint -= ElevatorConstants.SETPOINT_INCREMENT);
         });

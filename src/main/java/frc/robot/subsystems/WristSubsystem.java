@@ -24,12 +24,14 @@ public class WristSubsystem extends SubsystemBase{
         WristConstants.kD
     );
     private double targetSetpoint = WristConstants.STOW_ANGLE;
+    private double output;
 
     public WristSubsystem(){ 
         // Current Limit
         var limitConfigs = new CurrentLimitsConfigs();
         limitConfigs.SupplyCurrentLimit = WristConstants.CURRENT_LIMIT;
         motor.getConfigurator().apply(limitConfigs);
+        output = 0;
     }
 
     public void periodic(){
@@ -42,7 +44,7 @@ public class WristSubsystem extends SubsystemBase{
         double feedforward = getFeedForward();  // feedforwad that counteracts gravity
 
         // clamping of output to minimum/maximum voltage
-        double output = MathUtil.clamp(
+        output = MathUtil.clamp(
             feedback + feedforward,
             WristConstants.MINIMUM_VOLTAGE,
             WristConstants.MAXIMUM_VOLTAGE
@@ -109,5 +111,13 @@ public class WristSubsystem extends SubsystemBase{
         if (setpoint >= 0.5) 
             setpoint = setpoint - 1;
         return setpoint;
+    }
+
+    public double getAppliedVoltage(){
+        return motor.getMotorVoltage().getValueAsDouble();
+    }
+
+    public double getCommandedVoltage(){
+        return output;
     }
 }
