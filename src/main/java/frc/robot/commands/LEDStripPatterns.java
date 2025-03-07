@@ -332,10 +332,6 @@ public class LEDStripPatterns {
         return constantColorAnimation(start, length, 0, 5, LEDConstants.FULL_BLUE_RGB / 2);
     }
 
-    public Command fullWhiteCommand(int start, int length) {
-        return constantColorAnimation(start, length, LEDConstants.FULL_RED_RGB, LEDConstants.FULL_GREEN_RGB, LEDConstants.FULL_BLUE_RGB);
-    }
-
     public Command autoPatternChasingSingleBlueCommand(int start, int length, double frameTime, boolean isInverted){
         return chasingSinglePatternAnimation(start, length, frameTime, isInverted, 0, 5, 25);
     }
