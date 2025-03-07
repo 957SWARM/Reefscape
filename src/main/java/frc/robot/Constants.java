@@ -298,8 +298,8 @@ public final class Constants {
 
     public static final double MAX_VISION_SPEED = 0.5; //JOYSTICK
 
-    public static final double REEF_TRANSLATION_TOLERANCE = 0.025; //METERS
-    public static final double ROTATION_TOLERANCE = 1.5; //DEGREES?
+    public static final double REEF_TRANSLATION_TOLERANCE = 0.030; //METERS
+    public static final double ROTATION_TOLERANCE = 1.5; //DEGREES
     public static final double SPEED_TOLERANCE = 0.1; //METERS PER SECOND
 
     public static final double STATION_TRANSLATION_TOLERANCE = 0.040;
