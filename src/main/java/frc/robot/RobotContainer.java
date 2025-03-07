@@ -18,11 +18,13 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.RunCommand;
+import edu.wpi.first.wpilibj2.command.WaitCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.Constants.ElevatorConstants;
 import frc.robot.Constants.IOConstants;
 import frc.robot.Constants.IntakeConstants;
+import frc.robot.Constants.LEDConstants;
 import frc.robot.Constants.WristConstants;
 import frc.robot.commands.LEDStripPatterns;
 import frc.robot.commands.ReefAlign;
@@ -87,7 +89,7 @@ public class RobotContainer {
     //autoChooser.addOption("Test Auto", new PathPlannerAuto("Test Auto"));
     autoChooser.addOption("Nothing", new InstantCommand());
     autoChooser.addOption("Just Leave", new PathPlannerAuto("Just Leave"));
-    autoChooser.addOption("Near L4", new PathPlannerAuto("Near L4 Auto"));
+    autoChooser.addOption("Near L4", new PathPlannerAuto("Near L4 Auto").andThen(() -> m_robotDrive.zeroHeading()));
     autoChooser.addOption("EZ Right 2 L4", new PathPlannerAuto("EZ Right 2 L4 Auto"));
     autoChooser.addOption("EZ Left 2 L4", new PathPlannerAuto("EZ Left 2 L4 Auto"));
     autoChooser.addOption("Right 2.5 L4", new PathPlannerAuto("Right 2.5 L4 Auto").andThen(() -> m_robotDrive.zeroHeading()));
@@ -135,6 +137,8 @@ public class RobotContainer {
                 m_elevator.getHeight()),
             m_robotDrive));
 
+    led.scheduleDefaultCommand(led.coralOutChasingBlueCommand(0, LEDConstants.TOTAL_PIXELS, 0.1, false));
+
     // m_wrist.setDefaultCommand(m_wrist.toStow());
   }
 
@@ -159,7 +163,7 @@ public class RobotContainer {
     // sends elevator, wrist, and intake ready to take in coral from loading station
     new Trigger(() -> m_driver.intake())
       .onTrue(Sequencing.intake(m_elevator, m_wrist, m_intake)
-      .andThen(led.intakeBreatheBlueCommand(0, LEDConstants.TOTAL_PIXELS, 0.0333, false).withTimeout(3)));
+      .andThen(led.intakeBreatheBlueCommand(0, LEDConstants.TOTAL_PIXELS, 0.333, false).withTimeout(3)));
 
     // sends elevator and wrist to L1 position
     new Trigger(() -> m_driver.L1())
@@ -189,6 +193,7 @@ public class RobotContainer {
 
     // dynamic vision align
     new Trigger(() -> m_driver.visionAlign() && reefAlign.checkReefTag())
+    .whileTrue(led.blankPatternAnimation(0, LEDConstants.TOTAL_PIXELS))
     .whileTrue(reefAlign.alignNearestReef(m_robotDrive));
 
     new Trigger(() -> m_driver.visionAlign() && stationAlign.checkStationTag())

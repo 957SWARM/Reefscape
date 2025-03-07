@@ -12,7 +12,6 @@ import frc.robot.subsystems.LED;
 
 public class LEDStripPatterns {
 
-    /*
     LED led;
     Timer timer;
     
@@ -317,6 +316,10 @@ public class LEDStripPatterns {
         return constantColorAnimation(start, length, 0, 5, LEDConstants.FULL_BLUE_RGB / 2);
     }
 
+    public Command fullWhiteCommand(int start, int length) {
+        return constantColorAnimation(start, length, 255, 255, 255);
+    }
+
     public Command autoPatternChasingSingleBlueCommand(int start, int length, double frameTime, boolean isInverted){
         return chasingSinglePatternAnimation(start, length, frameTime, isInverted, 0, 5, 25);
     }
@@ -374,5 +377,5 @@ public class LEDStripPatterns {
                 0,
                 LEDConstants.FULL_BLUE_RGB);
     }
-    */
+
 }
