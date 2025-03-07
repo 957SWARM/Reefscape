@@ -57,9 +57,15 @@ public class LEDStripPatterns {
         return false;
     }
 
-    public void blankPattern(int start, int length){
+    public void getBlankPattern(int start, int length){
         for (int i = start; i < start + length; i++) {
             led.setPixel(i, 0, 0, 0);
+        }
+    }
+
+    public void getWhitePattern(int start, int length){
+        for (int i = start; i < start + length; i++) {
+            led.setPixel(i, LEDConstants.FULL_RED_RGB, LEDConstants.FULL_GREEN_RGB, LEDConstants.FULL_BLUE_RGB);
         }
     }
 
@@ -71,6 +77,16 @@ public class LEDStripPatterns {
                     }
                 },
                 led);
+    }
+
+    public Command whitePatternAnimation(int start, int length) {
+        return Commands.run(
+            () -> {
+                for (int i = start; i < start + length; i++) {
+                    led.setPixel(i, LEDConstants.FULL_RED_RGB, LEDConstants.FULL_GREEN_RGB, LEDConstants.FULL_BLUE_RGB);
+                }
+        }, 
+        led);
     }
 
     public Command constantColorAnimation(int start, int length, int r, int g, int b) {
@@ -137,7 +153,7 @@ public class LEDStripPatterns {
                     
                     for (int i = start; i < start + length + 1; i++) {
                         if (i == currentFrame % length) {
-                            blankPattern(start, length);
+                            getBlankPattern(start, length);
                             led.setPixel(i, r, g, b);
                         }
                     }    
@@ -317,7 +333,7 @@ public class LEDStripPatterns {
     }
 
     public Command fullWhiteCommand(int start, int length) {
-        return constantColorAnimation(start, length, 255, 255, 255);
+        return constantColorAnimation(start, length, LEDConstants.FULL_RED_RGB, LEDConstants.FULL_GREEN_RGB, LEDConstants.FULL_BLUE_RGB);
     }
 
     public Command autoPatternChasingSingleBlueCommand(int start, int length, double frameTime, boolean isInverted){
