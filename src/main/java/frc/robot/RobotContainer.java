@@ -115,7 +115,7 @@ public class RobotContainer {
     coralOut.onTrue(new WaitCommand(.25)
     .andThen(m_intake.stopIntakeCommand())
     .andThen(Sequencing.stow(m_elevator, m_wrist, m_intake))
-    .andThen(led.coralOutChasingBlueCommand(0, LEDConstants.TOTAL_PIXELS, 0.1, false).withTimeout(3)));
+    .andThen(led.coralOutChasingBlueCommand(0, LEDConstants.TOTAL_PIXELS, 0.1, false).withTimeout(1.5)));
 
     // automatically sends robot to stow after intaking
     Trigger coralIn = new Trigger(
@@ -136,8 +136,6 @@ public class RobotContainer {
                 true,
                 m_elevator.getHeight()),
             m_robotDrive));
-
-    led.scheduleDefaultCommand(led.coralOutChasingBlueCommand(0, LEDConstants.TOTAL_PIXELS, 0.1, false));
 
     // m_wrist.setDefaultCommand(m_wrist.toStow());
   }
@@ -163,7 +161,8 @@ public class RobotContainer {
     // sends elevator, wrist, and intake ready to take in coral from loading station
     new Trigger(() -> m_driver.intake())
       .onTrue(Sequencing.intake(m_elevator, m_wrist, m_intake)
-      .andThen(led.intakeBreatheBlueCommand(0, LEDConstants.TOTAL_PIXELS, 0.333, false).withTimeout(3)));
+      .andThen(led.intakeBreatheBlueCommand(0, LEDConstants.TOTAL_PIXELS, 0.3333, false)
+      .until(() -> m_intake.checkToF())));
 
     // sends elevator and wrist to L1 position
     new Trigger(() -> m_driver.L1())
