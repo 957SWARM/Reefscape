@@ -89,6 +89,10 @@ public class WristSubsystem extends SubsystemBase{
         return setSetpoint(WristConstants.STOW_ANGLE);
     }
 
+    public Command toDeepStow(){
+        return setSetpoint(WristConstants.DEEP_STOW_ANGLE);
+    }
+
     // gets encoder position
     public double getPosition(){
         return encoder.getAbsPosition();

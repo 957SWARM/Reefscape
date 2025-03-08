@@ -71,6 +71,16 @@ public class Sequencing {
         .alongWith(intake.stopIntakeCommand());
     }
 
+    public static Command deepStow(ElevatorSubsystem elevator, WristSubsystem wrist, IntakeSubsystem intake){
+        return elevator.toStow()
+        .alongWith(Commands.runOnce(
+            () -> { if (elevator.getTargetSetpoint() == ElevatorConstants.POSITION_GROUND) 
+                    wrist.toDeepStow(); 
+                })
+        )
+        .alongWith(intake.stopIntakeCommand());
+    }
+
     // for use in auto when going up from high stow
     public static Command quickL4(ElevatorSubsystem elevator, WristSubsystem wrist, IntakeSubsystem intake){
         return elevator.toL4()
