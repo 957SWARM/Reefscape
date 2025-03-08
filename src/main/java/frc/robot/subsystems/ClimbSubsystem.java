@@ -45,7 +45,7 @@ public class ClimbSubsystem extends SubsystemBase{
                 neo.setVoltage(0);
             }
         }else if(appliedVoltage >= 0){  // if retracting
-            if(!limitSwitch.get() && getPosition() < ClimberConstants.MAX_RETRACTION){
+            if(!limitSwitch.get()){
                 neo.setVoltage(appliedVoltage);
             }else{
                 neo.setVoltage(0);
