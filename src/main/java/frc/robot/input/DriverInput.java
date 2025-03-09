@@ -4,6 +4,8 @@ import edu.wpi.first.math.filter.Debouncer;
 import edu.wpi.first.math.filter.SlewRateLimiter;
 import edu.wpi.first.wpilibj.GenericHID.RumbleType;
 import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.Commands;
 import frc.robot.Constants.IOConstants;
 
 public class DriverInput {
@@ -90,5 +92,11 @@ public class DriverInput {
 
     public boolean retractClimb(){
         return controller.getPOV() == 180;
+    }
+
+    public Command rumble(){
+        return Commands.run(() -> setRumble(true))
+            .withTimeout(.75)
+            .andThen(Commands.run(() -> setRumble(false)));
     }
 }

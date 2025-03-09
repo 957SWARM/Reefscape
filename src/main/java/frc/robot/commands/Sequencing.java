@@ -7,6 +7,7 @@ import edu.wpi.first.wpilibj2.command.WaitUntilCommand;
 import frc.robot.Constants.ElevatorConstants;
 import frc.robot.Constants.IntakeConstants;
 import frc.robot.Constants.SequencingConstants;
+import frc.robot.input.DriverInput;
 import frc.robot.subsystems.ElevatorSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.subsystems.WristSubsystem;
@@ -56,6 +57,24 @@ public class Sequencing {
         .alongWith(new WaitCommand(SequencingConstants.L4_WRIST_DELAY).andThen(wrist.toL4()))
         .alongWith(intake.stopIntakeCommand())
         .andThen(new WaitUntilCommand(()-> wrist.atSetpoint() && elevator.atSetpoint()));
+    }
+
+    public static Command L2Fancy(ElevatorSubsystem elevator, WristSubsystem wrist, IntakeSubsystem intake,
+         DriveSubsystem drive, ReefAlign reefAlign, DriverInput controller){
+        return reefAlign.alignNearestReef(drive).andThen(controller.rumble()).withTimeout(SequencingConstants.ALIGN_TIMEOUT)
+            .andThen(L2(elevator, wrist, intake));
+    }
+
+    public static Command L3Fancy(ElevatorSubsystem elevator, WristSubsystem wrist, IntakeSubsystem intake,
+         DriveSubsystem drive, ReefAlign reefAlign, DriverInput controller){
+        return reefAlign.alignNearestReef(drive).andThen(controller.rumble()).withTimeout(SequencingConstants.ALIGN_TIMEOUT)
+            .andThen(L3(elevator, wrist, intake));
+    }
+
+    public static Command L4Fancy(ElevatorSubsystem elevator, WristSubsystem wrist, IntakeSubsystem intake,
+         DriveSubsystem drive, ReefAlign reefAlign, DriverInput controller){
+        return reefAlign.alignNearestReef(drive).andThen(controller.rumble()).withTimeout(SequencingConstants.ALIGN_TIMEOUT)
+            .andThen(L4(elevator, wrist, intake));
     }
 
     public static Command stow(ElevatorSubsystem elevator, WristSubsystem wrist, IntakeSubsystem intake){

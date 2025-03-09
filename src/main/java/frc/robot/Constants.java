@@ -314,8 +314,10 @@ public final class Constants {
     public static final double L2_WRIST_DELAY = .1;
     public static final double L3_WRIST_DELAY = .3;
     public static final double L4_WRIST_DELAY = .8;
-
     public static final double QUICK_L4_WRIST_DELAY = 0.45;
+
+    public static final double ALIGN_TIMEOUT = 2;
+
   }
 
 }

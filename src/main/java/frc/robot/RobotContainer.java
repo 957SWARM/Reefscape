@@ -170,15 +170,15 @@ public class RobotContainer {
 
     // sends elevator and wrist to L2 position
     new Trigger(() -> m_driver.L2())
-      .onTrue(Sequencing.L2(m_elevator, m_wrist, m_intake));
+      .onTrue(Sequencing.L2Fancy(m_elevator, m_wrist, m_intake, m_robotDrive, reefAlign, m_driver));
 
     // sends elevator and wrist to L3 position
     new Trigger(() -> m_driver.L3())
-      .onTrue(Sequencing.L3(m_elevator, m_wrist, m_intake));
+      .onTrue(Sequencing.L3Fancy(m_elevator, m_wrist, m_intake, m_robotDrive, reefAlign, m_driver));
 
     // sends elevator and wrist to L4 position
     new Trigger(() -> m_driver.L4())
-      .onTrue(Sequencing.L4(m_elevator, m_wrist, m_intake));
+      .onTrue(Sequencing.L4Fancy(m_elevator, m_wrist, m_intake, m_robotDrive, reefAlign, m_driver));
 
     // while holding trigger, runs intake backwards for scoring
     new Trigger(() -> m_driver.score())
