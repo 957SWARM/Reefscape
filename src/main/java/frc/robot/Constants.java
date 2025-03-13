@@ -240,10 +240,12 @@ public final class Constants {
     public static final int CURRENT_LIMIT = 30;
 
     // in rotations of the motor
-    public static final double MAX_EXTENSION = -47; //-53
-    public static final double MAX_RETRACTION = 125; //123
+    public static final double MIN_CLIMBER_ANGLE = 0; 
+    public static final double MAX_CLIMBER_ANGLE = 0.25; 
 
     public static final int SENSOR_PORT = 1;
+   
+    public static final int CLIMB_ENCODER_CAN_ID = 20;
     
   }
 
@@ -317,5 +319,7 @@ public final class Constants {
 
     public static final double QUICK_L4_WRIST_DELAY = 0.45;
   }
+
+
 
 }
