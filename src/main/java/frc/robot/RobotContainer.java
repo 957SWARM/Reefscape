@@ -214,13 +214,13 @@ public class RobotContainer {
 
       // climbs while up on d-pad is held
     new Trigger(() -> m_operator.deployClimb() || m_driver.deployClimb())
-    .whileTrue(m_climber.extend())
-    .onFalse(m_climber.stopCommand());
+    .whileTrue(m_climber.latchClimber())
+    .onFalse(m_climber.stopClimber());
     
   // retracts climber while down on d-pad is held
   new Trigger(() -> m_operator.retractClimb() || m_driver.retractClimb())
-    .whileTrue(m_climber.retract().alongWith(Sequencing.deepStow(m_elevator, m_wrist, m_intake)))
-    .onFalse(m_climber.stopCommand());
+    .whileTrue(m_climber.retractClimber().alongWith(Sequencing.deepStow(m_elevator, m_wrist, m_intake)))
+    .onFalse(m_climber.stopClimber());
     
   
   }
