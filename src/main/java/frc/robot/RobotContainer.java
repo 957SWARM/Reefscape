@@ -193,7 +193,12 @@ public class RobotContainer {
     // dynamic vision align
     new Trigger(() -> m_driver.visionAlign() && reefAlign.checkReefTag())
     .whileTrue(led.blankPatternAnimation(0, LEDConstants.TOTAL_PIXELS))
-    .whileTrue(reefAlign.alignNearestReef(m_robotDrive));
+    .whileTrue(reefAlign.alignNearestReef(m_robotDrive)
+      .andThen(
+        Commands.run(() -> m_driver.setRumble(true))
+        .withTimeout(.75)
+        .andThen(Commands.run(() -> m_driver.setRumble(false))))
+      );
 
     new Trigger(() -> m_driver.visionAlign() && stationAlign.checkStationTag())
     .whileTrue(stationAlign.alignCenterStation(m_robotDrive)
