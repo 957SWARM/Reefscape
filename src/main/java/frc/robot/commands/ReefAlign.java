@@ -55,7 +55,7 @@ public class ReefAlign {
             else{
                 drive.drive(0, 0, 0, false, 0);
             }
-        }, drive).until(() -> checkAligned(drive));
+        }, drive).until(() -> checkAligned(drive)).andThen(Commands.runOnce(() -> drive.drive(0, 0, 0, false, 0)));
     }
 
     public Command alignRightReef(DriveSubsystem drive){
@@ -74,7 +74,7 @@ public class ReefAlign {
             else{
                 drive.drive(0, 0, 0, false, 0);
             }
-        }, drive).until(() -> checkAligned(drive));
+        }, drive).until(() -> checkAligned(drive)).andThen(Commands.runOnce(() -> drive.drive(0, 0, 0, false, 0)));
     }
 
     public Command alignLeftReef(DriveSubsystem drive){
@@ -94,7 +94,7 @@ public class ReefAlign {
             else{
                 drive.drive(0, 0, 0, false, 0);
             }
-        }, drive).until(() -> checkAligned(drive));
+        }, drive).until(() -> checkAligned(drive)).andThen(Commands.runOnce(() -> drive.drive(0, 0, 0, false, 0)));
     }
 
     //FORWARD: 

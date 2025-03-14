@@ -96,6 +96,7 @@ public class RobotContainer {
     autoChooser.addOption("Left 2.5 L4", new PathPlannerAuto("Left 2.5 L4 Auto"));
     autoChooser.addOption("Right 3 L4 Auto", new PathPlannerAuto("Right 3 L4 Auto"));
     autoChooser.addOption("Buddy Auto", new PathPlannerAuto("Buddy Auto"));
+    autoChooser.addOption("Fun Auto", new PathPlannerAuto("Fun Auto"));
 
     //configureNamedCommands();
 
@@ -136,6 +137,7 @@ public class RobotContainer {
                 true,
                 m_elevator.getHeight()),
             m_robotDrive));
+
 
     // m_wrist.setDefaultCommand(m_wrist.toStow());
   }
@@ -198,7 +200,8 @@ public class RobotContainer {
         Commands.run(() -> m_driver.setRumble(true))
         .withTimeout(.75)
         .andThen(Commands.run(() -> m_driver.setRumble(false))))
-      );
+      )
+      .onFalse(Commands.run(() -> m_driver.setRumble(false)));
 
     new Trigger(() -> m_driver.visionAlign() && stationAlign.checkStationTag())
     .whileTrue(stationAlign.alignCenterStation(m_robotDrive)
