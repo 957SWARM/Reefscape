@@ -19,4 +19,8 @@ public class OperatorInput {
         return controller.getPOV() == 180;
     }
 
+    public boolean deepStow(){
+        return controller.getAButton();
+    }
+
 }

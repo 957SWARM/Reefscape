@@ -219,8 +219,13 @@ public class RobotContainer {
     
   // retracts climber while down on d-pad is held
   new Trigger(() -> m_operator.retractClimb() || m_driver.retractClimb())
-    .whileTrue(m_climber.retract().alongWith(Sequencing.deepStow(m_elevator, m_wrist, m_intake)))
+    .whileTrue(m_climber.retract())
     .onFalse(m_climber.stopCommand());
+  
+
+  new Trigger(() -> m_operator.deepStow())
+    .onTrue(m_wrist.toDeepStow());
+
   }
 
   public void configureNamedCommands(){

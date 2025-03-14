@@ -241,7 +241,7 @@ public final class Constants {
 
     // in rotations of the motor
     public static final double MAX_EXTENSION = -47; //-53
-    public static final double MAX_RETRACTION = 125; //123
+    public static final double MAX_RETRACTION = 165; //123
 
     public static final int SENSOR_PORT = 1;
     
