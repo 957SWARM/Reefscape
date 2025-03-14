@@ -20,6 +20,7 @@ public final class Configs {
 
             drivingConfig
                     .idleMode(IdleMode.kBrake)
+                    //.closedLoopRampRate(drivingVelocityFeedForward)
                     .smartCurrentLimit(65);
             drivingConfig.encoder
                     .positionConversionFactor(drivingFactor) // meters
