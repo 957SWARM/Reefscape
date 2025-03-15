@@ -20,7 +20,11 @@ public final class Configs {
 
             drivingConfig
                     .idleMode(IdleMode.kBrake)
+<<<<<<< Updated upstream
                     .closedLoopRampRate(.2)
+=======
+                    //.closedLoopRampRate(0.2)
+>>>>>>> Stashed changes
                     .smartCurrentLimit(65);
             drivingConfig.encoder
                     .positionConversionFactor(drivingFactor) // meters

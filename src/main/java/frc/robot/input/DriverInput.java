@@ -11,8 +11,8 @@ public class DriverInput {
     XboxController controller = new XboxController(IOConstants.DRIVER_PORT);
 
     // Slew Rate Limiters. limit how fast joystick values can change
-    SlewRateLimiter xLimiter = new SlewRateLimiter(20);
-    SlewRateLimiter yLimiter = new SlewRateLimiter(20);
+    SlewRateLimiter xLimiter = new SlewRateLimiter(2.8);
+    SlewRateLimiter yLimiter = new SlewRateLimiter(2.8);
     SlewRateLimiter turnLimiter = new SlewRateLimiter(20);
 
     Debouncer lowRemoveDebouncer = new Debouncer(IOConstants.DEBOUNCE_TIME);
