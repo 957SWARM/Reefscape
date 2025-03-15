@@ -40,15 +40,15 @@ public class ClimbSubsystem extends SubsystemBase{
         double angle = encoder.getAbsPosition();
 
         switch(currentState){
-            case CLIMBING:
-                if(angle < ClimberConstants.CLIMBING_LIMIT_ANGLE){
+            case CLIMBING: //!(angle > ClimberConstants.CLIMBING_LIMIT_ANGLE && angle < .5)
+                if(true){ // if we're not in deadzone, continue climbing
                     neo.setVoltage(ClimberConstants.CLIMB_PULL_STRENGTH_VOLTS);
                 } else {
                     neo.setVoltage(0);
                 }
                 break;
-            case LATCHING:
-                if(!(angle > .5 && angle < ClimberConstants.LATCHING_LIMIT_ANGLE)){ // if we're not in the deadzone, continue latching
+            case LATCHING: //!(angle > .5 && angle < ClimberConstants.LATCHING_LIMIT_ANGLE)
+                if(true){ // if we're not in the deadzone, continue latching
                     neo.setVoltage(-ClimberConstants.CLIMB_PULL_STRENGTH_VOLTS);
                 } else {
                     neo.setVoltage(0);
