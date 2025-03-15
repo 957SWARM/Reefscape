@@ -35,6 +35,17 @@ public class StationAlign {
         VisionConstants.STATION_ROTATION_D
     );
 
+    PIDController dumbRotPID = new PIDController(
+        VisionConstants.DUMB_STATION_ROTATION_P, 
+        VisionConstants.DUMB_STATION_ROTATION_I, 
+        VisionConstants.DUMB_STATION_ROTATION_D
+    );
+
+    PIDController dumbXPID = new PIDController(
+        VisionConstants.DUMB_STATION_TRANSLATION_P, 
+        VisionConstants.DUMB_STATION_TRANSLATION_I, 
+        VisionConstants.DUMB_STATION_TRANSLATION_D);
+
     Pose3d currentPose;
     Pose3d nearestStationPose;
 
@@ -43,6 +54,8 @@ public class StationAlign {
 
     boolean biasCenter = false;
     TimeOfFlight tof = new TimeOfFlight(2);
+
+    double shuffleOutput = 0;
 
     public StationAlign(){
         tof.setRangingMode(RangingMode.Long, 24);
@@ -80,37 +93,51 @@ public class StationAlign {
 
     public Command dumbStationAlign(DriveSubsystem drive){
         return Commands.run(() -> {
-            drive.drive(0, 0, getDumbRotOutput(drive)/3, false, 0);
-        });
+            drive.drive(getDumbXOutput(), 0, getDumbRotOutput(drive), false, 0);
+        }).until(() -> dumbCheckAligned(drive)).andThen(Commands.run(() -> {
+            drive.drive(0, shuffleYOutput(drive), 0, false, 0);
+        }));
     }
 
-    public double getDumbYDiff(){
-        return tof.getRange()/1000 - 0.5;
+    public double getDumbXDiff(){
+        return tof.getRange()/1000 - 0.33;
     }
 
     public double getDumbRotDiff(DriveSubsystem drive){
         double difference = 0;
-        if(drive.getHeading() < 0){
-            difference = -140 - drive.getHeading();
+        double modifiedHeading = MathUtil.inputModulus(drive.getHeading(), -180, 180);
+        if(modifiedHeading < 0){
+            difference = -120 - modifiedHeading;
         }else{
-            difference = 140 - drive.getHeading();
+            difference = 120 - modifiedHeading;
         }
         return difference;
     }
 
-    public double getDumbYOutput(){
+    public double getDumbXOutput(){
 
         double clampedOutput = MathUtil.clamp(
-            -yPID.calculate(getDumbYDiff()), 
-            -.2, 
-            .2);
+            -xPID.calculate(getDumbXDiff()), 
+            -.3, 
+            .3);
         
         return clampedOutput;
     }
 
     public double getDumbRotOutput(DriveSubsystem drive){
 
-        return rotPID.calculate(getDumbRotDiff(drive));
+        return -dumbRotPID.calculate(getDumbRotDiff(drive));
+    }
+
+    public double shuffleRotOutput(DriveSubsystem drive){
+        double output = getDumbRotOutput(drive) * 17;
+        return MathUtil.clamp(output, -0.2, .2);
+    }
+
+    public double shuffleYOutput(DriveSubsystem drive){
+        shuffleOutput += .01;
+        shuffleOutput = MathUtil.inputModulus(shuffleOutput, -0.1, 0.1);
+        return MathUtil.clamp(shuffleOutput, -0.1, 0.1);
     }
 
     //FORWARD: 
@@ -231,6 +258,13 @@ public class StationAlign {
         && Math.abs(getYDiff()) <= VisionConstants.STATION_TRANSLATION_TOLERANCE
         && Math.abs(getRotDiff()) <= VisionConstants.ROTATION_TOLERANCE
         && drive.getLinearSpeed() <= VisionConstants.SPEED_TOLERANCE;
+
+        return aligned;
+    }
+
+    public boolean dumbCheckAligned(DriveSubsystem drive){
+        boolean aligned = Math.abs(getDumbXDiff()) <= VisionConstants.STATION_TRANSLATION_TOLERANCE
+        && Math.abs(getDumbRotDiff(drive)) <= VisionConstants.ROTATION_TOLERANCE;
 
         return aligned;
     }

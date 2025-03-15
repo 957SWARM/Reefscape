@@ -210,7 +210,7 @@ public final class Constants {
 
     // SPEEDS
     public static final double IDLE_SPEED = 0;
-    public static final double INTAKE_SPEED = 5;
+    public static final double INTAKE_SPEED = 8;
     public static final double EJECT_SPEED = -5;
 
     public static final double APPLIED_VOLTAGE = 10;
@@ -293,6 +293,14 @@ public final class Constants {
     public static final double STATION_ROTATION_I = 0;
     public static final double STATION_ROTATION_D = 0;
 
+    public static final double DUMB_STATION_ROTATION_P = 0.015;
+    public static final double DUMB_STATION_ROTATION_I = 0;
+    public static final double DUMB_STATION_ROTATION_D = 0;
+
+    public static final double DUMB_STATION_TRANSLATION_P = .2;
+    public static final double DUMB_STATION_TRANSLATION_I = 0;
+    public static final double DUMB_STATION_TRANSLATION_D = 0;
+
     public static final double REEF_HORIZONTAL_TRANSLATION_P = 0.75;  // 1.4
     public static final double REEF_HORIZONTAL_TRANSLATION_I = 0; // 0
     public static final double REEF_HORIZONTAL_TRANSLATION_D = 0;  //.11
@@ -322,7 +330,7 @@ public final class Constants {
     public static final double L1_WRIST_DELAY = .4;
     public static final double L2_WRIST_DELAY = .1;
     public static final double L3_WRIST_DELAY = .3;
-    public static final double L4_WRIST_DELAY = .8;
+    public static final double L4_WRIST_DELAY = .7;
 
     public static final double QUICK_L4_WRIST_DELAY = 0.45;
   }
