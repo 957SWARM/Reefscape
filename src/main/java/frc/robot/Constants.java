@@ -240,8 +240,8 @@ public final class Constants {
     public static final int CURRENT_LIMIT = 30;
 
     // in rotations of the motor
-    public static final double MIN_CLIMBER_ANGLE = 0; 
-    public static final double MAX_CLIMBER_ANGLE = 0.25; 
+    public static final double LATCHING_LIMIT_ANGLE = 0.95; // Climber allowed to extend (1 - LATCHING_LIMIT_ANGLE) past vertical
+    public static final double CLIMBING_LIMIT_ANGLE = 0.25; 
 
     public static final int SENSOR_PORT = 1;
    

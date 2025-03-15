@@ -41,14 +41,14 @@ public class ClimbSubsystem extends SubsystemBase{
 
         switch(currentState){
             case CLIMBING:
-                if(angle < ClimberConstants.MAX_CLIMBER_ANGLE){
+                if(angle < ClimberConstants.CLIMBING_LIMIT_ANGLE){
                     neo.setVoltage(ClimberConstants.CLIMB_PULL_STRENGTH_VOLTS);
                 } else {
                     neo.setVoltage(0);
                 }
                 break;
             case LATCHING:
-                if(angle < 0.5){
+                if(!(angle > .5 && angle < ClimberConstants.LATCHING_LIMIT_ANGLE)){ // if we're not in the deadzone, continue latching
                     neo.setVoltage(-ClimberConstants.CLIMB_PULL_STRENGTH_VOLTS);
                 } else {
                     neo.setVoltage(0);
