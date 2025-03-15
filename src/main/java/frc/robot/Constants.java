@@ -180,7 +180,7 @@ public final class Constants {
 
     // PID + Feedforward
     public static final double kG = 0.5;  // constant multiplied by angle of arm to maintain position
-    public static final double kP = 50;
+    public static final double kP = 70;
     public static final double kI = 0;
     public static final double kD = 0;
 
@@ -309,11 +309,11 @@ public final class Constants {
   }
 
   public static final class SequencingConstants {
-    public static final double STOW_DELAY = 0.15;
-    public static final double L1_WRIST_DELAY = .4;
-    public static final double L2_WRIST_DELAY = .1;
-    public static final double L3_WRIST_DELAY = .3;
-    public static final double L4_WRIST_DELAY = .8;
+    public static final double STOW_DELAY = 0; //0.15
+    public static final double L1_WRIST_DELAY = 0; //.4
+    public static final double L2_WRIST_DELAY = 0; //.1
+    public static final double L3_WRIST_DELAY = 0; //.3
+    public static final double L4_WRIST_DELAY = 0; //.8
 
     public static final double QUICK_L4_WRIST_DELAY = 0.45;
   }

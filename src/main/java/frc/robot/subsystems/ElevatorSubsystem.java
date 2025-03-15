@@ -68,7 +68,7 @@ public class ElevatorSubsystem extends SubsystemBase{
             isReset = !isReset;
         }
         
-        kraken.setControl(request.withPosition(getAsRotations(-targetSetpoint)));
+        //kraken.setControl(request.withPosition(getAsRotations(-targetSetpoint)));
 
     }
 
