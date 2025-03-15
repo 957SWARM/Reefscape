@@ -173,7 +173,7 @@ public final class Constants {
     public static final double L1_ANGLE = 0;
     public static final double L2_ANGLE = 0.91;
     public static final double L3_ANGLE = L2_ANGLE;
-    public static final double L4_ANGLE = 0.893;
+    public static final double L4_ANGLE = 0.875;
     public static final double STOW_ANGLE = 0.165;
     public static final double INTAKE_ANGLE = 0.11;
     public static final double DEEP_STOW_ANGLE = 0.193;
@@ -251,7 +251,9 @@ public final class Constants {
 
   public static final class VisionConstants {
     public static final Pose3d LEFT_REEF = new Pose3d(new Translation3d(-.203, 0, -.61), new Rotation3d()); //-.185 at clack
+    // -.203 at hive
     public static final Pose3d RIGHT_REEF = new Pose3d(new Translation3d(.137, 0, -.61), new Rotation3d()); //.155 at clack
+    //.137 at hive
     public static final double REEF_CENTER_OFFSET = -0.09;
     public static final List<Pose3d> REEF_POSES = Arrays.asList(LEFT_REEF, RIGHT_REEF);
     public static final List<Double> REEF_TAG_IDS = Arrays.asList(
@@ -291,19 +293,24 @@ public final class Constants {
     public static final double STATION_ROTATION_I = 0;
     public static final double STATION_ROTATION_D = 0;
 
-    public static final double REEF_TRANSLATION_P = .65;
-    public static final double REEF_TRANSLATION_I = 0;
-    public static final double REEF_TRANSLATION_D = 0;
+    public static final double REEF_HORIZONTAL_TRANSLATION_P = 0.75;  // 1.4
+    public static final double REEF_HORIZONTAL_TRANSLATION_I = 0; // 0
+    public static final double REEF_HORIZONTAL_TRANSLATION_D = 0;  //.11
+
+    public static final double REEF_TOWARD_TRANSLATION_P = 0.9; // 0.9
+    public static final double REEF_TOWARD_TRANSLATION_I = 0.005; // 0.005
+    public static final double REEF_TOWARD_TRANSLATION_D = 0.06; // 0.06
 
     public static final double REEF_ROTATION_P = 0.025;
     public static final double REEF_ROTATION_I = 0;
     public static final double REEF_ROTATION_D = 0;
 
-    public static final double MAX_VISION_SPEED = 0.5; //JOYSTICK
+    public static final double MAX_VISION_SPEED = 0.6; //JOYSTICK
 
     public static final double REEF_TRANSLATION_TOLERANCE = 0.025; //METERS
     public static final double ROTATION_TOLERANCE = 1.5; //DEGREES
-    public static final double SPEED_TOLERANCE = 0.1; //METERS PER SECOND
+    public static final double SPEED_TOLERANCE = 0.4; //METERS PER SECOND
+    public static final double MAX_TRACKING_DISTANCE = 2.4; //METERS
 
     public static final double STATION_TRANSLATION_TOLERANCE = 0.040;
 

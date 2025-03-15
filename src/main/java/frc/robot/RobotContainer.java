@@ -193,30 +193,35 @@ public class RobotContainer {
       .onTrue(Sequencing.stow(m_elevator, m_wrist, m_intake));
 
     // dynamic vision align
-    new Trigger(() -> m_driver.visionRightAlign() && reefAlign.checkReefTag())
+    new Trigger(() -> m_driver.visionRightAlign())
     .whileTrue(led.blankPatternAnimation(0, LEDConstants.TOTAL_PIXELS))
-    .whileTrue(reefAlign.alignRightReef(m_robotDrive)
+    .whileTrue(Commands.runOnce(() -> reefAlign.setTagPriority()).andThen(reefAlign.alignRightReef(m_robotDrive))
       .andThen(
         Commands.run(() -> m_driver.setRumble(true))
         .withTimeout(.75)
         .andThen(Commands.run(() -> m_driver.setRumble(false))))
       )
-      .onFalse(Commands.run(() -> m_driver.setRumble(false)));
+      .onFalse(Commands.run(() -> m_driver.setRumble(false)))
+      .onFalse(Commands.runOnce(() -> reefAlign.removeTagPriority()));
 
-      new Trigger(() -> m_driver.visionLeftAlign() && reefAlign.checkReefTag())
+      new Trigger(() -> m_driver.visionLeftAlign())
       .whileTrue(led.blankPatternAnimation(0, LEDConstants.TOTAL_PIXELS))
-      .whileTrue(reefAlign.alignLeftReef(m_robotDrive)
+      .whileTrue(Commands.runOnce(() -> reefAlign.setTagPriority()).andThen(reefAlign.alignLeftReef(m_robotDrive))
         .andThen(
           Commands.run(() -> m_driver.setRumble(true))
           .withTimeout(.75)
           .andThen(Commands.run(() -> m_driver.setRumble(false))))
         )
-        .onFalse(Commands.run(() -> m_driver.setRumble(false)));
+        .onFalse(Commands.run(() -> m_driver.setRumble(false)))
+        .onFalse(Commands.runOnce(() -> reefAlign.removeTagPriority()));
 
-    new Trigger(() -> (m_driver.visionLeftAlign() || m_driver.visionRightAlign()) && stationAlign.checkStationTag())
+    new Trigger(() -> (m_driver.visionRightAlign()) && stationAlign.checkStationTag())
     .whileTrue(stationAlign.alignCenterStation(m_robotDrive)
     .andThen(Sequencing.intake(m_elevator, m_wrist, m_intake)
     .alongWith(Commands.run(() -> m_robotDrive.setX()))));
+
+    new Trigger(() -> m_driver.visionLeftAlign() && m_wrist.getTargetSetpoint() == WristConstants.INTAKE_ANGLE)
+    .whileTrue(stationAlign.dumbStationAlign(m_robotDrive));
 
     new Trigger(() -> m_driver.lowRemove())
       .whileTrue(Sequencing.removeLow(m_elevator, m_wrist, m_robotDrive))

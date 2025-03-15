@@ -2,6 +2,9 @@ package frc.robot.commands;
 
 import java.util.List;
 
+import com.playingwithfusion.TimeOfFlight;
+import com.playingwithfusion.TimeOfFlight.RangingMode;
+
 import edu.wpi.first.epilogue.Logged;
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.controller.PIDController;
@@ -39,8 +42,11 @@ public class StationAlign {
     boolean timerReset = false;
 
     boolean biasCenter = false;
+    TimeOfFlight tof = new TimeOfFlight(2);
 
-    public StationAlign(){}
+    public StationAlign(){
+        tof.setRangingMode(RangingMode.Long, 24);
+    }
     
     public Command alignNearestStation(DriveSubsystem drive){
 
@@ -70,6 +76,41 @@ public class StationAlign {
                 drive.drive(0, 0, 0, false, 0);
             }
         }, drive).until(() -> checkAligned(drive));
+    }
+
+    public Command dumbStationAlign(DriveSubsystem drive){
+        return Commands.run(() -> {
+            drive.drive(0, 0, getDumbRotOutput(drive)/3, false, 0);
+        });
+    }
+
+    public double getDumbYDiff(){
+        return tof.getRange()/1000 - 0.5;
+    }
+
+    public double getDumbRotDiff(DriveSubsystem drive){
+        double difference = 0;
+        if(drive.getHeading() < 0){
+            difference = -140 - drive.getHeading();
+        }else{
+            difference = 140 - drive.getHeading();
+        }
+        return difference;
+    }
+
+    public double getDumbYOutput(){
+
+        double clampedOutput = MathUtil.clamp(
+            -yPID.calculate(getDumbYDiff()), 
+            -.2, 
+            .2);
+        
+        return clampedOutput;
+    }
+
+    public double getDumbRotOutput(DriveSubsystem drive){
+
+        return rotPID.calculate(getDumbRotDiff(drive));
     }
 
     //FORWARD: 

@@ -43,14 +43,14 @@ public class ClimbSubsystem extends SubsystemBase{
 
         switch(currentState){
             case CLIMBING:
-                if(modifiedAngle < 0.25){
+                if(modifiedAngle < 0.25 || limitSwitch.get()){
                     neo.setVoltage(ClimberConstants.CLIMB_PULL_STRENGTH_VOLTS);
                 } else {
                     neo.setVoltage(0);
                 }
                 break;
             case LATCHING:
-                if(modifiedAngle > -0.045){
+                if(modifiedAngle > -0.01){
                     neo.setVoltage(-ClimberConstants.CLIMB_PULL_STRENGTH_VOLTS);
                 } else {
                     neo.setVoltage(0);

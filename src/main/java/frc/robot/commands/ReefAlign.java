@@ -17,13 +17,13 @@ import frc.robot.subsystems.Drive.DriveSubsystem;
 public class ReefAlign {
 
     PIDController xPID = new PIDController(
-        VisionConstants.REEF_TRANSLATION_P, 
-        VisionConstants.REEF_TRANSLATION_I, 
-        VisionConstants.REEF_TRANSLATION_D);
+        VisionConstants.REEF_TOWARD_TRANSLATION_P, 
+        VisionConstants.REEF_TOWARD_TRANSLATION_I, 
+        VisionConstants.REEF_TOWARD_TRANSLATION_D);
     PIDController yPID = new PIDController(
-        VisionConstants.REEF_TRANSLATION_P, 
-        VisionConstants.REEF_TRANSLATION_I, 
-        VisionConstants.REEF_TRANSLATION_D
+        VisionConstants.REEF_HORIZONTAL_TRANSLATION_P, 
+        VisionConstants.REEF_HORIZONTAL_TRANSLATION_I, 
+        VisionConstants.REEF_HORIZONTAL_TRANSLATION_D
     );
     PIDController rotPID = new PIDController(
         VisionConstants.REEF_ROTATION_P, 
@@ -37,11 +37,11 @@ public class ReefAlign {
     boolean biasLeft;
     boolean biasRight;
 
-    public ReefAlign(){}
+    public ReefAlign(){
+        xPID.setIZone(.5);
+    }
     
     public Command alignNearestReef(DriveSubsystem drive){
-
-        System.out.println("near?");
         
         return Commands.run(() -> {
             
@@ -55,12 +55,11 @@ public class ReefAlign {
             else{
                 drive.drive(0, 0, 0, false, 0);
             }
-        }, drive).until(() -> checkAligned(drive)).andThen(Commands.runOnce(() -> drive.drive(0, 0, 0, false, 0)));
+        }, drive).until(() -> checkAligned(drive))
+        .andThen(Commands.runOnce(() -> drive.drive(0, 0, 0, false, 0)));
     }
 
     public Command alignRightReef(DriveSubsystem drive){
-
-        System.out.println("RIGHTT");
 
         return Commands.run(() -> {
 
@@ -74,12 +73,12 @@ public class ReefAlign {
             else{
                 drive.drive(0, 0, 0, false, 0);
             }
-        }, drive).until(() -> checkAligned(drive)).andThen(Commands.runOnce(() -> drive.drive(0, 0, 0, false, 0)));
+        }, drive)
+        .until(() -> checkAligned(drive))
+        .andThen(Commands.runOnce(() -> drive.drive(0, 0, 0, false, 0)));
     }
 
     public Command alignLeftReef(DriveSubsystem drive){
-
-        System.out.println("LEFT");
 
         return Commands.run(() -> {
 
@@ -94,7 +93,21 @@ public class ReefAlign {
             else{
                 drive.drive(0, 0, 0, false, 0);
             }
-        }, drive).until(() -> checkAligned(drive)).andThen(Commands.runOnce(() -> drive.drive(0, 0, 0, false, 0)));
+        }, drive)
+        .until(() -> checkAligned(drive))
+        .andThen(Commands.runOnce(() -> drive.drive(0, 0, 0, false, 0)));
+    }
+
+    public void setTagPriority(){
+        LimelightHelpers.setPriorityTagID(
+            VisionConstants.REEF_LIMELIGHT_NAME, 
+            (int)LimelightHelpers.getFiducialID(VisionConstants.REEF_LIMELIGHT_NAME));
+    }
+
+    public void removeTagPriority(){
+        LimelightHelpers.setPriorityTagID(
+            VisionConstants.REEF_LIMELIGHT_NAME, 
+            -1);
     }
 
     //FORWARD: 
@@ -117,8 +130,8 @@ public class ReefAlign {
 
         double clampedOutput = MathUtil.clamp(
             -yPID.calculate(getYDiff()), 
-            -VisionConstants.MAX_VISION_SPEED, 
-            VisionConstants.MAX_VISION_SPEED);
+            -0.4, 
+            0.4);
         
         return clampedOutput;
     }
@@ -201,6 +214,7 @@ public class ReefAlign {
         if(
             LimelightHelpers.getTV(VisionConstants.REEF_LIMELIGHT_NAME)
             && VisionConstants.REEF_TAG_IDS.contains(LimelightHelpers.getFiducialID(VisionConstants.REEF_LIMELIGHT_NAME))
+            && Math.abs(currentPose.getZ()) < VisionConstants.MAX_TRACKING_DISTANCE
             ){
             valid = true;
         }
