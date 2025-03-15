@@ -40,6 +40,10 @@ public class DriverInput {
         return controller.getRawButton(IOConstants.LEFT_CENTER_BUTTON);
     }
 
+    public boolean stow(){
+        return controller.getRawButton(8);
+    }
+
     public boolean L1(){
         return controller.getAButton();
     }
@@ -56,7 +60,7 @@ public class DriverInput {
         return controller.getBButton();
     }
 
-    public boolean stow(){
+    public boolean visionLeftAlign(){
         return controller.getLeftBumperButton();
     }
 
@@ -72,7 +76,7 @@ public class DriverInput {
         controller.setRumble(RumbleType.kBothRumble, on ? 1 : 0);
     }
 
-    public boolean visionAlign(){
+    public boolean visionRightAlign(){
         return controller.getRightBumperButton();
     }
 
