@@ -38,17 +38,19 @@ public class ClimbSubsystem extends SubsystemBase{
     public void periodic(){
 
         double angle = encoder.getAbsPosition();
+        double modifiedAngle = (angle > 0.5)? angle - 1 : angle;
+        // climber angle set to range (0.5, -0.5) (retracted, extended)
 
         switch(currentState){
-            case CLIMBING: //!(angle > ClimberConstants.CLIMBING_LIMIT_ANGLE && angle < .5)
-                if(true){ // if we're not in deadzone, continue climbing
+            case CLIMBING:
+                if(modifiedAngle < 0.25){
                     neo.setVoltage(ClimberConstants.CLIMB_PULL_STRENGTH_VOLTS);
                 } else {
                     neo.setVoltage(0);
                 }
                 break;
-            case LATCHING: //!(angle > .5 && angle < ClimberConstants.LATCHING_LIMIT_ANGLE)
-                if(true){ // if we're not in the deadzone, continue latching
+            case LATCHING:
+                if(modifiedAngle > -0.045){
                     neo.setVoltage(-ClimberConstants.CLIMB_PULL_STRENGTH_VOLTS);
                 } else {
                     neo.setVoltage(0);

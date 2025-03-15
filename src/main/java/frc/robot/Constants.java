@@ -157,7 +157,7 @@ public final class Constants {
   public static final class WristConstants {
     // CAN IDs & Ports
     public static final int MOTOR_CAN_ID = 9;
-    public static final int ENCODER_CAN_ID  = 50;
+    public static final int ENCODER_CAN_ID  = 12;
 
     // Maximums and Minimums Allowed
     public static final double MAXIMUM_VOLTAGE = 9;
@@ -240,8 +240,8 @@ public final class Constants {
     public static final int CURRENT_LIMIT = 30;
 
     // in rotations of the motor
-    public static final double LATCHING_LIMIT_ANGLE = 0.95; // Climber allowed to extend (1 - LATCHING_LIMIT_ANGLE) past vertical
-    public static final double CLIMBING_LIMIT_ANGLE = 0.25; 
+    public static final double LATCHING_LIMIT_ANGLE = 0.05; // latching allowed 0.05 rotations past vertical
+    public static final double CLIMBING_LIMIT_ANGLE = -0.25; // climbing allowed 90 degree back from vertical
 
     public static final int SENSOR_PORT = 1;
    
