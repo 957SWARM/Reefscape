@@ -70,9 +70,22 @@
                       }
                     },
                     {
-                      "type": "path",
+                      "type": "sequential",
                       "data": {
-                        "pathName": "Left 3 L4.2"
+                        "commands": [
+                          {
+                            "type": "wait",
+                            "data": {
+                              "waitTime": 0.2
+                            }
+                          },
+                          {
+                            "type": "path",
+                            "data": {
+                              "pathName": "Left 3 L4.2"
+                            }
+                          }
+                        ]
                       }
                     }
                   ]
@@ -166,9 +179,22 @@
                       }
                     },
                     {
-                      "type": "path",
+                      "type": "sequential",
                       "data": {
-                        "pathName": "Left 3 L4.6"
+                        "commands": [
+                          {
+                            "type": "wait",
+                            "data": {
+                              "waitTime": 0.2
+                            }
+                          },
+                          {
+                            "type": "path",
+                            "data": {
+                              "pathName": "Left 3 L4.6"
+                            }
+                          }
+                        ]
                       }
                     }
                   ]

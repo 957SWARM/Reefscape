@@ -229,6 +229,18 @@ public class ReefAlign {
 
         return aligned;
     }
+ 
+    public boolean xCondition(){
+        return Math.abs(getXDiff()) <= VisionConstants.REEF_TRANSLATION_TOLERANCE;
+    }
+
+    public boolean yCondition(){
+        return Math.abs(getYDiff()) <= VisionConstants.REEF_TRANSLATION_TOLERANCE;
+    }
+
+    public boolean rotCondition(){
+        return Math.abs(getRotDiff()) <= VisionConstants.ROTATION_TOLERANCE;
+    }
 
     public void periodic(){
         updatePoses();

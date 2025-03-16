@@ -29,6 +29,7 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 import frc.robot.Constants.DriveConstants;
 import frc.robot.Constants.ElevatorConstants;
+import frc.robot.Constants.VisionConstants;
 
 @Logged
 public class DriveSubsystem extends SubsystemBase {
@@ -226,6 +227,14 @@ public class DriveSubsystem extends SubsystemBase {
     return m_gyro.getRotation2d().getDegrees();
   }
 
+  public double getPitch(){
+    return m_gyro.getPitch().getValueAsDouble(); // returns pitch in degrees
+  }
+
+  public double getRoll(){
+    return m_gyro.getRoll().getValueAsDouble(); // returns roll in degrees
+  }
+
   /**
    * Returns the turn rate of the robot.
    *
@@ -235,6 +244,10 @@ public class DriveSubsystem extends SubsystemBase {
   public double getTurnRate() {
     return m_gyro.getAngularVelocityZWorld().getValueAsDouble() * (DriveConstants.kGyroReversed ? -1.0 : 1.0);
 
+  }
+
+  public boolean speedCondition(){
+    return getLinearSpeed() < VisionConstants.SPEED_TOLERANCE;
   }
 
   // returns new speed based on elevator height (higher elevator = slower speed)
