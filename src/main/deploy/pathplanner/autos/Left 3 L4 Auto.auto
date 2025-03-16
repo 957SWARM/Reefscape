@@ -104,7 +104,7 @@
                     {
                       "type": "named",
                       "data": {
-                        "name": "Station Align"
+                        "name": "Center Station Align"
                       }
                     }
                   ]
@@ -130,7 +130,7 @@
                     {
                       "type": "path",
                       "data": {
-                        "pathName": "Left 3 L4.4"
+                        "pathName": "Left 3 L4.3"
                       }
                     }
                   ]
@@ -191,7 +191,7 @@
                           {
                             "type": "path",
                             "data": {
-                              "pathName": "Left 3 L4.6"
+                              "pathName": "Left 3 L4.5"
                             }
                           }
                         ]
@@ -213,7 +213,7 @@
                     {
                       "type": "named",
                       "data": {
-                        "name": "Station Align"
+                        "name": "Center Station Align"
                       }
                     }
                   ]
@@ -239,7 +239,7 @@
                     {
                       "type": "path",
                       "data": {
-                        "pathName": "Left 3 L4.8"
+                        "pathName": "Left 3 L4.6"
                       }
                     }
                   ]

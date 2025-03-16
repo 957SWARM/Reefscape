@@ -88,7 +88,8 @@ public class StationAlign {
             else{
                 drive.drive(0, 0, 0, false, 0);
             }
-        }, drive).until(() -> checkAligned(drive));
+        }, drive).until(() -> checkAligned(drive))
+        .andThen(Commands.runOnce(() -> drive.drive(0, 0, 0, false, 0)));
     }
 
     public Command dumbStationAlign(DriveSubsystem drive){
@@ -97,6 +98,12 @@ public class StationAlign {
         }).until(() -> dumbCheckAligned(drive)).andThen(Commands.run(() -> {
             drive.drive(0, shuffleYOutput(drive), 0, false, 0);
         }));
+    }
+
+    public Command autoStationAlign(DriveSubsystem drive){
+        return Commands.run(() -> {
+            drive.drive(getDumbXOutput(), 0, 0, false, 0);
+        }).withTimeout(3).until(() -> checkStationTag()).andThen(alignCenterStation(drive));
     }
 
     public double getDumbXDiff(){

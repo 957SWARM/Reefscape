@@ -81,7 +81,7 @@ public class RobotContainer {
     NamedCommands.registerCommand("Go L4", Sequencing.L4(m_elevator, m_wrist, m_intake));
     NamedCommands.registerCommand("Go L2", Sequencing.L2(m_elevator, m_wrist, m_intake));
     NamedCommands.registerCommand("Near Station Align", stationAlign.alignNearestStation(m_robotDrive));
-    NamedCommands.registerCommand("Center Station Align", stationAlign.alignCenterStation(m_robotDrive));
+    NamedCommands.registerCommand("Center Station Align", stationAlign.autoStationAlign(m_robotDrive));
     NamedCommands.registerCommand("Intake", Sequencing.autoIntake(m_elevator, m_wrist, m_intake));
     NamedCommands.registerCommand("Quick L4", Sequencing.quickL4(m_elevator, m_wrist, m_intake));
 
@@ -98,7 +98,7 @@ public class RobotContainer {
     // autoChooser.addOption("Right 3 L4 Auto", new PathPlannerAuto("Right 3 L4 Auto"));
     // autoChooser.addOption("Buddy Auto", new PathPlannerAuto("Buddy Auto"));
     autoChooser.addOption("Fun Auto", new PathPlannerAuto("Fun Auto"));
-    autoChooser.addOption("Left 3 L4", new PathPlannerAuto("Left 3 L4 Auto").andThen(() -> m_robotDrive.zeroHeading()));
+    autoChooser.addOption("Left 3 L4", new PathPlannerAuto("Left 3 L4 Auto"));
 
     //configureNamedCommands();
 
@@ -130,8 +130,8 @@ public class RobotContainer {
 
     // stow elevator if starting to tip
     Trigger tipping = new Trigger(() -> 
-      Math.abs(m_robotDrive.getPitch()) > DriveConstants.MAXIMUM_TIP_DEGREES 
-      || Math.abs(m_robotDrive.getRoll()) > DriveConstants.MAXIMUM_TIP_DEGREES)
+      m_robotDrive.pitchTipping()
+      || m_robotDrive.rollPitching())
       .onTrue(Sequencing.stow(m_elevator, m_wrist, m_intake));
 
     // Configure default commands
@@ -191,7 +191,12 @@ public class RobotContainer {
       .onTrue(Sequencing.L4(m_elevator, m_wrist, m_intake));
 
     // while holding trigger, runs intake backwards for scoring
-    new Trigger(() -> m_driver.score())
+    new Trigger(() -> m_driver.score() && m_wrist.getTargetSetpoint() == WristConstants.L1_ANGLE)
+      .whileTrue(m_intake.ejectCommand(IntakeConstants.SLOW_EJECT_SPEED)
+      .andThen(led.shootingFillEmptyBlueCommand(0, LEDConstants.TOTAL_PIXELS, 0.03333, false)
+      .withTimeout(3)));
+
+    new Trigger(() -> m_driver.score() && m_wrist.getTargetSetpoint() != WristConstants.L1_ANGLE)
       .whileTrue(m_intake.ejectCommand(IntakeConstants.EJECT_SPEED)
       .andThen(led.shootingFillEmptyBlueCommand(0, LEDConstants.TOTAL_PIXELS, 0.03333, false)
       .withTimeout(3)));
@@ -268,6 +273,14 @@ public class RobotContainer {
    */
   public Command getAutonomousCommand() {
     return autoChooser.getSelected();
+  }
+
+  public void fixHeading(){
+    m_robotDrive.setHeading(m_robotDrive.getHeading() - 270 + 180);
+  }
+
+  public void zeroHeading(){
+    m_robotDrive.zeroHeading();
   }
   
 }

@@ -74,7 +74,7 @@ public final class Constants {
     public static final int BACK_LEFT = 0;
     public static final int BACK_RIGHT = 0;
 
-    public static final double MAXIMUM_TIP_DEGREES = 3;
+    public static final double MAXIMUM_TIP_DEGREES = 5;
   }
 
   public static final class ModuleConstants {
@@ -129,7 +129,7 @@ public final class Constants {
 
     // measurements in meters the carriage rises. (end effector raises twice these values)
     public static final double POSITION_GROUND = 0;
-    public static final double POSITION_L1 = 0.07; 
+    public static final double POSITION_L1 = 0.02; 
     public static final double POSITION_L2 = 0.242;
     public static final double POSITION_L3 = 0.452;
     public static final double POSITION_L4 = 0.775;
@@ -173,8 +173,8 @@ public final class Constants {
 
     // angle setpoints for scoring, intake, stowing
     public static final double L1_ANGLE = 0;
-    public static final double L2_ANGLE = 0.91;
-    public static final double L3_ANGLE = L2_ANGLE;
+    public static final double L2_ANGLE = 0.88;
+    public static final double L3_ANGLE = 0.887;
     public static final double L4_ANGLE = 0.875;
     public static final double STOW_ANGLE = 0.165;
     public static final double INTAKE_ANGLE = 0.11;
@@ -214,8 +214,10 @@ public final class Constants {
     public static final double IDLE_SPEED = 0;
     public static final double INTAKE_SPEED = 8;
     public static final double EJECT_SPEED = -5;
+    public static final double SLOW_EJECT_SPEED = -2;
 
     public static final double APPLIED_VOLTAGE = 10;
+
   }
 
   public static final class IOConstants {
@@ -274,8 +276,8 @@ public final class Constants {
     );
   
 
-    public static final Pose3d LEFT_STATION = new Pose3d(new Translation3d(-.6, 0, -.59), new Rotation3d());
-    public static final Pose3d MID_STATION = new Pose3d(new Translation3d(0, 0, -.59), new Rotation3d());
+    public static final Pose3d LEFT_STATION = new Pose3d(new Translation3d(-.6, 0, -.62), new Rotation3d());
+    public static final Pose3d MID_STATION = new Pose3d(new Translation3d(0, 0, -.62), new Rotation3d());
     public static final List<Pose3d> STATION_POSES = Arrays.asList(LEFT_STATION, MID_STATION);
     public static final List<Double> STATION_TAG_IDS = Arrays.asList(
       (double)1, 
