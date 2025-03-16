@@ -176,9 +176,9 @@ public final class Constants {
     public static final double L2_ANGLE = 0.88;
     public static final double L3_ANGLE = 0.887;
     public static final double L4_ANGLE = 0.875;
-    public static final double STOW_ANGLE = 0.165;
+    public static final double STOW_ANGLE = 0.142;
     public static final double INTAKE_ANGLE = 0.11;
-    public static final double DEEP_STOW_ANGLE = 0.193;
+    public static final double DEEP_STOW_ANGLE = 0.173;
 
     // PID + Feedforward
     public static final double kG = 0.5;  // constant multiplied by angle of arm to maintain position
@@ -276,8 +276,8 @@ public final class Constants {
     );
   
 
-    public static final Pose3d LEFT_STATION = new Pose3d(new Translation3d(-.6, 0, -.62), new Rotation3d());
-    public static final Pose3d MID_STATION = new Pose3d(new Translation3d(0, 0, -.62), new Rotation3d());
+    public static final Pose3d LEFT_STATION = new Pose3d(new Translation3d(-.6, 0, -.65), new Rotation3d());
+    public static final Pose3d MID_STATION = new Pose3d(new Translation3d(0, 0, -.65), new Rotation3d());
     public static final List<Pose3d> STATION_POSES = Arrays.asList(LEFT_STATION, MID_STATION);
     public static final List<Double> STATION_TAG_IDS = Arrays.asList(
       (double)1, 

@@ -105,6 +105,10 @@ public class DriveSubsystem extends SubsystemBase {
     return m_odometry.getPoseMeters();
   }
 
+  public String getPoseString(){
+    return getPose().toString();
+  }
+
   /**
    * Resets the odometry to the specified pose.
    *

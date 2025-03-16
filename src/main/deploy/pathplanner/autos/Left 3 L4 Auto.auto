@@ -13,12 +13,6 @@
                 "data": {
                   "commands": [
                     {
-                      "type": "named",
-                      "data": {
-                        "name": "High Stow"
-                      }
-                    },
-                    {
                       "type": "path",
                       "data": {
                         "pathName": "Left 3 L4.0"
@@ -36,20 +30,8 @@
                       "data": {
                         "name": "Right Reef Align"
                       }
-                    },
-                    {
-                      "type": "named",
-                      "data": {
-                        "name": "Go L4"
-                      }
                     }
                   ]
-                }
-              },
-              {
-                "type": "named",
-                "data": {
-                  "name": "Score"
                 }
               }
             ]
@@ -63,12 +45,6 @@
                 "type": "race",
                 "data": {
                   "commands": [
-                    {
-                      "type": "named",
-                      "data": {
-                        "name": "Intake"
-                      }
-                    },
                     {
                       "type": "sequential",
                       "data": {
@@ -98,12 +74,6 @@
                     {
                       "type": "named",
                       "data": {
-                        "name": "Intake"
-                      }
-                    },
-                    {
-                      "type": "named",
-                      "data": {
                         "name": "Center Station Align"
                       }
                     }
@@ -122,12 +92,6 @@
                 "data": {
                   "commands": [
                     {
-                      "type": "named",
-                      "data": {
-                        "name": "High Stow"
-                      }
-                    },
-                    {
                       "type": "path",
                       "data": {
                         "pathName": "Left 3 L4.3"
@@ -145,20 +109,8 @@
                       "data": {
                         "name": "Left Reef Align"
                       }
-                    },
-                    {
-                      "type": "named",
-                      "data": {
-                        "name": "Go L4"
-                      }
                     }
                   ]
-                }
-              },
-              {
-                "type": "named",
-                "data": {
-                  "name": "Score"
                 }
               }
             ]
@@ -172,12 +124,6 @@
                 "type": "race",
                 "data": {
                   "commands": [
-                    {
-                      "type": "named",
-                      "data": {
-                        "name": "Intake"
-                      }
-                    },
                     {
                       "type": "sequential",
                       "data": {
@@ -207,12 +153,6 @@
                     {
                       "type": "named",
                       "data": {
-                        "name": "Intake"
-                      }
-                    },
-                    {
-                      "type": "named",
-                      "data": {
                         "name": "Center Station Align"
                       }
                     }
@@ -231,12 +171,6 @@
                 "data": {
                   "commands": [
                     {
-                      "type": "named",
-                      "data": {
-                        "name": "High Stow"
-                      }
-                    },
-                    {
                       "type": "path",
                       "data": {
                         "pathName": "Left 3 L4.6"
@@ -254,20 +188,8 @@
                       "data": {
                         "name": "Right Reef Align"
                       }
-                    },
-                    {
-                      "type": "named",
-                      "data": {
-                        "name": "Go L4"
-                      }
                     }
                   ]
-                }
-              },
-              {
-                "type": "named",
-                "data": {
-                  "name": "Score"
                 }
               }
             ]
