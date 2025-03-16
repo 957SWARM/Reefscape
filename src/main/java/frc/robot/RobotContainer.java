@@ -21,6 +21,7 @@ import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
+import frc.robot.Constants.DriveConstants;
 import frc.robot.Constants.ElevatorConstants;
 import frc.robot.Constants.IOConstants;
 import frc.robot.Constants.IntakeConstants;
@@ -126,6 +127,12 @@ public class RobotContainer {
       && m_intake.checkToF() && !DriverStation.isAutonomous());
     coralIn.onTrue(Sequencing.stow(m_elevator, m_wrist, m_intake)
       .andThen(led.coralReceivedFlashingBlueCommand(0, LEDConstants.TOTAL_PIXELS).withTimeout(3)));
+
+    // stow elevator if starting to tip
+    Trigger tipping = new Trigger(() -> 
+      Math.abs(m_robotDrive.getPitch()) > DriveConstants.MAXIMUM_TIP_DEGREES 
+      || Math.abs(m_robotDrive.getRoll()) > DriveConstants.MAXIMUM_TIP_DEGREES)
+      .onTrue(Sequencing.stow(m_elevator, m_wrist, m_intake));
 
     // Configure default commands
 

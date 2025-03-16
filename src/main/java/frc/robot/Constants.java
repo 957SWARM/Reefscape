@@ -73,6 +73,8 @@ public final class Constants {
     public static final int FRONT_RIGHT = 0;
     public static final int BACK_LEFT = 0;
     public static final int BACK_RIGHT = 0;
+
+    public static final double MAXIMUM_TIP_DEGREES = 3;
   }
 
   public static final class ModuleConstants {
