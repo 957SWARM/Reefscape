@@ -90,8 +90,8 @@ public class ReefAlign {
                 drive.drive(getXOutput(), getYOutput(), getRotOutput(), false, 0);
 
             }else if(StationAlign.tof.getRange()/1000 < .5){
-                drive.drive(0, -0.1, 0, false, 0);
-                
+                drive.drive(0, 0.1, 0, false, 0);
+
             }else{
                 drive.drive(0, 0, 0, false, 0);
             }
