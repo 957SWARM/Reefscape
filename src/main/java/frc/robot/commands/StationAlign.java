@@ -53,7 +53,7 @@ public class StationAlign {
     boolean timerReset = false;
 
     boolean biasCenter = false;
-    TimeOfFlight tof = new TimeOfFlight(2);
+    public static TimeOfFlight tof = new TimeOfFlight(2);
 
     double shuffleOutput = 0;
 
