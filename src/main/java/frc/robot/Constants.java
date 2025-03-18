@@ -131,7 +131,7 @@ public final class Constants {
     public static final double POSITION_GROUND = 0;
     public static final double POSITION_L1 = 0.02; 
     public static final double POSITION_L2 = 0.242;
-    public static final double POSITION_L3 = 0.452;
+    public static final double POSITION_L3 = 0.432;
     public static final double POSITION_L4 = 0.775;
     public static final double POSITION_INTAKE = 0.1;
     public static final double POSITION_LOW_REMOVE = 0.03;
@@ -173,12 +173,12 @@ public final class Constants {
 
     // angle setpoints for scoring, intake, stowing
     public static final double L1_ANGLE = 0;
-    public static final double L2_ANGLE = 0.88;
-    public static final double L3_ANGLE = 0.887;
-    public static final double L4_ANGLE = 0.875;
-    public static final double STOW_ANGLE = 0.142;
+    public static final double L2_ANGLE = 0.92;
+    public static final double L3_ANGLE = 0.92;
+    public static final double L4_ANGLE = 0.91;
+    public static final double STOW_ANGLE = 0.152;
     public static final double INTAKE_ANGLE = 0.11;
-    public static final double DEEP_STOW_ANGLE = 0.173;
+    public static final double DEEP_STOW_ANGLE = 0.2;
 
     // PID + Feedforward
     public static final double kG = 0.5;  // constant multiplied by angle of arm to maintain position
@@ -213,7 +213,7 @@ public final class Constants {
     // SPEEDS
     public static final double IDLE_SPEED = 0;
     public static final double INTAKE_SPEED = 8;
-    public static final double EJECT_SPEED = -5;
+    public static final double EJECT_SPEED = -8;
     public static final double SLOW_EJECT_SPEED = -2;
 
     public static final double APPLIED_VOLTAGE = 10;
