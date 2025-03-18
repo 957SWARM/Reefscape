@@ -103,7 +103,9 @@ public class StationAlign {
     public Command autoStationAlign(DriveSubsystem drive){
         return Commands.run(() -> {
             drive.drive(getDumbXOutput(), 0, 0, false, 0);
-        }).withTimeout(3).until(() -> checkStationTag()).andThen(alignCenterStation(drive));
+        }).withTimeout(3).until(() -> checkStationTag()).andThen(alignCenterStation(drive))
+        .andThen(Commands.runOnce(() -> drive.drive(0, 0, 0, false, 0)))
+        .andThen(() -> drive.drive(0, shuffleYOutput(drive), 0, false, 0));
     }
 
     public double getDumbXDiff(){
