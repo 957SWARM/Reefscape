@@ -76,6 +76,9 @@ public class RobotContainer {
   DriverInput m_driver = new DriverInput();
   OperatorInput m_operator = new OperatorInput();
 
+  // Auto Offset. Pulled at beginning of auto and used for fixHeading()
+  double autoOffsetDegrees = 0;
+
   /**
    * The container for the robot. Contains subsystems, OI devices, and commands.
    */
@@ -275,26 +278,16 @@ public class RobotContainer {
    * @return the command to run in autonomous
    */
   public Command getAutonomousCommand() {
-    return autoChooser.getSelected();
+    return Commands.runOnce(() -> grabHeading()).andThen(autoChooser.getSelected());
   }
 
   public void fixHeading(){
-    if(autoChooser.getSelected().equals(Left3L4Auto)){
-      m_robotDrive.setHeading(m_robotDrive.getHeading() - 270 + 180);
-    }
-    else if(autoChooser.getSelected().equals(Right3L4Auto)){
-      m_robotDrive.setHeading(m_robotDrive.getHeading() - 270);
-    }
-    else if(autoChooser.getSelected().equals(NearL4Auto)){
-      m_robotDrive.setHeading(m_robotDrive.getHeading() + 180);
-    }
-    else if(autoChooser.getSelected().equals(JustLeaveAuto)){
-      m_robotDrive.setHeading(m_robotDrive.getHeading() + 180);
-    }
+    m_robotDrive.setHeading(m_robotDrive.getHeading() - 90 - autoOffsetDegrees);
   }
 
-  public void zeroHeading(){
-    m_robotDrive.zeroHeading();
+  // sets the global variable autoOffsetDegrees to the current heading of the robot
+  public void grabHeading(){
+    autoOffsetDegrees = m_robotDrive.getHeading();
   }
   
 }
