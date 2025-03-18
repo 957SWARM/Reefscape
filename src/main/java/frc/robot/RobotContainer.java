@@ -51,7 +51,14 @@ import frc.robot.subsystems.Drive.DriveSubsystem;
 @Logged
 public class RobotContainer {
 
+  // Autonomous
   private final SendableChooser<Command> autoChooser;
+  private Command Left3L4Auto;
+  private Command Right3L4Auto;
+  private Command NearL4Auto;
+  private Command JustLeaveAuto;
+  private Command NothingAuto;
+
 
   // The robot's subsystems
   private final DriveSubsystem m_robotDrive = new DriveSubsystem();
@@ -74,6 +81,7 @@ public class RobotContainer {
    */
   public RobotContainer() {
 
+    // Auto Commands
     NamedCommands.registerCommand("Go L1", Sequencing.L1(m_elevator, m_wrist, m_intake));
     NamedCommands.registerCommand("Stow", Sequencing.stow(m_elevator, m_wrist, m_intake));
     NamedCommands.registerCommand("High Stow", Sequencing.highStow(m_elevator, m_wrist, m_intake));
@@ -90,20 +98,12 @@ public class RobotContainer {
 
     autoChooser = AutoBuilder.buildAutoChooser();
     SmartDashboard.putData("Auto Chooser", autoChooser);
-    //autoChooser.addOption("Test Auto", new PathPlannerAuto("Test Auto"));
-    autoChooser.addOption("Nothing", new InstantCommand());
-    autoChooser.addOption("Just Leave", new PathPlannerAuto("Just Leave"));
-    autoChooser.addOption("Near L4", new PathPlannerAuto("Near L4 Auto").andThen(() -> m_robotDrive.zeroHeading()));
-    // autoChooser.addOption("EZ Right 2 L4", new PathPlannerAuto("EZ Right 2 L4 Auto"));
-    // autoChooser.addOption("EZ Left 2 L4", new PathPlannerAuto("EZ Left 2 L4 Auto"));
-    // autoChooser.addOption("Right 2.5 L4", new PathPlannerAuto("Right 2.5 L4 Auto").andThen(() -> m_robotDrive.zeroHeading()));
-    // autoChooser.addOption("Left 2.5 L4", new PathPlannerAuto("Left 2.5 L4 Auto"));
-    // autoChooser.addOption("Right 3 L4 Auto", new PathPlannerAuto("Right 3 L4 Auto"));
-    // autoChooser.addOption("Buddy Auto", new PathPlannerAuto("Buddy Auto"));
-    autoChooser.addOption("Fun Auto", new PathPlannerAuto("Fun Auto"));
-    autoChooser.addOption("Left 3 L4", new PathPlannerAuto("Left 3 L4 Auto"));
 
-    //configureNamedCommands();
+    autoChooser.addOption("Nothing", NothingAuto);
+    autoChooser.addOption("Just Leave", JustLeaveAuto);
+    autoChooser.addOption("Near L4", NearL4Auto);
+    //autoChooser.addOption("Fun Auto", new PathPlannerAuto("Fun Auto"));
+    autoChooser.addOption("Left 3 L4", Left3L4Auto);
 
     // Configure the button bindings
     configureButtonBindings();
@@ -279,7 +279,18 @@ public class RobotContainer {
   }
 
   public void fixHeading(){
-    m_robotDrive.setHeading(m_robotDrive.getHeading() - 270 + 180);
+    if(autoChooser.getSelected().equals(Left3L4Auto)){
+      m_robotDrive.setHeading(m_robotDrive.getHeading() - 270 + 180);
+    }
+    else if(autoChooser.getSelected().equals(Right3L4Auto)){
+      m_robotDrive.setHeading(m_robotDrive.getHeading() - 270);
+    }
+    else if(autoChooser.getSelected().equals(NearL4Auto)){
+      m_robotDrive.setHeading(m_robotDrive.getHeading() + 180);
+    }
+    else if(autoChooser.getSelected().equals(JustLeaveAuto)){
+      m_robotDrive.setHeading(m_robotDrive.getHeading() + 180);
+    }
   }
 
   public void zeroHeading(){
