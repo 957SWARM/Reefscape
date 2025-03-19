@@ -87,7 +87,6 @@ public class ReefAlign {
             updatePoses();
 
             if(checkReefTag()){
-
                 drive.drive(getXOutput(), getYOutput(), getRotOutput(), false, 0);
             }
             else if(StationAlign.tof.getRange()/1000 < .5){

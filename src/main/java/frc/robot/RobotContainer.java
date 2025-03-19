@@ -51,7 +51,14 @@ import frc.robot.subsystems.Drive.DriveSubsystem;
 @Logged
 public class RobotContainer {
 
+  // Autonomous
   private final SendableChooser<Command> autoChooser;
+  private Command Left3L4Auto;
+  private Command Right3L4Auto;
+  private Command NearL4Auto;
+  private Command JustLeaveAuto;
+  private Command NothingAuto;
+
 
   // The robot's subsystems
   private final DriveSubsystem m_robotDrive = new DriveSubsystem();
@@ -69,11 +76,15 @@ public class RobotContainer {
   DriverInput m_driver = new DriverInput();
   OperatorInput m_operator = new OperatorInput();
 
+  // Auto Offset. Pulled at beginning of auto and used for fixHeading()
+  double autoOffsetDegrees = 0;
+
   /**
    * The container for the robot. Contains subsystems, OI devices, and commands.
    */
   public RobotContainer() {
 
+    // Auto Commands
     NamedCommands.registerCommand("Go L1", Sequencing.L1(m_elevator, m_wrist, m_intake));
     NamedCommands.registerCommand("Stow", Sequencing.stow(m_elevator, m_wrist, m_intake));
     NamedCommands.registerCommand("High Stow", Sequencing.highStow(m_elevator, m_wrist, m_intake));
@@ -90,20 +101,12 @@ public class RobotContainer {
 
     autoChooser = AutoBuilder.buildAutoChooser();
     SmartDashboard.putData("Auto Chooser", autoChooser);
-    //autoChooser.addOption("Test Auto", new PathPlannerAuto("Test Auto"));
-    autoChooser.addOption("Nothing", new InstantCommand());
-    autoChooser.addOption("Just Leave", new PathPlannerAuto("Just Leave"));
-    autoChooser.addOption("Near L4", new PathPlannerAuto("Near L4 Auto").andThen(() -> m_robotDrive.zeroHeading()));
-    // autoChooser.addOption("EZ Right 2 L4", new PathPlannerAuto("EZ Right 2 L4 Auto"));
-    // autoChooser.addOption("EZ Left 2 L4", new PathPlannerAuto("EZ Left 2 L4 Auto"));
-    // autoChooser.addOption("Right 2.5 L4", new PathPlannerAuto("Right 2.5 L4 Auto").andThen(() -> m_robotDrive.zeroHeading()));
-    // autoChooser.addOption("Left 2.5 L4", new PathPlannerAuto("Left 2.5 L4 Auto"));
-    // autoChooser.addOption("Right 3 L4 Auto", new PathPlannerAuto("Right 3 L4 Auto"));
-    // autoChooser.addOption("Buddy Auto", new PathPlannerAuto("Buddy Auto"));
-    autoChooser.addOption("Fun Auto", new PathPlannerAuto("Fun Auto"));
-    autoChooser.addOption("Left 3 L4", new PathPlannerAuto("Left 3 L4 Auto"));
 
-    //configureNamedCommands();
+    autoChooser.addOption("Nothing", NothingAuto);
+    autoChooser.addOption("Just Leave", JustLeaveAuto);
+    autoChooser.addOption("Near L4", NearL4Auto);
+    //autoChooser.addOption("Fun Auto", new PathPlannerAuto("Fun Auto"));
+    autoChooser.addOption("Left 3 L4", Left3L4Auto);
 
     // Configure the button bindings
     configureButtonBindings();
@@ -275,15 +278,16 @@ public class RobotContainer {
    * @return the command to run in autonomous
    */
   public Command getAutonomousCommand() {
-    return autoChooser.getSelected();
+    return Commands.runOnce(() -> grabHeading()).andThen(autoChooser.getSelected());
   }
 
   public void fixHeading(){
-    m_robotDrive.setHeading(m_robotDrive.getHeading() - 270 + 180);
+    m_robotDrive.setHeading(m_robotDrive.getHeading() - 90 - autoOffsetDegrees);
   }
 
-  public void zeroHeading(){
-    m_robotDrive.zeroHeading();
+  // sets the global variable autoOffsetDegrees to the current heading of the robot
+  public void grabHeading(){
+    autoOffsetDegrees = m_robotDrive.getHeading();
   }
   
 }
