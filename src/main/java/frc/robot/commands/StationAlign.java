@@ -53,9 +53,10 @@ public class StationAlign {
     boolean timerReset = false;
 
     boolean biasCenter = false;
-    TimeOfFlight tof = new TimeOfFlight(2);
+    public static TimeOfFlight tof = new TimeOfFlight(2);
 
     double shuffleOutput = 0;
+    double shuffleRotOutput = 0;
 
     public StationAlign(){
         tof.setRangingMode(RangingMode.Long, 24);
@@ -89,7 +90,7 @@ public class StationAlign {
                 drive.drive(0, 0, 0, false, 0);
             }
         }, drive).until(() -> checkAligned(drive))
-        .andThen(Commands.runOnce(() -> drive.drive(0, 0, 0, false, 0)));
+        .andThen(Commands.run(() -> drive.drive(0, 0, shuffleRotOutput(drive), false, 0)));
     }
 
     public Command dumbStationAlign(DriveSubsystem drive){
@@ -100,13 +101,14 @@ public class StationAlign {
         }));
     }
 
-    public Command autoStationAlign(DriveSubsystem drive){
-        return Commands.run(() -> {
-            drive.drive(getDumbXOutput(), 0, 0, false, 0);
-        }).withTimeout(3).until(() -> checkStationTag()).andThen(alignCenterStation(drive))
-        .andThen(Commands.runOnce(() -> drive.drive(0, 0, 0, false, 0)))
-        .andThen(() -> drive.drive(0, shuffleYOutput(drive), 0, false, 0));
-    }
+    // public Command autoStationAlign(DriveSubsystem drive){
+    //     return Commands.run(() -> {
+    //         drive.drive(getDumbXOutput(), 0, 0, false, 0);
+    //     }).withTimeout(3).until(() -> checkStationTag()).andThen(alignCenterStation(drive))
+    //     .andThen(Commands.runOnce(() -> drive.drive(0, 0, 0, false, 0)))
+    //     .andThen(() -> drive.drive(0, shuffleYOutput(drive), 0, false, 0));
+    // }
+
 
     public double getDumbXDiff(){
         return tof.getRange()/1000 - 0.33;
@@ -139,8 +141,9 @@ public class StationAlign {
     }
 
     public double shuffleRotOutput(DriveSubsystem drive){
-        double output = getDumbRotOutput(drive) * 17;
-        return MathUtil.clamp(output, -0.2, .2);
+        shuffleRotOutput += .01;
+        shuffleRotOutput = MathUtil.inputModulus(shuffleRotOutput, -0.16, 0.16);
+        return MathUtil.clamp(shuffleRotOutput, -0.16, 0.16);
     }
 
     public double shuffleYOutput(DriveSubsystem drive){

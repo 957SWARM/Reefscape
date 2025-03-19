@@ -175,7 +175,7 @@ public final class Constants {
     public static final double L1_ANGLE = 0; 
     public static final double L2_ANGLE = 0.91;
     public static final double L3_ANGLE = 0.92;
-    public static final double L4_ANGLE = 0.905;
+    public static final double L4_ANGLE = 0.90;
     public static final double STOW_ANGLE = 0.152;
     public static final double INTAKE_ANGLE = 0.09;
     public static final double DEEP_STOW_ANGLE = 0.2;
@@ -187,7 +187,7 @@ public final class Constants {
     public static final double kD = 0;
 
     // Tolerance. Used for checking if wrist is at target angle
-    public static final double TOLERANCE = 0.02;
+    public static final double TOLERANCE = 0.010;
 
   }
 

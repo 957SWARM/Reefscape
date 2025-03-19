@@ -84,7 +84,7 @@ public class RobotContainer {
     NamedCommands.registerCommand("Go L4", Sequencing.L4(m_elevator, m_wrist, m_intake));
     NamedCommands.registerCommand("Go L2", Sequencing.L2(m_elevator, m_wrist, m_intake));
     NamedCommands.registerCommand("Near Station Align", stationAlign.alignNearestStation(m_robotDrive));
-    NamedCommands.registerCommand("Center Station Align", stationAlign.autoStationAlign(m_robotDrive));
+    NamedCommands.registerCommand("Center Station Align", stationAlign.alignCenterStation(m_robotDrive));
     NamedCommands.registerCommand("Intake", Sequencing.autoIntake(m_elevator, m_wrist, m_intake));
     NamedCommands.registerCommand("Quick L4", Sequencing.quickL4(m_elevator, m_wrist, m_intake));
 
@@ -132,10 +132,10 @@ public class RobotContainer {
       .andThen(led.coralReceivedFlashingBlueCommand(0, LEDConstants.TOTAL_PIXELS).withTimeout(3)));
 
     // stow elevator if starting to tip
-    Trigger tipping = new Trigger(() -> 
-      m_robotDrive.pitchTipping()
-      || m_robotDrive.rollPitching())
-      .onTrue(Sequencing.stow(m_elevator, m_wrist, m_intake));
+    // Trigger tipping = new Trigger(() -> 
+    //   m_robotDrive.pitchTipping()
+    //   || m_robotDrive.rollPitching())
+    //   .onTrue(Sequencing.stow(m_elevator, m_wrist, m_intake));
 
     // Configure default commands
 

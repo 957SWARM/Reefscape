@@ -168,7 +168,8 @@ public class DriveSubsystem extends SubsystemBase {
   //Same as drive function but for auto. Accepts chassisSpeeds directly instead of generating it from other arguments
   //Always robot relative
   public void autoDrive(ChassisSpeeds speeds) {
-    var swerveModuleStates = DriveConstants.kDriveKinematics.toSwerveModuleStates(speeds);
+    ChassisSpeeds discretizedSpeeds = ChassisSpeeds.discretize(speeds, 0.02);
+    var swerveModuleStates =  DriveConstants.kDriveKinematics.toSwerveModuleStates(discretizedSpeeds);
 
     SwerveDriveKinematics.desaturateWheelSpeeds(
         swerveModuleStates, DriveConstants.kMaxSpeedMetersPerSecond);
