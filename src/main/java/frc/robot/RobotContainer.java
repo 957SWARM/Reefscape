@@ -99,6 +99,8 @@ public class RobotContainer {
     NamedCommands.registerCommand("Intake", Sequencing.autoIntake(m_elevator, m_wrist, m_intake));
     NamedCommands.registerCommand("Quick L4", Sequencing.quickL4(m_elevator, m_wrist, m_intake));
 
+    Left3L4Auto = new PathPlannerAuto("Left 3 L4 Auto");
+
     autoChooser = AutoBuilder.buildAutoChooser();
     SmartDashboard.putData("Auto Chooser", autoChooser);
 
@@ -278,7 +280,7 @@ public class RobotContainer {
    * @return the command to run in autonomous
    */
   public Command getAutonomousCommand() {
-    return Commands.runOnce(() -> grabHeading()).andThen(autoChooser.getSelected());
+    return autoChooser.getSelected();
   }
 
   public void fixHeading(){

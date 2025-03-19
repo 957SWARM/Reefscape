@@ -129,6 +129,7 @@ public final class Constants {
 
     // measurements in meters the carriage rises. (end effector raises twice these values)
     public static final double POSITION_GROUND = 0;
+    public static final double POSITION_HIGH_STOW = 0.34;
     public static final double POSITION_L1 = 0.02; 
     public static final double POSITION_L2 = 0.242;
     public static final double POSITION_L3 = 0.432;
@@ -187,7 +188,7 @@ public final class Constants {
     public static final double kD = 0;
 
     // Tolerance. Used for checking if wrist is at target angle
-    public static final double TOLERANCE = 0.010;
+    public static final double TOLERANCE = 0.0125;
 
   }
 
@@ -336,7 +337,7 @@ public final class Constants {
     public static final double L3_WRIST_DELAY = .3;
     public static final double L4_WRIST_DELAY = .7;
 
-    public static final double QUICK_L4_WRIST_DELAY = 0.45;
+    public static final double QUICK_L4_WRIST_DELAY = 0.36;
   }
 
 

@@ -66,7 +66,7 @@ public class Sequencing {
     }
 
     public static Command highStow(ElevatorSubsystem elevator, WristSubsystem wrist, IntakeSubsystem intake){
-        return elevator.toL2()
+        return elevator.toHighStow()
         .alongWith(wrist.toStow())
         .alongWith(intake.stopIntakeCommand());
     }

@@ -141,6 +141,12 @@ public class ElevatorSubsystem extends SubsystemBase{
         });
     }
 
+    public Command toHighStow(){
+        return Commands.runOnce(() -> {
+            assignSetpoint(ElevatorConstants.POSITION_HIGH_STOW);
+        });
+    }
+
     public Command toL3(){
         return Commands.runOnce(() -> {
             assignSetpoint(ElevatorConstants.POSITION_L3);

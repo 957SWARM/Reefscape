@@ -102,6 +102,7 @@ public class Robot extends TimedRobot {
   public void autonomousInit() {
 
     //m_robotContainer.zeroHeading();
+    m_robotContainer.grabHeading();
     m_autonomousCommand = m_robotContainer.getAutonomousCommand();
 
     /*
