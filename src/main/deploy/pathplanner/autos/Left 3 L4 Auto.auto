@@ -21,7 +21,7 @@
                     {
                       "type": "path",
                       "data": {
-                        "pathName": "Right 2 L4.0"
+                        "pathName": "Left 3 L4.0"
                       }
                     }
                   ]
@@ -90,7 +90,7 @@
                           {
                             "type": "path",
                             "data": {
-                              "pathName": "Right 2 L4.2"
+                              "pathName": "Left 3 L4.2"
                             }
                           }
                         ]
@@ -128,7 +128,7 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "Right 2 L4.3"
+                  "pathName": "Left 3 L4.3"
                 }
               },
               {
@@ -180,7 +180,7 @@
                           {
                             "type": "path",
                             "data": {
-                              "pathName": "Right 2 L4.4"
+                              "pathName": "Left 3 L4.4"
                             }
                           }
                         ]
@@ -222,7 +222,7 @@
                     {
                       "type": "path",
                       "data": {
-                        "pathName": "Right 2 L4.5"
+                        "pathName": "Left 3 L4.5"
                       }
                     },
                     {
