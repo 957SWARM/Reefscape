@@ -100,6 +100,7 @@ public class RobotContainer {
     NamedCommands.registerCommand("Quick L4", Sequencing.quickL4(m_elevator, m_wrist, m_intake));
 
     Left3L4Auto = new PathPlannerAuto("Left 3 L4 Auto");
+    Right3L4Auto = new PathPlannerAuto("Right 3 L4 Auto");
 
     autoChooser = AutoBuilder.buildAutoChooser();
     SmartDashboard.putData("Auto Chooser", autoChooser);
@@ -109,6 +110,7 @@ public class RobotContainer {
     autoChooser.addOption("Near L4", NearL4Auto);
     //autoChooser.addOption("Fun Auto", new PathPlannerAuto("Fun Auto"));
     autoChooser.addOption("Left 3 L4", Left3L4Auto);
+    autoChooser.addOption("Right 3 L4", Right3L4Auto);
 
     // Configure the button bindings
     configureButtonBindings();
