@@ -13,7 +13,13 @@
         {
           "type": "path",
           "data": {
-            "pathName": "Left L4"
+            "pathName": "Near L4"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "Right Reef Align"
           }
         },
         {
@@ -26,6 +32,12 @@
           "type": "named",
           "data": {
             "name": "Score"
+          }
+        },
+        {
+          "type": "wait",
+          "data": {
+            "waitTime": 0.35
           }
         },
         {

@@ -100,7 +100,8 @@ public class WristSubsystem extends SubsystemBase{
 
     // purely for checking if at setpoint
     public boolean atSetpoint(){
-        return Math.abs(getPosition() - targetSetpoint) < WristConstants.TOLERANCE;
+        return (Math.abs(getPosition() - targetSetpoint) < WristConstants.POSITION_TOLERANCE)
+        && Math.abs(encoder.getVelocity()) < WristConstants.SPEED_TOLERANCE;
     }
     
     // Helper function. feedforward = voltage to remain at current position

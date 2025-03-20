@@ -261,7 +261,7 @@ public class DriveSubsystem extends SubsystemBase {
   }
 
   public boolean speedCondition(){
-    return getLinearSpeed() < VisionConstants.SPEED_TOLERANCE;
+    return getLinearSpeed() < VisionConstants.REEF_SPEED_TOLERANCE;
   }
 
   // returns new speed based on elevator height (higher elevator = slower speed)

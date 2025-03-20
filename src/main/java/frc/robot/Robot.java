@@ -51,8 +51,9 @@ public class Robot extends TimedRobot {
     // driveCamera.setResolution(240, 180);
     // climbCamera.setResolution(240, 180);
 
-    driveCameraServer.setSource(driveCamera);
-    climbCameraServer.setSource(climbCamera);
+    // temp comment out
+    // driveCameraServer.setSource(driveCamera);
+    // climbCameraServer.setSource(climbCamera);
 
   }
 
@@ -65,8 +66,9 @@ public class Robot extends TimedRobot {
 
     FollowPathCommand.warmupCommand().schedule(); // For Path Planner. Supposedly speeds up followings paths
 
-    CameraServer.startAutomaticCapture(0).setResolution(240, 180); // For end-effector camera
-    CameraServer.startAutomaticCapture(1).setResolution(240, 180);
+    // temp comment out
+    // CameraServer.startAutomaticCapture(0).setResolution(240, 180); // For end-effector camera
+    // CameraServer.startAutomaticCapture(1).setResolution(240, 180);
     
     led.scheduleDefaultCommand(led.defaultBlueWavesLightCommand(0, LEDConstants.TOTAL_PIXELS, 0.1, false));
   }

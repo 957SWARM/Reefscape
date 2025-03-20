@@ -86,6 +86,9 @@ public class StationAlign {
             if(checkStationTag()){
                 drive.drive(getXOutput(), getYOutput(), getRotOutput(), false, 0);
             }
+            else if(tof.getRange()/1000 > .5 && tof.getRange()/1000 < 1){
+                drive.drive(0.1, 0, 0, false, 0);
+            }
             else{
                 drive.drive(0, 0, 0, false, 0);
             }
@@ -97,7 +100,7 @@ public class StationAlign {
         return Commands.run(() -> {
             drive.drive(getDumbXOutput(), 0, getDumbRotOutput(drive), false, 0);
         }).until(() -> dumbCheckAligned(drive)).andThen(Commands.run(() -> {
-            drive.drive(0, shuffleYOutput(drive), 0, false, 0);
+            drive.setX();
         }));
     }
 
@@ -159,8 +162,8 @@ public class StationAlign {
 
         double clampedOutput = MathUtil.clamp(
             -xPID.calculate(getXDiff()), 
-            -VisionConstants.MAX_VISION_SPEED, 
-            VisionConstants.MAX_VISION_SPEED);
+            -VisionConstants.MAX_STATION_ALIGN_SPEED, 
+            VisionConstants.MAX_STATION_ALIGN_SPEED);
 
         return clampedOutput;
     }
@@ -172,8 +175,8 @@ public class StationAlign {
 
         double clampedOutput = MathUtil.clamp(
             -yPID.calculate(getYDiff()), 
-            -VisionConstants.MAX_VISION_SPEED, 
-            VisionConstants.MAX_VISION_SPEED);
+            -VisionConstants.MAX_STATION_ALIGN_SPEED, 
+            VisionConstants.MAX_STATION_ALIGN_SPEED);
         
         return clampedOutput;
     }
@@ -269,14 +272,14 @@ public class StationAlign {
         boolean aligned = Math.abs(getXDiff()) <= VisionConstants.STATION_TRANSLATION_TOLERANCE
         && Math.abs(getYDiff()) <= VisionConstants.STATION_TRANSLATION_TOLERANCE
         && Math.abs(getRotDiff()) <= VisionConstants.ROTATION_TOLERANCE
-        && drive.getLinearSpeed() <= VisionConstants.SPEED_TOLERANCE;
+        && drive.getLinearSpeed() <= VisionConstants.STATION_SPEED_TOLERANCE;
 
         return aligned;
     }
 
     public boolean dumbCheckAligned(DriveSubsystem drive){
         boolean aligned = Math.abs(getDumbXDiff()) <= VisionConstants.STATION_TRANSLATION_TOLERANCE
-        && Math.abs(getDumbRotDiff(drive)) <= VisionConstants.ROTATION_TOLERANCE;
+        && Math.abs(getDumbRotDiff(drive)) <= VisionConstants.ROTATION_TOLERANCE * 2;
 
         return aligned;
     }

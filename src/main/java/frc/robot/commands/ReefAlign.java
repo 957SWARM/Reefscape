@@ -132,8 +132,8 @@ public class ReefAlign {
 
         double clampedOutput = MathUtil.clamp(
             -yPID.calculate(getYDiff()), 
-            -0.4, 
-            0.4);
+            -0.3, 
+            0.3);
         
         return clampedOutput;
     }
@@ -227,7 +227,7 @@ public class ReefAlign {
         boolean aligned = Math.abs(getXDiff()) <= VisionConstants.REEF_TRANSLATION_TOLERANCE
         && Math.abs(getYDiff()) <= VisionConstants.REEF_TRANSLATION_TOLERANCE
         && Math.abs(getRotDiff()) <= VisionConstants.ROTATION_TOLERANCE
-        && drive.getLinearSpeed() <= VisionConstants.SPEED_TOLERANCE;
+        && drive.getLinearSpeed() <= VisionConstants.REEF_SPEED_TOLERANCE;
 
         return aligned;
     }

@@ -55,7 +55,8 @@ public class RobotContainer {
   private final SendableChooser<Command> autoChooser;
   private Command Left3L4Auto;
   private Command Right3L4Auto;
-  private Command NearL4Auto;
+  private Command NearLeftL4Auto;
+  private Command NearRightL4Auto;
   private Command JustLeaveAuto;
   private Command NothingAuto;
 
@@ -88,7 +89,7 @@ public class RobotContainer {
     NamedCommands.registerCommand("Go L1", Sequencing.L1(m_elevator, m_wrist, m_intake));
     NamedCommands.registerCommand("Stow", Sequencing.stow(m_elevator, m_wrist, m_intake));
     NamedCommands.registerCommand("High Stow", Sequencing.highStow(m_elevator, m_wrist, m_intake));
-    NamedCommands.registerCommand("Score", m_intake.autoEject(IntakeConstants.EJECT_SPEED));
+    NamedCommands.registerCommand("Score", m_intake.autoEject(IntakeConstants.L4_EJECT_SPEED));
     NamedCommands.registerCommand("Right Reef Align", reefAlign.alignRightReef(m_robotDrive));
     NamedCommands.registerCommand("Left Reef Align", reefAlign.alignLeftReef(m_robotDrive));
     NamedCommands.registerCommand("Near Reef Align", reefAlign.alignNearestReef(m_robotDrive));
@@ -101,13 +102,16 @@ public class RobotContainer {
 
     Left3L4Auto = new PathPlannerAuto("Left 3 L4 Auto");
     Right3L4Auto = new PathPlannerAuto("Right 3 L4 Auto");
+    NearRightL4Auto = new PathPlannerAuto("Near Right L4 Auto");
+    NearLeftL4Auto = new PathPlannerAuto("Near Left L4 Auto");
 
     autoChooser = AutoBuilder.buildAutoChooser();
     SmartDashboard.putData("Auto Chooser", autoChooser);
 
     autoChooser.addOption("Nothing", NothingAuto);
     autoChooser.addOption("Just Leave", JustLeaveAuto);
-    autoChooser.addOption("Near L4", NearL4Auto);
+    autoChooser.addOption("Near Right L4", NearRightL4Auto);
+    autoChooser.addOption("Near Left L4", NearLeftL4Auto);
     //autoChooser.addOption("Fun Auto", new PathPlannerAuto("Fun Auto"));
     autoChooser.addOption("Left 3 L4", Left3L4Auto);
     autoChooser.addOption("Right 3 L4", Right3L4Auto);
@@ -123,7 +127,7 @@ public class RobotContainer {
       .andThen(Commands.run(() -> m_driver.setRumble(false))));
 
     // stops intake when coral leaves
-    Trigger coralOut = new Trigger(() -> !m_intake.checkToF() && m_intake.getVoltage() == IntakeConstants.EJECT_SPEED
+    Trigger coralOut = new Trigger(() -> !m_intake.checkToF() && m_intake.getVoltage() > 0
     && !DriverStation.isAutonomous());
     coralOut.onTrue(new WaitCommand(.25)
     .andThen(m_intake.stopIntakeCommand())
@@ -139,10 +143,10 @@ public class RobotContainer {
       .andThen(led.coralReceivedFlashingBlueCommand(0, LEDConstants.TOTAL_PIXELS).withTimeout(3)));
 
     // stow elevator if starting to tip
-    // Trigger tipping = new Trigger(() -> 
-    //   m_robotDrive.pitchTipping()
-    //   || m_robotDrive.rollPitching())
-    //   .onTrue(Sequencing.stow(m_elevator, m_wrist, m_intake));
+    Trigger tipping = new Trigger(() -> 
+      m_robotDrive.pitchTipping()
+      || m_robotDrive.rollPitching())
+      .onTrue(Sequencing.stow(m_elevator, m_wrist, m_intake));
 
     // Configure default commands
 
@@ -206,7 +210,12 @@ public class RobotContainer {
       .andThen(led.shootingFillEmptyBlueCommand(0, LEDConstants.TOTAL_PIXELS, 0.03333, false)
       .withTimeout(3)));
 
-    new Trigger(() -> m_driver.score() && m_wrist.getTargetSetpoint() != WristConstants.L1_ANGLE)
+      new Trigger(() -> m_driver.score() && m_wrist.getTargetSetpoint() == WristConstants.L4_ANGLE)
+      .whileTrue(m_intake.ejectCommand(IntakeConstants.L4_EJECT_SPEED)
+      .andThen(led.shootingFillEmptyBlueCommand(0, LEDConstants.TOTAL_PIXELS, 0.03333, false)
+      .withTimeout(3)));
+
+    new Trigger(() -> m_driver.score() && m_wrist.getTargetSetpoint() != (WristConstants.L1_ANGLE) && m_wrist.getTargetSetpoint() != (WristConstants.L4_ANGLE))
       .whileTrue(m_intake.ejectCommand(IntakeConstants.EJECT_SPEED)
       .andThen(led.shootingFillEmptyBlueCommand(0, LEDConstants.TOTAL_PIXELS, 0.03333, false)
       .withTimeout(3)));
@@ -286,7 +295,14 @@ public class RobotContainer {
   }
 
   public void fixHeading(){
-    m_robotDrive.setHeading(m_robotDrive.getHeading() - 90 - autoOffsetDegrees);
+    if(autoChooser.getSelected().equals(Left3L4Auto))
+      m_robotDrive.setHeading(m_robotDrive.getHeading() - 90 - autoOffsetDegrees);
+    if(autoChooser.getSelected().equals(Right3L4Auto))
+      m_robotDrive.setHeading(m_robotDrive.getHeading() + 90 - autoOffsetDegrees);
+    if(autoChooser.getSelected().equals(NearRightL4Auto))
+      m_robotDrive.setHeading(m_robotDrive.getHeading() + 180 - autoOffsetDegrees);
+    if(autoChooser.getSelected().equals(NearLeftL4Auto))
+      m_robotDrive.setHeading(m_robotDrive.getHeading() + 180 - autoOffsetDegrees);
   }
 
   // sets the global variable autoOffsetDegrees to the current heading of the robot
