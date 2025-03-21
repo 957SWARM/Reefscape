@@ -70,7 +70,7 @@ public class Robot extends TimedRobot {
     // CameraServer.startAutomaticCapture(0).setResolution(240, 180); // For end-effector camera
     // CameraServer.startAutomaticCapture(1).setResolution(240, 180);
     
-    led.scheduleDefaultCommand(led.defaultBlueWavesLightCommand(0, LEDConstants.TOTAL_PIXELS, 0.1, false));
+    // led.scheduleDefaultCommand(led.defaultBlueWavesLightCommand(0, LEDConstants.TOTAL_PIXELS, 0.1, false));
   }
 
   /**
