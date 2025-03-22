@@ -250,6 +250,9 @@ public final class Constants {
     public static final double LATCHING_LIMIT_ANGLE = 0.05; // latching allowed 0.05 rotations past vertical
     public static final double CLIMBING_LIMIT_ANGLE = -0.25; // climbing allowed 90 degree back from vertical
 
+    public static final double SETUP_ANGLE = 0.2;
+    public static final double ANGLE_TOLERANCE = 0.05; // in rotations
+
     public static final int SENSOR_PORT = 1;
    
     public static final int CLIMB_ENCODER_CAN_ID = 20;

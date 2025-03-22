@@ -70,7 +70,7 @@ public class Robot extends TimedRobot {
     // CameraServer.startAutomaticCapture(0).setResolution(240, 180); // For end-effector camera
     // CameraServer.startAutomaticCapture(1).setResolution(240, 180);
     
-    //led.scheduleDefaultCommand(led.defaultBlueWavesLightCommand(0, LEDConstants.TOTAL_PIXELS, 0.1, false));
+    // led.scheduleDefaultCommand(led.defaultBlueWavesLightCommand(0, LEDConstants.TOTAL_PIXELS, 0.1, false));
   }
 
   /**
@@ -149,6 +149,7 @@ public class Robot extends TimedRobot {
   public void testInit() {
     // Cancels all running commands at the start of test mode.
     CommandScheduler.getInstance().cancelAll();
+    m_robotContainer.getSetupClimbCommand().schedule();
   }
 
   /** This function is called periodically during test mode. */

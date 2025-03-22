@@ -104,6 +104,8 @@ public class RobotContainer {
     Right3L4Auto = new PathPlannerAuto("Right 3 L4 Auto");
     NearRightL4Auto = new PathPlannerAuto("Near Right L4 Auto");
     NearLeftL4Auto = new PathPlannerAuto("Near Left L4 Auto");
+    JustLeaveAuto = new PathPlannerAuto("Just Leave");
+    NothingAuto = new InstantCommand();
 
     autoChooser = AutoBuilder.buildAutoChooser();
     SmartDashboard.putData("Auto Chooser", autoChooser);
@@ -140,7 +142,7 @@ public class RobotContainer {
       && m_wrist.getTargetSetpoint() == WristConstants.INTAKE_ANGLE
       && m_intake.checkToF() && !DriverStation.isAutonomous());
     coralIn.onTrue(Sequencing.stow(m_elevator, m_wrist, m_intake)
-      .andThen(led.coralReceivedFlashingBlueCommand(0, LEDConstants.TOTAL_PIXELS).withTimeout(3)));
+      .andThen(led.coralReceivedFlashingBlueCommand(0, LEDConstants.TOTAL_PIXELS).withTimeout(2)));
 
     // stow elevator if starting to tip
     Trigger tipping = new Trigger(() -> 
@@ -209,18 +211,19 @@ public class RobotContainer {
     // while holding trigger, runs intake backwards for scoring
     new Trigger(() -> m_driver.score() && m_wrist.getTargetSetpoint() == WristConstants.L1_ANGLE)
       .whileTrue(m_intake.ejectCommand(IntakeConstants.SLOW_EJECT_SPEED)
-      .andThen(led.shootingFillEmptyBlueCommand(0, LEDConstants.TOTAL_PIXELS, 0.03333, false)
-      .withTimeout(3)));
+      .andThen(led.shootingFillEmptyBlueCommand(0, LEDConstants.TOTAL_PIXELS, 0.03333, false)))
+      .onFalse(led.defaultBlueWavesLightCommand(0, LEDConstants.TOTAL_PIXELS, 0.1, false));
+      // .until(() -> !(m_driver.score() && m_wrist.getTargetSetpoint() == WristConstants.L1_ANGLE))));
 
       new Trigger(() -> m_driver.score() && m_wrist.getTargetSetpoint() == WristConstants.L4_ANGLE)
       .whileTrue(m_intake.ejectCommand(IntakeConstants.L4_EJECT_SPEED)
-      .andThen(led.shootingFillEmptyBlueCommand(0, LEDConstants.TOTAL_PIXELS, 0.03333, false)
-      .withTimeout(3)));
+      .andThen(led.shootingFillEmptyBlueCommand(0, LEDConstants.TOTAL_PIXELS, 0.03333, false)))
+      .onFalse(led.defaultBlueWavesLightCommand(0, LEDConstants.TOTAL_PIXELS, 0.1, false));
 
     new Trigger(() -> m_driver.score() && m_wrist.getTargetSetpoint() != (WristConstants.L1_ANGLE) && m_wrist.getTargetSetpoint() != (WristConstants.L4_ANGLE))
       .whileTrue(m_intake.ejectCommand(IntakeConstants.EJECT_SPEED)
-      .andThen(led.shootingFillEmptyBlueCommand(0, LEDConstants.TOTAL_PIXELS, 0.03333, false)
-      .withTimeout(3)));
+      .andThen(led.shootingFillEmptyBlueCommand(0, LEDConstants.TOTAL_PIXELS, 0.03333, false)))
+      .onFalse(led.defaultBlueWavesLightCommand(0, LEDConstants.TOTAL_PIXELS, 0.1, false));
 
     // sends elevator and wrist to stow position
     new Trigger(() -> m_driver.stow())
@@ -274,12 +277,11 @@ public class RobotContainer {
     .whileTrue(m_climber.latchClimber())
     .onFalse(m_climber.stopClimber());
     
-  // retracts climber while down on d-pad is held
-  new Trigger(() -> m_operator.retractClimb() || m_driver.retractClimb())
-    .whileTrue(m_climber.retractClimber().alongWith(Sequencing.deepStow(m_elevator, m_wrist, m_intake)))
-    .onFalse(m_climber.stopClimber());
+    // retracts climber while down on d-pad is held
+    new Trigger(() -> m_operator.retractClimb() || m_driver.retractClimb())
+      .whileTrue(m_climber.retractClimber().alongWith(Sequencing.deepStow(m_elevator, m_wrist, m_intake)))
+      .onFalse(m_climber.stopClimber());
     
-  
   }
 
   public void configureNamedCommands(){
@@ -305,11 +307,19 @@ public class RobotContainer {
       m_robotDrive.setHeading(m_robotDrive.getHeading() + 180 - autoOffsetDegrees);
     if(autoChooser.getSelected().equals(NearLeftL4Auto))
       m_robotDrive.setHeading(m_robotDrive.getHeading() + 180 - autoOffsetDegrees);
+    if(autoChooser.getSelected().equals(JustLeaveAuto))
+      m_robotDrive.setHeading(m_robotDrive.getHeading() + 180 - autoOffsetDegrees);
+    if(autoChooser.getSelected().equals(NothingAuto))
+      m_robotDrive.setHeading(m_robotDrive.getHeading() + 180 - autoOffsetDegrees);
   }
 
   // sets the global variable autoOffsetDegrees to the current heading of the robot
   public void grabHeading(){
     autoOffsetDegrees = m_robotDrive.getHeading();
+  }
+
+  public Command getSetupClimbCommand(){
+    return m_climber.setupClimber();
   }
   
 }

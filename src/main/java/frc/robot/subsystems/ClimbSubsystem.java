@@ -83,6 +83,21 @@ public class ClimbSubsystem extends SubsystemBase{
         return setState(ClimbState.LATCHING);
     }
 
+    public Command setupClimber(){
+        return Commands.run(() -> {
+            double angle = encoder.getAbsPosition();
+            double modifiedAngle = (angle > 0.5)? angle - 1 : angle;
+
+            if(modifiedAngle > ClimberConstants.SETUP_ANGLE + ClimberConstants.ANGLE_TOLERANCE) {
+                setState(ClimbState.LATCHING);
+            }else if (modifiedAngle < ClimberConstants.SETUP_ANGLE - ClimberConstants.ANGLE_TOLERANCE) {
+                setState(ClimbState.CLIMBING);
+            } else {
+                setState(ClimbState.STOP);
+            }
+        }).withTimeout(5).andThen(setState(ClimbState.STOP));
+    }
+
     public double getPosition(){
         return encoder.getPosition();
     }
