@@ -95,7 +95,7 @@ public class ClimbSubsystem extends SubsystemBase{
             } else {
                 setState(ClimbState.STOP);
             }
-        }).withTimeout(5);
+        }).withTimeout(5).andThen(setState(ClimbState.STOP));
     }
 
     public double getPosition(){
