@@ -114,7 +114,7 @@ public class StationAlign {
 
 
     public double getDumbXDiff(){
-        return tof.getRange()/1000 - 0.33;
+        return tof.getRange()/1000 - VisionConstants.DUMB_STATION_DISTANCE;
     }
 
     public double getDumbRotDiff(DriveSubsystem drive){

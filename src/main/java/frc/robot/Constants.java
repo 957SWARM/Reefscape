@@ -260,9 +260,9 @@ public final class Constants {
   }
 
   public static final class VisionConstants {
-    public static final Pose3d LEFT_REEF = new Pose3d(new Translation3d(-.185, 0, -.61), new Rotation3d()); //-.185 at clack
+    public static final Pose3d LEFT_REEF = new Pose3d(new Translation3d(-.185, 0, -.62), new Rotation3d()); //-.185 at clack
     // -.203 at hive
-    public static final Pose3d RIGHT_REEF = new Pose3d(new Translation3d(.137, 0, -.61), new Rotation3d()); //.155 at clack
+    public static final Pose3d RIGHT_REEF = new Pose3d(new Translation3d(.155, 0, -.62), new Rotation3d()); //.155 at clack
     //.137 at hive
     public static final double REEF_CENTER_OFFSET = -0.09;
     public static final List<Pose3d> REEF_POSES = Arrays.asList(LEFT_REEF, RIGHT_REEF);
@@ -310,6 +310,8 @@ public final class Constants {
     public static final double DUMB_STATION_TRANSLATION_P = .2;
     public static final double DUMB_STATION_TRANSLATION_I = 0;
     public static final double DUMB_STATION_TRANSLATION_D = 0;
+
+    public static final double DUMB_STATION_DISTANCE = 0.35;
 
     public static final double REEF_HORIZONTAL_TRANSLATION_P = 0.75;  // 1.4
     public static final double REEF_HORIZONTAL_TRANSLATION_I = 0; // 0
