@@ -104,6 +104,8 @@ public class RobotContainer {
     Right3L4Auto = new PathPlannerAuto("Right 3 L4 Auto");
     NearRightL4Auto = new PathPlannerAuto("Near Right L4 Auto");
     NearLeftL4Auto = new PathPlannerAuto("Near Left L4 Auto");
+    JustLeaveAuto = new PathPlannerAuto("Just Leave");
+    NothingAuto = new InstantCommand();
 
     autoChooser = AutoBuilder.buildAutoChooser();
     SmartDashboard.putData("Auto Chooser", autoChooser);
@@ -127,7 +129,7 @@ public class RobotContainer {
       .andThen(Commands.run(() -> m_driver.setRumble(false))));
 
     // stops intake when coral leaves
-    Trigger coralOut = new Trigger(() -> !m_intake.checkToF() && m_intake.getVoltage() > 0
+    Trigger coralOut = new Trigger(() -> !m_intake.checkToF() && m_intake.getVoltage() < 0
     && !DriverStation.isAutonomous());
     coralOut.onTrue(new WaitCommand(.25)
     .andThen(m_intake.stopIntakeCommand())
@@ -273,12 +275,11 @@ public class RobotContainer {
     .whileTrue(m_climber.latchClimber())
     .onFalse(m_climber.stopClimber());
     
-  // retracts climber while down on d-pad is held
-  new Trigger(() -> m_operator.retractClimb() || m_driver.retractClimb())
-    .whileTrue(m_climber.retractClimber().alongWith(Sequencing.deepStow(m_elevator, m_wrist, m_intake)))
-    .onFalse(m_climber.stopClimber());
+    // retracts climber while down on d-pad is held
+    new Trigger(() -> m_operator.retractClimb() || m_driver.retractClimb())
+      .whileTrue(m_climber.retractClimber().alongWith(Sequencing.deepStow(m_elevator, m_wrist, m_intake)))
+      .onFalse(m_climber.stopClimber());
     
-  
   }
 
   public void configureNamedCommands(){
@@ -309,6 +310,10 @@ public class RobotContainer {
   // sets the global variable autoOffsetDegrees to the current heading of the robot
   public void grabHeading(){
     autoOffsetDegrees = m_robotDrive.getHeading();
+  }
+
+  public Command getSetupClimbCommand(){
+    return m_climber.setupClimber();
   }
   
 }
