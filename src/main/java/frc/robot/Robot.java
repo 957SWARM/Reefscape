@@ -6,9 +6,6 @@ package frc.robot;
 
 import com.pathplanner.lib.commands.FollowPathCommand;
 
-import edu.wpi.first.cameraserver.CameraServer;
-import edu.wpi.first.cscore.MjpegServer;
-import edu.wpi.first.cscore.UsbCamera;
 import edu.wpi.first.epilogue.Epilogue;
 import edu.wpi.first.epilogue.Logged;
 import edu.wpi.first.wpilibj.DataLogManager;
