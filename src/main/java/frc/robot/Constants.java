@@ -282,8 +282,8 @@ public final class Constants {
     );
   
 
-    public static final Pose3d LEFT_STATION = new Pose3d(new Translation3d(-.6, 0, -.665), new Rotation3d());
-    public static final Pose3d MID_STATION = new Pose3d(new Translation3d(0, 0, -.665), new Rotation3d());
+    public static final Pose3d LEFT_STATION = new Pose3d(new Translation3d(-.6, 0, -.635), new Rotation3d());
+    public static final Pose3d MID_STATION = new Pose3d(new Translation3d(0, 0, -.635), new Rotation3d());
     public static final List<Pose3d> STATION_POSES = Arrays.asList(LEFT_STATION, MID_STATION);
     public static final List<Double> STATION_TAG_IDS = Arrays.asList(
       (double)1, 
