@@ -31,11 +31,11 @@ public class Robot extends TimedRobot {
   private RobotContainer m_robotContainer;
 
   // Mentor built :c
-  private MjpegServer driveCameraServer = new MjpegServer("drive_server", 1181);
-  private MjpegServer climbCameraServer = new MjpegServer("climb_server", 1182);
+  // private MjpegServer driveCameraServer = new MjpegServer("drive_server", 1181);
+  // private MjpegServer climbCameraServer = new MjpegServer("climb_server", 1182);
 
-  private UsbCamera driveCamera = new UsbCamera("drive_camera", 1);
-  private UsbCamera climbCamera = new UsbCamera("climb_camera", 0);
+  // private UsbCamera driveCamera = new UsbCamera("drive_camera", 1);
+  // private UsbCamera climbCamera = new UsbCamera("climb_camera", 0);
 
   private LEDStripPatterns led;
 
@@ -70,7 +70,7 @@ public class Robot extends TimedRobot {
     // CameraServer.startAutomaticCapture(0).setResolution(240, 180); // For end-effector camera
     // CameraServer.startAutomaticCapture(1).setResolution(240, 180);
     
-    led.scheduleDefaultCommand(led.defaultBlueWavesLightCommand(0, LEDConstants.TOTAL_PIXELS, 0.1, false));
+    //led.scheduleDefaultCommand(led.defaultBlueWavesLightCommand(0, LEDConstants.TOTAL_PIXELS, 0.1, false));
   }
 
   /**

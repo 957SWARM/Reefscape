@@ -103,8 +103,8 @@ public class Sequencing {
 
     public static Command removeHigh(ElevatorSubsystem elevator, WristSubsystem wrist, DriveSubsystem drive){
         return elevator.toHighRemove(0)
-        .alongWith(wrist.toL1())
         .andThen(new WaitCommand(0.1))
+        .andThen(wrist.toL1())
         .andThen(Commands.run(() -> drive.drive(0.1, 0, 0, false, 0))
         .withTimeout(0.55))
         .andThen(wrist.toStow()

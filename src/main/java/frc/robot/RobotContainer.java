@@ -127,7 +127,7 @@ public class RobotContainer {
       .andThen(Commands.run(() -> m_driver.setRumble(false))));
 
     // stops intake when coral leaves
-    Trigger coralOut = new Trigger(() -> !m_intake.checkToF() && m_intake.getVoltage() > 0
+    Trigger coralOut = new Trigger(() -> !m_intake.checkToF() && m_intake.getVoltage() < 0
     && !DriverStation.isAutonomous());
     coralOut.onTrue(new WaitCommand(.25)
     .andThen(m_intake.stopIntakeCommand())
@@ -160,6 +160,8 @@ public class RobotContainer {
                 m_elevator.getHeight()),
             m_robotDrive));
 
+
+    led.scheduleDefaultCommand(led.defaultBlueWavesLightCommand(0, LEDConstants.TOTAL_PIXELS, 0.1, false));
 
     // m_wrist.setDefaultCommand(m_wrist.toStow());
   }
