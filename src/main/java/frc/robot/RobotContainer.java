@@ -127,7 +127,7 @@ public class RobotContainer {
     // stops intake when coral leaves
     Trigger coralOut = new Trigger(() -> !m_intake.checkToF() && m_intake.getVoltage() < 0
     && !DriverStation.isAutonomous());
-    coralOut.onTrue(new WaitCommand(.25)
+    coralOut.onTrue(new WaitCommand(.2)
     .andThen(m_intake.stopIntakeCommand())
     .andThen(Sequencing.stow(m_elevator, m_wrist, m_intake))
     .andThen(led.coralOutChasingBlueCommand(0, LEDConstants.TOTAL_PIXELS, 0.1, false).withTimeout(1.5)));
@@ -278,6 +278,8 @@ public class RobotContainer {
       .whileTrue(m_climber.retractClimber().alongWith(Sequencing.deepStow(m_elevator, m_wrist, m_intake)))
       .onFalse(m_climber.stopClimber());
     
+    new Trigger(() -> m_operator.deepStow())
+      .onTrue(Sequencing.deepStow(m_elevator, m_wrist, m_intake));
   }
 
   public void configureNamedCommands(){

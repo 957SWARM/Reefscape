@@ -6,6 +6,9 @@ package frc.robot;
 
 import com.pathplanner.lib.commands.FollowPathCommand;
 
+import edu.wpi.first.cameraserver.CameraServer;
+import edu.wpi.first.cscore.MjpegServer;
+import edu.wpi.first.cscore.UsbCamera;
 import edu.wpi.first.epilogue.Epilogue;
 import edu.wpi.first.epilogue.Logged;
 import edu.wpi.first.wpilibj.DataLogManager;
@@ -29,10 +32,10 @@ public class Robot extends TimedRobot {
 
   // Mentor built :c
   // private MjpegServer driveCameraServer = new MjpegServer("drive_server", 1181);
-  // private MjpegServer climbCameraServer = new MjpegServer("climb_server", 1182);
+  private MjpegServer climbCameraServer = new MjpegServer("climb_server", 1181);
 
   // private UsbCamera driveCamera = new UsbCamera("drive_camera", 1);
-  // private UsbCamera climbCamera = new UsbCamera("climb_camera", 0);
+  private UsbCamera climbCamera = new UsbCamera("climb_camera", 0);
 
   private LEDStripPatterns led;
 
@@ -46,11 +49,11 @@ public class Robot extends TimedRobot {
     Epilogue.bind(this);
 
     // driveCamera.setResolution(240, 180);
-    // climbCamera.setResolution(240, 180);
+    climbCamera.setResolution(240, 180);
 
     // temp comment out
     // driveCameraServer.setSource(driveCamera);
-    // climbCameraServer.setSource(climbCamera);
+    climbCameraServer.setSource(climbCamera);
 
   }
 
@@ -65,7 +68,7 @@ public class Robot extends TimedRobot {
 
     // temp comment out
     // CameraServer.startAutomaticCapture(0).setResolution(240, 180); // For end-effector camera
-    // CameraServer.startAutomaticCapture(1).setResolution(240, 180);
+    CameraServer.startAutomaticCapture(1).setResolution(240, 180);
     
     // led.scheduleDefaultCommand(led.defaultBlueWavesLightCommand(0, LEDConstants.TOTAL_PIXELS, 0.1, false));
   }
