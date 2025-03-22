@@ -305,6 +305,10 @@ public class RobotContainer {
       m_robotDrive.setHeading(m_robotDrive.getHeading() + 180 - autoOffsetDegrees);
     if(autoChooser.getSelected().equals(NearLeftL4Auto))
       m_robotDrive.setHeading(m_robotDrive.getHeading() + 180 - autoOffsetDegrees);
+    if(autoChooser.getSelected().equals(JustLeaveAuto))
+      m_robotDrive.setHeading(m_robotDrive.getHeading() + 180 - autoOffsetDegrees);
+    if(autoChooser.getSelected().equals(NothingAuto))
+      m_robotDrive.setHeading(m_robotDrive.getHeading() + 180 - autoOffsetDegrees);
   }
 
   // sets the global variable autoOffsetDegrees to the current heading of the robot
