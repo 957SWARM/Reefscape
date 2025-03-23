@@ -119,7 +119,7 @@ public class Robot extends TimedRobot {
       m_autonomousCommand.schedule();
     }
 
-    led.scheduleDefaultCommand(led.autoPatternChasingSingleBlueCommand(0, LEDConstants.TOTAL_PIXELS, 0.03333, false));
+    // led.scheduleDefaultCommand(led.autoPatternChasingSingleBlueCommand(0, LEDConstants.TOTAL_PIXELS, 0.03333, false));
   }
 
   /** This function is called periodically during autonomous. */
