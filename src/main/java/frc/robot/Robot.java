@@ -15,7 +15,6 @@ import edu.wpi.first.wpilibj.DataLogManager;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
-import frc.robot.Constants.LEDConstants;
 import frc.robot.commands.LEDStripPatterns;
 
 /**
@@ -37,7 +36,7 @@ public class Robot extends TimedRobot {
   // private UsbCamera driveCamera = new UsbCamera("drive_camera", 1);
   private UsbCamera climbCamera = new UsbCamera("climb_camera", 0);
 
-  private LEDStripPatterns led;
+  // private LEDStripPatterns led;
 
   /**
    * This function is run when the robot is first started up and should be used for any
@@ -62,7 +61,7 @@ public class Robot extends TimedRobot {
     // Instantiate our RobotContainer.  This will perform all our button bindings, and put our
     // autonomous chooser on the dashboard.
     m_robotContainer = new RobotContainer();
-    led = m_robotContainer.led;
+    // led = m_robotContainer.led;
 
     FollowPathCommand.warmupCommand().schedule(); // For Path Planner. Supposedly speeds up followings paths
 
