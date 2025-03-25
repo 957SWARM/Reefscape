@@ -316,7 +316,7 @@ public class LEDStripPatterns {
         return breathingPatternAnimation(start, length, breathRate, isInverted, 0, 45, 225);
     }
 
-    public Command shootingFillEmptyBlueCommand(int start, int length, double frameTime, boolean isInverted){
+    public Command elevatorOutFillEmptyBlueCommand(int start, int length, double frameTime, boolean isInverted){
         return fillThenEmptyAnimation(start, length, frameTime, isInverted, 0, 5, LEDConstants.FULL_BLUE_RGB / 2);
     }
 

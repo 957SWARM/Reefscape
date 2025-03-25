@@ -15,7 +15,6 @@ import edu.wpi.first.wpilibj.DataLogManager;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
-import frc.robot.commands.LEDStripPatterns;
 
 /**
  * The VM is configured to automatically run this class, and to call the functions corresponding to
@@ -35,8 +34,6 @@ public class Robot extends TimedRobot {
 
   // private UsbCamera driveCamera = new UsbCamera("drive_camera", 1);
   private UsbCamera climbCamera = new UsbCamera("climb_camera", 0);
-
-  // private LEDStripPatterns led;
 
   /**
    * This function is run when the robot is first started up and should be used for any
@@ -61,15 +58,13 @@ public class Robot extends TimedRobot {
     // Instantiate our RobotContainer.  This will perform all our button bindings, and put our
     // autonomous chooser on the dashboard.
     m_robotContainer = new RobotContainer();
-    // led = m_robotContainer.led;
 
     FollowPathCommand.warmupCommand().schedule(); // For Path Planner. Supposedly speeds up followings paths
 
     // temp comment out
     // CameraServer.startAutomaticCapture(0).setResolution(240, 180); // For end-effector camera
     CameraServer.startAutomaticCapture(1).setResolution(240, 180);
-    
-    // led.scheduleDefaultCommand(led.defaultBlueWavesLightCommand(0, LEDConstants.TOTAL_PIXELS, 0.1, false));
+
   }
 
   /**
@@ -117,8 +112,6 @@ public class Robot extends TimedRobot {
     if (m_autonomousCommand != null) {
       m_autonomousCommand.schedule();
     }
-
-    // led.scheduleDefaultCommand(led.autoPatternChasingSingleBlueCommand(0, LEDConstants.TOTAL_PIXELS, 0.03333, false));
   }
 
   /** This function is called periodically during autonomous. */
@@ -136,8 +129,6 @@ public class Robot extends TimedRobot {
     if (m_autonomousCommand != null) {
       m_autonomousCommand.cancel();
     }
-    
-    // led.scheduleDefaultCommand(led.defaultBlueWavesLightCommand(0, LEDConstants.TOTAL_PIXELS, 0.1, false));
   }
 
   /** This function is called periodically during operator control. */
