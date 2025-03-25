@@ -126,7 +126,8 @@ public class RobotContainer {
 
     // stops intake when coral leaves
     Trigger coralOut = new Trigger(() -> !m_intake.checkToF() && m_intake.getVoltage() < 0
-    && !DriverStation.isAutonomous());
+    && !DriverStation.isAutonomous()
+    && m_wrist.getTargetSetpoint() != WristConstants.L1_ANGLE);
     coralOut.onTrue(new WaitCommand(.2)
     .andThen(m_intake.stopIntakeCommand())
     .andThen(Sequencing.stow(m_elevator, m_wrist, m_intake)));
@@ -214,7 +215,7 @@ public class RobotContainer {
       .andThen(led.defaultBlueWavesLightCommand(0, LEDConstants.TOTAL_PIXELS, 0.1, false)));
       // .until(() -> !(m_driver.score() && m_wrist.getTargetSetpoint() == WristConstants.L1_ANGLE))));
 
-      new Trigger(() -> m_driver.score() && m_wrist.getTargetSetpoint() == WristConstants.L4_ANGLE)
+    new Trigger(() -> m_driver.score() && m_wrist.getTargetSetpoint() == WristConstants.L4_ANGLE)
       .whileTrue(m_intake.ejectCommand(IntakeConstants.L4_EJECT_SPEED)
       .andThen(led.shootingFillEmptyBlueCommand(0, LEDConstants.TOTAL_PIXELS, 0.03333, false)))
       .onFalse(led.coralOutChasingBlueCommand(0, LEDConstants.TOTAL_PIXELS, 0.1, false)

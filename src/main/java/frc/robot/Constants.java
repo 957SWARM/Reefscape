@@ -334,7 +334,7 @@ public final class Constants {
     public static final double STATION_SPEED_TOLERANCE = 0.2;
     public static final double MAX_TRACKING_DISTANCE = 2.4; //METERS
 
-    public static final double STATION_TRANSLATION_TOLERANCE = 0.040;
+    public static final double STATION_TRANSLATION_TOLERANCE = 0.03;
 
     public static final double STATION_DROP_TOLERANCE = 0.1; //SECONDS
   }
