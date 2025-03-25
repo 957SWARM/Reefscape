@@ -126,11 +126,12 @@ public class RobotContainer {
 
     // stops intake when coral leaves
     Trigger coralOut = new Trigger(() -> !m_intake.checkToF() && m_intake.getVoltage() < 0
-    && !DriverStation.isAutonomous());
-    coralOut.onTrue(new WaitCommand(.25)
+    && !DriverStation.isAutonomous()
+    && m_wrist.getTargetSetpoint() != WristConstants.L1_ANGLE);
+    coralOut.onTrue(new WaitCommand(.2)
     .andThen(m_intake.stopIntakeCommand())
-    .andThen(Sequencing.stow(m_elevator, m_wrist, m_intake))
-    .andThen(led.coralOutChasingBlueCommand(0, LEDConstants.TOTAL_PIXELS, 0.1, false).withTimeout(1.5)));
+    .andThen(Sequencing.stow(m_elevator, m_wrist, m_intake)));
+    // .andThen(led.coralOutChasingBlueCommand(0, LEDConstants.TOTAL_PIXELS, 0.1, false).withTimeout(1.5)));
 
     // automatically sends robot to stow after intaking
     Trigger coralIn = new Trigger(
@@ -138,9 +139,11 @@ public class RobotContainer {
       && m_wrist.getTargetSetpoint() == WristConstants.INTAKE_ANGLE
       && m_intake.checkToF() && !DriverStation.isAutonomous());
     coralIn.onTrue(Sequencing.stow(m_elevator, m_wrist, m_intake)
-      .andThen(led.coralReceivedFlashingBlueCommand(0, LEDConstants.TOTAL_PIXELS).withTimeout(2)));
+      .andThen(led.coralReceivedFlashingBlueCommand(0, LEDConstants.TOTAL_PIXELS).withTimeout(1.5))
+      .andThen(led.defaultBlueWavesLightCommand(0, LEDConstants.TOTAL_PIXELS, 0.1, false)));
 
     // stow elevator if starting to tip
+    @SuppressWarnings("unused")
     Trigger tipping = new Trigger(() -> 
       m_robotDrive.pitchTipping()
       || m_robotDrive.rollPitching())
@@ -208,18 +211,21 @@ public class RobotContainer {
     new Trigger(() -> m_driver.score() && m_wrist.getTargetSetpoint() == WristConstants.L1_ANGLE)
       .whileTrue(m_intake.ejectCommand(IntakeConstants.SLOW_EJECT_SPEED)
       .andThen(led.shootingFillEmptyBlueCommand(0, LEDConstants.TOTAL_PIXELS, 0.03333, false)))
-      .onFalse(led.defaultBlueWavesLightCommand(0, LEDConstants.TOTAL_PIXELS, 0.1, false));
+      .onFalse(led.coralOutChasingBlueCommand(0, LEDConstants.TOTAL_PIXELS, 0.1, false).withTimeout(1.5)
+      .andThen(led.defaultBlueWavesLightCommand(0, LEDConstants.TOTAL_PIXELS, 0.1, false)));
       // .until(() -> !(m_driver.score() && m_wrist.getTargetSetpoint() == WristConstants.L1_ANGLE))));
 
-      new Trigger(() -> m_driver.score() && m_wrist.getTargetSetpoint() == WristConstants.L4_ANGLE)
+    new Trigger(() -> m_driver.score() && m_wrist.getTargetSetpoint() == WristConstants.L4_ANGLE)
       .whileTrue(m_intake.ejectCommand(IntakeConstants.L4_EJECT_SPEED)
       .andThen(led.shootingFillEmptyBlueCommand(0, LEDConstants.TOTAL_PIXELS, 0.03333, false)))
-      .onFalse(led.defaultBlueWavesLightCommand(0, LEDConstants.TOTAL_PIXELS, 0.1, false));
+      .onFalse(led.coralOutChasingBlueCommand(0, LEDConstants.TOTAL_PIXELS, 0.1, false)
+      .andThen(led.defaultBlueWavesLightCommand(0, LEDConstants.TOTAL_PIXELS, 0.1, false)));
 
     new Trigger(() -> m_driver.score() && m_wrist.getTargetSetpoint() != (WristConstants.L1_ANGLE) && m_wrist.getTargetSetpoint() != (WristConstants.L4_ANGLE))
       .whileTrue(m_intake.ejectCommand(IntakeConstants.EJECT_SPEED)
       .andThen(led.shootingFillEmptyBlueCommand(0, LEDConstants.TOTAL_PIXELS, 0.03333, false)))
-      .onFalse(led.defaultBlueWavesLightCommand(0, LEDConstants.TOTAL_PIXELS, 0.1, false));
+      .onFalse(led.coralOutChasingBlueCommand(0, LEDConstants.TOTAL_PIXELS, 0.1, false).withTimeout(1.5)
+      .andThen(led.defaultBlueWavesLightCommand(0, LEDConstants.TOTAL_PIXELS, 0.1, false)));
 
     // sends elevator and wrist to stow position
     new Trigger(() -> m_driver.stow())
@@ -278,6 +284,8 @@ public class RobotContainer {
       .whileTrue(m_climber.retractClimber().alongWith(Sequencing.deepStow(m_elevator, m_wrist, m_intake)))
       .onFalse(m_climber.stopClimber());
     
+    new Trigger(() -> m_operator.deepStow())
+      .onTrue(Sequencing.deepStow(m_elevator, m_wrist, m_intake));
   }
 
   public void configureNamedCommands(){

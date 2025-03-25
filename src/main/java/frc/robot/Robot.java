@@ -6,13 +6,15 @@ package frc.robot;
 
 import com.pathplanner.lib.commands.FollowPathCommand;
 
+import edu.wpi.first.cameraserver.CameraServer;
+import edu.wpi.first.cscore.MjpegServer;
+import edu.wpi.first.cscore.UsbCamera;
 import edu.wpi.first.epilogue.Epilogue;
 import edu.wpi.first.epilogue.Logged;
 import edu.wpi.first.wpilibj.DataLogManager;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
-import frc.robot.Constants.LEDConstants;
 import frc.robot.commands.LEDStripPatterns;
 
 /**
@@ -29,12 +31,12 @@ public class Robot extends TimedRobot {
 
   // Mentor built :c
   // private MjpegServer driveCameraServer = new MjpegServer("drive_server", 1181);
-  // private MjpegServer climbCameraServer = new MjpegServer("climb_server", 1182);
+  private MjpegServer climbCameraServer = new MjpegServer("climb_server", 1181);
 
   // private UsbCamera driveCamera = new UsbCamera("drive_camera", 1);
-  // private UsbCamera climbCamera = new UsbCamera("climb_camera", 0);
+  private UsbCamera climbCamera = new UsbCamera("climb_camera", 0);
 
-  private LEDStripPatterns led;
+  // private LEDStripPatterns led;
 
   /**
    * This function is run when the robot is first started up and should be used for any
@@ -46,11 +48,11 @@ public class Robot extends TimedRobot {
     Epilogue.bind(this);
 
     // driveCamera.setResolution(240, 180);
-    // climbCamera.setResolution(240, 180);
+    climbCamera.setResolution(240, 180);
 
     // temp comment out
     // driveCameraServer.setSource(driveCamera);
-    // climbCameraServer.setSource(climbCamera);
+    climbCameraServer.setSource(climbCamera);
 
   }
 
@@ -59,13 +61,13 @@ public class Robot extends TimedRobot {
     // Instantiate our RobotContainer.  This will perform all our button bindings, and put our
     // autonomous chooser on the dashboard.
     m_robotContainer = new RobotContainer();
-    led = m_robotContainer.led;
+    // led = m_robotContainer.led;
 
     FollowPathCommand.warmupCommand().schedule(); // For Path Planner. Supposedly speeds up followings paths
 
     // temp comment out
     // CameraServer.startAutomaticCapture(0).setResolution(240, 180); // For end-effector camera
-    // CameraServer.startAutomaticCapture(1).setResolution(240, 180);
+    CameraServer.startAutomaticCapture(1).setResolution(240, 180);
     
     // led.scheduleDefaultCommand(led.defaultBlueWavesLightCommand(0, LEDConstants.TOTAL_PIXELS, 0.1, false));
   }
@@ -116,7 +118,7 @@ public class Robot extends TimedRobot {
       m_autonomousCommand.schedule();
     }
 
-    led.scheduleDefaultCommand(led.autoPatternChasingSingleBlueCommand(0, LEDConstants.TOTAL_PIXELS, 0.03333, false));
+    // led.scheduleDefaultCommand(led.autoPatternChasingSingleBlueCommand(0, LEDConstants.TOTAL_PIXELS, 0.03333, false));
   }
 
   /** This function is called periodically during autonomous. */
@@ -135,7 +137,7 @@ public class Robot extends TimedRobot {
       m_autonomousCommand.cancel();
     }
     
-    led.scheduleDefaultCommand(led.defaultBlueWavesLightCommand(0, LEDConstants.TOTAL_PIXELS, 0.1, false));
+    // led.scheduleDefaultCommand(led.defaultBlueWavesLightCommand(0, LEDConstants.TOTAL_PIXELS, 0.1, false));
   }
 
   /** This function is called periodically during operator control. */
@@ -146,7 +148,7 @@ public class Robot extends TimedRobot {
   public void testInit() {
     // Cancels all running commands at the start of test mode.
     CommandScheduler.getInstance().cancelAll();
-    m_robotContainer.getSetupClimbCommand().schedule();
+    // m_robotContainer.getSetupClimbCommand().schedule();
   }
 
   /** This function is called periodically during test mode. */
