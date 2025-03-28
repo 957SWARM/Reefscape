@@ -194,7 +194,9 @@ public class RobotContainer {
     // sends elevator and wrist to L1 position
     new Trigger(() -> m_driver.L1())
       .onTrue(Sequencing.L1(m_elevator, m_wrist, m_intake)
-      .andThen(led.elevatorOutFillEmptyBlueCommand(0, LEDConstants.TOTAL_PIXELS, 0.01, false)));
+      .andThen(led.blankPatternAnimation(0, LEDConstants.TOTAL_PIXELS))
+      .andThen(led.elevatorOutFillEmptyBlueCommand(0, LEDConstants.TOTAL_PIXELS, 0.01, false))
+      .until(() -> Sequencing.stow(m_elevator, m_wrist, m_intake)));
 
     // sends elevator and wrist to L2 position
     new Trigger(() -> m_driver.L2())
