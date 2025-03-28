@@ -196,22 +196,40 @@ public class RobotContainer {
       .onTrue(Sequencing.L1(m_elevator, m_wrist, m_intake)
       .andThen(led.blankPatternAnimation(0, LEDConstants.TOTAL_PIXELS))
       .andThen(led.elevatorOutFillEmptyBlueCommand(0, LEDConstants.TOTAL_PIXELS, 0.01, false))
-      .until(() -> Sequencing.stow(m_elevator, m_wrist, m_intake)));
+      .until(() -> !m_intake.checkToF() && m_intake.getVoltage() < 0
+      && !DriverStation.isAutonomous()
+      && m_wrist.getTargetSetpoint() != WristConstants.L1_ANGLE)
+      .andThen(led.defaultBlueWavesLightCommand(0, LEDConstants.TOTAL_PIXELS, 0.1, false)));
 
     // sends elevator and wrist to L2 position
     new Trigger(() -> m_driver.L2())
       .onTrue(Sequencing.L2(m_elevator, m_wrist, m_intake)
-      .andThen(led.elevatorOutFillEmptyBlueCommand(0, LEDConstants.TOTAL_PIXELS, 0.01, false)));
+      .andThen(led.blankPatternAnimation(0, LEDConstants.TOTAL_PIXELS))
+      .andThen(led.elevatorOutFillEmptyBlueCommand(0, LEDConstants.TOTAL_PIXELS, 0.01, false))
+      .until(() -> !m_intake.checkToF() && m_intake.getVoltage() < 0
+      && !DriverStation.isAutonomous()
+      && m_wrist.getTargetSetpoint() != WristConstants.L1_ANGLE)
+      .andThen(led.defaultBlueWavesLightCommand(0, LEDConstants.TOTAL_PIXELS, 0.1, false)));
 
     // sends elevator and wrist to L3 position
     new Trigger(() -> m_driver.L3())
       .onTrue(Sequencing.L3(m_elevator, m_wrist, m_intake)
-      .andThen(led.elevatorOutFillEmptyBlueCommand(0, LEDConstants.TOTAL_PIXELS, 0.01, false)));
+      .andThen(led.blankPatternAnimation(0, LEDConstants.TOTAL_PIXELS))
+      .andThen(led.elevatorOutFillEmptyBlueCommand(0, LEDConstants.TOTAL_PIXELS, 0.01, false))
+      .until(() -> !m_intake.checkToF() && m_intake.getVoltage() < 0
+      && !DriverStation.isAutonomous()
+      && m_wrist.getTargetSetpoint() != WristConstants.L1_ANGLE)
+      .andThen(led.defaultBlueWavesLightCommand(0, LEDConstants.TOTAL_PIXELS, 0.1, false)));
 
     // sends elevator and wrist to L4 position
     new Trigger(() -> m_driver.L4())
       .onTrue(Sequencing.L4(m_elevator, m_wrist, m_intake)
-      .andThen(led.elevatorOutFillEmptyBlueCommand(0, LEDConstants.TOTAL_PIXELS, 0.01, false)));
+      .andThen(led.blankPatternAnimation(0, LEDConstants.TOTAL_PIXELS))
+      .andThen(led.elevatorOutFillEmptyBlueCommand(0, LEDConstants.TOTAL_PIXELS, 0.01, false))
+      .until(() -> !m_intake.checkToF() && m_intake.getVoltage() < 0
+      && !DriverStation.isAutonomous()
+      && m_wrist.getTargetSetpoint() != WristConstants.L1_ANGLE)
+      .andThen(led.defaultBlueWavesLightCommand(0, LEDConstants.TOTAL_PIXELS, 0.1, false)));
 
     // while holding trigger, runs intake backwards for scoring
     new Trigger(() -> m_driver.score() && m_wrist.getTargetSetpoint() == WristConstants.L1_ANGLE)
