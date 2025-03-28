@@ -131,7 +131,8 @@ public class RobotContainer {
     coralOut.onTrue(new WaitCommand(.2)
     .andThen(m_intake.stopIntakeCommand())
     .andThen(Sequencing.stow(m_elevator, m_wrist, m_intake))
-    .andThen(led.coralOutChasingBlueCommand(0, LEDConstants.TOTAL_PIXELS, 0.1, false).withTimeout(1.5)));
+    .andThen(led.coralOutChasingBlueCommand(0, LEDConstants.TOTAL_PIXELS, 0.1, false).withTimeout(1.5)
+    .andThen(led.defaultBlueWavesLightCommand(0, LEDConstants.TOTAL_PIXELS, 0.1, false))));
 
     // automatically sends robot to stow after intaking
     Trigger coralIn = new Trigger(
@@ -194,7 +195,7 @@ public class RobotContainer {
     // sends elevator and wrist to L1 position
     new Trigger(() -> m_driver.L1())
       .onTrue(Sequencing.L1(m_elevator, m_wrist, m_intake)
-      .andThen(led.blankPatternAnimation(0, LEDConstants.TOTAL_PIXELS))
+      .andThen(() -> led.getBlankPattern(0, LEDConstants.TOTAL_PIXELS))
       .andThen(led.elevatorOutFillEmptyBlueCommand(0, LEDConstants.TOTAL_PIXELS, 0.01, false))
       .until(() -> !m_intake.checkToF() && m_intake.getVoltage() < 0
       && !DriverStation.isAutonomous()
@@ -204,7 +205,7 @@ public class RobotContainer {
     // sends elevator and wrist to L2 position
     new Trigger(() -> m_driver.L2())
       .onTrue(Sequencing.L2(m_elevator, m_wrist, m_intake)
-      .andThen(led.blankPatternAnimation(0, LEDConstants.TOTAL_PIXELS))
+      .andThen(() -> led.getBlankPattern(0, LEDConstants.TOTAL_PIXELS))
       .andThen(led.elevatorOutFillEmptyBlueCommand(0, LEDConstants.TOTAL_PIXELS, 0.01, false))
       .until(() -> !m_intake.checkToF() && m_intake.getVoltage() < 0
       && !DriverStation.isAutonomous()
@@ -214,7 +215,7 @@ public class RobotContainer {
     // sends elevator and wrist to L3 position
     new Trigger(() -> m_driver.L3())
       .onTrue(Sequencing.L3(m_elevator, m_wrist, m_intake)
-      .andThen(led.blankPatternAnimation(0, LEDConstants.TOTAL_PIXELS))
+      .andThen(() -> led.getBlankPattern(0, LEDConstants.TOTAL_PIXELS))
       .andThen(led.elevatorOutFillEmptyBlueCommand(0, LEDConstants.TOTAL_PIXELS, 0.01, false))
       .until(() -> !m_intake.checkToF() && m_intake.getVoltage() < 0
       && !DriverStation.isAutonomous()
@@ -224,7 +225,7 @@ public class RobotContainer {
     // sends elevator and wrist to L4 position
     new Trigger(() -> m_driver.L4())
       .onTrue(Sequencing.L4(m_elevator, m_wrist, m_intake)
-      .andThen(led.blankPatternAnimation(0, LEDConstants.TOTAL_PIXELS))
+      .andThen(() -> led.getBlankPattern(0, LEDConstants.TOTAL_PIXELS))
       .andThen(led.elevatorOutFillEmptyBlueCommand(0, LEDConstants.TOTAL_PIXELS, 0.01, false))
       .until(() -> !m_intake.checkToF() && m_intake.getVoltage() < 0
       && !DriverStation.isAutonomous()
