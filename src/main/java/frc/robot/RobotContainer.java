@@ -66,7 +66,7 @@ public class RobotContainer {
 
   // Command classes
   final ReefAlign reefAlign = new ReefAlign();
-  final StationAlign stationAlign = new StationAlign();
+  final StationAlign stationAlign = new StationAlign(m_robotDrive);
   final LEDStripPatterns led = new LEDStripPatterns();
 
   // Controllers
@@ -86,15 +86,17 @@ public class RobotContainer {
     NamedCommands.registerCommand("Stow", Sequencing.stow(m_elevator, m_wrist, m_intake));
     NamedCommands.registerCommand("High Stow", Sequencing.highStow(m_elevator, m_wrist, m_intake));
     NamedCommands.registerCommand("Score", m_intake.autoEject(IntakeConstants.L4_EJECT_SPEED));
-    NamedCommands.registerCommand("Right Reef Align", reefAlign.alignRightReef(m_robotDrive));
-    NamedCommands.registerCommand("Left Reef Align", reefAlign.alignLeftReef(m_robotDrive));
+    NamedCommands.registerCommand("Right Reef Align", reefAlign.alignRightReef(m_robotDrive, m_driver, m_elevator));
+    NamedCommands.registerCommand("Left Reef Align", reefAlign.alignLeftReef(m_robotDrive, m_driver, m_elevator));
     NamedCommands.registerCommand("Near Reef Align", reefAlign.alignNearestReef(m_robotDrive));
     NamedCommands.registerCommand("Go L4", Sequencing.L4(m_elevator, m_wrist, m_intake));
     NamedCommands.registerCommand("Go L2", Sequencing.L2(m_elevator, m_wrist, m_intake));
-    NamedCommands.registerCommand("Near Station Align", stationAlign.alignNearestStation(m_robotDrive));
-    NamedCommands.registerCommand("Center Station Align", stationAlign.alignCenterStation(m_robotDrive));
+    NamedCommands.registerCommand("Left Station Align", stationAlign.alignLeftStation());
+    NamedCommands.registerCommand("Center Station Align", stationAlign.alignCenterStation());
     NamedCommands.registerCommand("Intake", Sequencing.autoIntake(m_elevator, m_wrist, m_intake));
     NamedCommands.registerCommand("Quick L4", Sequencing.quickL4(m_elevator, m_wrist, m_intake));
+    NamedCommands.registerCommand("Remove High", Sequencing.removeHigh(m_elevator, m_wrist, m_robotDrive));
+    NamedCommands.registerCommand("Remove Low", Sequencing.removeLow(m_elevator, m_wrist, m_robotDrive));
 
     Left3L4Auto = new PathPlannerAuto("Left 3 L4 Auto");
     Right3L4Auto = new PathPlannerAuto("Right 3 L4 Auto");
@@ -113,6 +115,7 @@ public class RobotContainer {
     //autoChooser.addOption("Fun Auto", new PathPlannerAuto("Fun Auto"));
     autoChooser.addOption("Left 3 L4", Left3L4Auto);
     autoChooser.addOption("Right 3 L4", Right3L4Auto);
+    autoChooser.addOption("Front 2 L4", new PathPlannerAuto("Left Front 2 L4 Auto"));
 
     // Configure the button bindings
     configureButtonBindings();
@@ -234,7 +237,7 @@ public class RobotContainer {
     // dynamic vision align
     new Trigger(() -> m_driver.visionRightAlign())
     .whileTrue(led.blankPatternAnimation(0, LEDConstants.TOTAL_PIXELS))
-    .whileTrue(Commands.runOnce(() -> reefAlign.setTagPriority()).andThen(reefAlign.alignRightReef(m_robotDrive))
+    .whileTrue(Commands.runOnce(() -> reefAlign.setTagPriority()).andThen(reefAlign.alignRightReef(m_robotDrive, m_driver, m_elevator))
       .andThen(
         Commands.run(() -> m_driver.setRumble(true))
         .withTimeout(.75)
@@ -245,7 +248,7 @@ public class RobotContainer {
 
       new Trigger(() -> m_driver.visionLeftAlign())
       .whileTrue(led.blankPatternAnimation(0, LEDConstants.TOTAL_PIXELS))
-      .whileTrue(Commands.runOnce(() -> reefAlign.setTagPriority()).andThen(reefAlign.alignLeftReef(m_robotDrive))
+      .whileTrue(Commands.runOnce(() -> reefAlign.setTagPriority()).andThen(reefAlign.alignLeftReef(m_robotDrive, m_driver, m_elevator))
         .andThen(
           Commands.run(() -> m_driver.setRumble(true))
           .withTimeout(.75)
@@ -255,19 +258,19 @@ public class RobotContainer {
         .onFalse(Commands.runOnce(() -> reefAlign.removeTagPriority()));
 
     new Trigger(() -> (m_driver.visionRightAlign()) && stationAlign.checkStationTag())
-    .whileTrue(stationAlign.alignCenterStation(m_robotDrive)
+    .whileTrue(stationAlign.alignCenterStation()
     .andThen(Sequencing.intake(m_elevator, m_wrist, m_intake)
     .alongWith(Commands.run(() -> m_robotDrive.setX()))));
 
     new Trigger(() -> m_driver.visionLeftAlign() && m_wrist.getTargetSetpoint() == WristConstants.INTAKE_ANGLE)
-    .whileTrue(stationAlign.dumbStationAlign(m_robotDrive));
+    .whileTrue(stationAlign.dumbStationAlign());
 
-    new Trigger(() -> m_driver.lowRemove())
-      .whileTrue(Sequencing.removeLow(m_elevator, m_wrist, m_robotDrive))
+    new Trigger(() -> m_driver.lowRemove() && !m_driver.visionLeftAlign() && !m_driver.visionRightAlign())
+      .whileTrue(Sequencing.removeLow(m_elevator, m_wrist, m_robotDrive).withInterruptBehavior(Command.InterruptionBehavior.kCancelIncoming))
       .onFalse(Sequencing.stow(m_elevator, m_wrist, m_intake));
 
-      new Trigger(() -> m_driver.highRemove())
-      .whileTrue(Sequencing.removeHigh(m_elevator, m_wrist, m_robotDrive))
+      new Trigger(() -> m_driver.highRemove() && !m_driver.visionLeftAlign() && !m_driver.visionRightAlign())
+      .whileTrue(Sequencing.removeHigh(m_elevator, m_wrist, m_robotDrive).withInterruptBehavior(Command.InterruptionBehavior.kCancelIncoming))
       .onFalse(Sequencing.stow(m_elevator, m_wrist, m_intake));
 
       // OPERATOR CONTROLS

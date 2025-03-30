@@ -9,8 +9,11 @@ import edu.wpi.first.math.geometry.Pose3d;
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
+import frc.robot.Constants.IOConstants;
 import frc.robot.Constants.VisionConstants;
 import frc.robot.LimelightHelpers;
+import frc.robot.input.DriverInput;
+import frc.robot.subsystems.ElevatorSubsystem;
 import frc.robot.subsystems.Drive.DriveSubsystem;
 
 @Logged
@@ -59,7 +62,7 @@ public class ReefAlign {
         .andThen(Commands.runOnce(() -> drive.drive(0, 0, 0, false, 0)));
     }
 
-    public Command alignRightReef(DriveSubsystem drive){
+    public Command alignRightReef(DriveSubsystem drive, DriverInput controller, ElevatorSubsystem elevator){
 
         return Commands.run(() -> {
 
@@ -70,15 +73,20 @@ public class ReefAlign {
             if(checkReefTag()){
                 drive.drive(getXOutput(), getYOutput(), getRotOutput(), false, 0);
             }
-            else{
-                drive.drive(0, 0, 0, false, 0);
+            else{   // if tag not seen, let driver drive normally
+                drive.drive(
+                -MathUtil.applyDeadband(controller.driveX(), IOConstants.DRIVE_DEADBAND),
+                -MathUtil.applyDeadband(controller.driveY(), IOConstants.DRIVE_DEADBAND),
+                -MathUtil.applyDeadband(controller.driveTurn(), IOConstants.DRIVE_DEADBAND),
+                true,
+                elevator.getHeight());
             }
         }, drive)
         .until(() -> checkAligned(drive))
         .andThen(Commands.runOnce(() -> drive.drive(0, 0, 0, false, 0)));
     }
 
-    public Command alignLeftReef(DriveSubsystem drive){
+    public Command alignLeftReef(DriveSubsystem drive, DriverInput controller, ElevatorSubsystem elevator){
 
         return Commands.run(() -> {
 
@@ -89,11 +97,16 @@ public class ReefAlign {
             if(checkReefTag()){
                 drive.drive(getXOutput(), getYOutput(), getRotOutput(), false, 0);
             }
-            else if(StationAlign.tof.getRange()/1000 < .5){
+            else if(StationAlign.tof.getRange()/1000 < .5 && StationAlign.tof.getRange()/1000 > 0.05){
                 drive.drive(0, -0.1, 0, false, 0);
             }
-            else{
-                drive.drive(0, 0, 0, false, 0);
+            else{ // if tag not seen, let driver drive normally
+                drive.drive(
+                -MathUtil.applyDeadband(controller.driveX(), IOConstants.DRIVE_DEADBAND),
+                -MathUtil.applyDeadband(controller.driveY(), IOConstants.DRIVE_DEADBAND),
+                -MathUtil.applyDeadband(controller.driveTurn(), IOConstants.DRIVE_DEADBAND),
+                true,
+                elevator.getHeight());
             }
         }, drive)
         .until(() -> checkAligned(drive))
