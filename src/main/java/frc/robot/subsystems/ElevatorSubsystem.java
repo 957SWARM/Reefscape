@@ -125,6 +125,12 @@ public class ElevatorSubsystem extends SubsystemBase{
 
     public Command toStow(){
         return Commands.runOnce(() -> {
+            assignSetpoint(ElevatorConstants.POSITION_STOW);
+        });
+    }
+
+    public Command toDeepStow(){
+        return Commands.runOnce(() -> {
             assignSetpoint(ElevatorConstants.POSITION_GROUND);
         });
     }

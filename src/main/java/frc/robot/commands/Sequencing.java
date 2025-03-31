@@ -32,7 +32,7 @@ public class Sequencing {
 
     public static Command L1(ElevatorSubsystem elevator, WristSubsystem wrist, IntakeSubsystem intake){
         return elevator.toL1()
-        .alongWith(new WaitCommand(SequencingConstants.L1_WRIST_DELAY).andThen(wrist.toL1()))
+        .alongWith(new WaitUntilCommand(() -> elevator.atSetpoint()).andThen(wrist.toL1()))
         .alongWith(intake.stopIntakeCommand())
         .andThen(new WaitUntilCommand(()-> wrist.atSetpoint() && elevator.atSetpoint()));
     }
@@ -81,11 +81,10 @@ public class Sequencing {
     }
 
     public static Command deepStow(ElevatorSubsystem elevator, WristSubsystem wrist, IntakeSubsystem intake){
-        return elevator.toStow()
-        .alongWith(Commands.runOnce(
-            () -> { if (elevator.getTargetSetpoint() == ElevatorConstants.POSITION_GROUND) 
-                    wrist.toDeepStow(); 
-                })
+        return elevator.toDeepStow()
+        .alongWith(
+            new WaitUntilCommand(() -> elevator.atSetpoint() && elevator.getTargetSetpoint() == ElevatorConstants.POSITION_GROUND)
+            .andThen(wrist.toDeepStow())
         )
         .alongWith(intake.stopIntakeCommand());
     }
