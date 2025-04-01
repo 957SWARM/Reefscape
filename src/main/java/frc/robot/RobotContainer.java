@@ -131,8 +131,8 @@ public class RobotContainer {
     coralOut.onTrue(new WaitCommand(.2)
     .andThen(m_intake.stopIntakeCommand())
     .andThen(Sequencing.stow(m_elevator, m_wrist, m_intake))
-    .andThen(led.coralOutChasingBlueCommand(0, LEDConstants.TOTAL_PIXELS, 0.1, false).withTimeout(1.5)
-    .andThen(led.defaultBlueWavesLightCommand(0, LEDConstants.TOTAL_PIXELS, 0.1, false))));
+    .andThen(led.coralOutChasingBlueCommand(0, LEDConstants.TOTAL_PIXELS, 0.1, false).withTimeout(1.5)));
+    // .andThen(led.defaultBlueWavesLightCommand(0, LEDConstants.TOTAL_PIXELS, 0.1, false))));
 
     // automatically sends robot to stow after intaking
     Trigger coralIn = new Trigger(
@@ -140,8 +140,8 @@ public class RobotContainer {
       && m_wrist.getTargetSetpoint() == WristConstants.INTAKE_ANGLE
       && m_intake.checkToF() && !DriverStation.isAutonomous());
     coralIn.onTrue(Sequencing.stow(m_elevator, m_wrist, m_intake)
-      .andThen(led.coralReceivedFlashingBlueCommand(0, LEDConstants.TOTAL_PIXELS).withTimeout(1.5))
-      .andThen(led.defaultBlueWavesLightCommand(0, LEDConstants.TOTAL_PIXELS, 0.1, false)));
+      .andThen(led.coralReceivedFlashingBlueCommand(0, LEDConstants.TOTAL_PIXELS).withTimeout(1.5)));
+      // .andThen(led.defaultBlueWavesLightCommand(0, LEDConstants.TOTAL_PIXELS, 0.1, false)));
 
     // stow elevator if starting to tip
     @SuppressWarnings("unused")
