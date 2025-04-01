@@ -4,6 +4,8 @@
 
 package frc.robot;
 
+import java.nio.file.FileSystem;
+
 import com.pathplanner.lib.commands.FollowPathCommand;
 
 import edu.wpi.first.cameraserver.CameraServer;
@@ -11,8 +13,12 @@ import edu.wpi.first.cscore.MjpegServer;
 import edu.wpi.first.cscore.UsbCamera;
 import edu.wpi.first.epilogue.Epilogue;
 import edu.wpi.first.epilogue.Logged;
+import edu.wpi.first.net.WebServer;
 import edu.wpi.first.wpilibj.DataLogManager;
+import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.Filesystem;
 import edu.wpi.first.wpilibj.TimedRobot;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.robot.commands.LEDStripPatterns;
@@ -70,6 +76,8 @@ public class Robot extends TimedRobot {
     CameraServer.startAutomaticCapture(1).setResolution(240, 180);
     
     // led.scheduleDefaultCommand(led.defaultBlueWavesLightCommand(0, LEDConstants.TOTAL_PIXELS, 0.1, false));
+
+    WebServer.start(5800, Filesystem.getDeployDirectory().getPath());
   }
 
   /**
@@ -86,6 +94,8 @@ public class Robot extends TimedRobot {
     // and running subsystem periodic() methods.  This must be called from the robot's periodic
     // block in order for anything in the Command-based framework to work.
     CommandScheduler.getInstance().run();
+
+    SmartDashboard.putNumber("Match Time", DriverStation.getMatchTime());
 
     m_robotContainer.reefAlign.updatePoses();
     m_robotContainer.stationAlign.updatePoses();

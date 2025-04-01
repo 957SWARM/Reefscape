@@ -182,7 +182,7 @@ public final class Constants {
     public static final double L4_ANGLE = 0.905;
     public static final double STOW_ANGLE = 0.152;
     public static final double INTAKE_ANGLE = 0.05;
-    public static final double DEEP_STOW_ANGLE = 0.2;
+    public static final double DEEP_STOW_ANGLE = 0.25;
 
     // PID + Feedforward
     public static final double kG = 0.5;  // constant multiplied by angle of arm to maintain position
