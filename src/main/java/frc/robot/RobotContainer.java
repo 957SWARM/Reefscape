@@ -107,6 +107,7 @@ public class RobotContainer {
 
     autoChooser = AutoBuilder.buildAutoChooser();
     SmartDashboard.putData("Auto Chooser", autoChooser);
+    
 
     autoChooser.addOption("Nothing", NothingAuto);
     autoChooser.addOption("Just Leave", JustLeaveAuto);
@@ -300,7 +301,7 @@ public class RobotContainer {
     
     // retracts climber while down on d-pad is held
     new Trigger(() -> m_operator.retractClimb() || m_driver.retractClimb())
-      .whileTrue(m_climber.retractClimber().alongWith(Sequencing.deepStow(m_elevator, m_wrist, m_intake)))
+      .whileTrue(m_climber.retractClimber())
       .onFalse(m_climber.stopClimber());
     
     new Trigger(() -> m_operator.deepStow())

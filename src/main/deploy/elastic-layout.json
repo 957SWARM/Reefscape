@@ -1,0 +1,211 @@
+{
+  "version": 1.0,
+  "grid_size": 128,
+  "tabs": [
+    {
+      "name": "Match",
+      "grid_layout": {
+        "layouts": [],
+        "containers": [
+          {
+            "title": "USB Camera 1",
+            "x": 0.0,
+            "y": 0.0,
+            "width": 512.0,
+            "height": 512.0,
+            "type": "Camera Stream",
+            "properties": {
+              "topic": "/CameraPublisher/USB Camera 1",
+              "period": 0.06,
+              "rotation_turns": 0
+            }
+          },
+          {
+            "title": "Has Coral?",
+            "x": 512.0,
+            "y": 0.0,
+            "width": 384.0,
+            "height": 128.0,
+            "type": "Boolean Box",
+            "properties": {
+              "topic": "Robot/m_robotContainer/m_intake/checkToF",
+              "period": 0.06,
+              "data_type": "boolean",
+              "true_color": 4283215696,
+              "false_color": 4294198070,
+              "true_icon": "None",
+              "false_icon": "None"
+            }
+          },
+          {
+            "title": "Station Aligned?",
+            "x": 512.0,
+            "y": 128.0,
+            "width": 384.0,
+            "height": 128.0,
+            "type": "Boolean Box",
+            "properties": {
+              "topic": "Robot/m_robotContainer/stationAlign/dumbCheckAligned",
+              "period": 0.06,
+              "data_type": "boolean",
+              "true_color": 4283215696,
+              "false_color": 4294198070,
+              "true_icon": "None",
+              "false_icon": "None"
+            }
+          },
+          {
+            "title": "autoChooser",
+            "x": 896.0,
+            "y": 0.0,
+            "width": 384.0,
+            "height": 128.0,
+            "type": "ComboBox Chooser",
+            "properties": {
+              "topic": "Robot/m_robotContainer/autoChooser",
+              "period": 0.06,
+              "sort_options": false
+            }
+          },
+          {
+            "title": "Elevator Stalled?",
+            "x": 896.0,
+            "y": 384.0,
+            "width": 384.0,
+            "height": 128.0,
+            "type": "Boolean Box",
+            "properties": {
+              "topic": "Robot/m_robotContainer/m_elevator/isStalled",
+              "period": 0.06,
+              "data_type": "boolean",
+              "true_color": 4294955776,
+              "false_color": 4282716943,
+              "true_icon": "None",
+              "false_icon": "None"
+            }
+          },
+          {
+            "title": "Match Time",
+            "x": 512.0,
+            "y": 256.0,
+            "width": 384.0,
+            "height": 256.0,
+            "type": "Match Time",
+            "properties": {
+              "topic": "/SmartDashboard/Match Time",
+              "period": 0.06,
+              "data_type": "double",
+              "time_display_mode": "Minutes and Seconds",
+              "red_start_time": 15,
+              "yellow_start_time": 30
+            }
+          }
+        ]
+      }
+    },
+    {
+      "name": "DEBUG",
+      "grid_layout": {
+        "layouts": [],
+        "containers": [
+          {
+            "title": "Reef Target Pose",
+            "x": 384.0,
+            "y": 0.0,
+            "width": 384.0,
+            "height": 128.0,
+            "type": "Text Display",
+            "properties": {
+              "topic": "Robot/m_robotContainer/reefAlign/reefPose",
+              "period": 0.06,
+              "data_type": "string",
+              "show_submit_button": false
+            }
+          },
+          {
+            "title": "Reef Robot Pose",
+            "x": 384.0,
+            "y": 128.0,
+            "width": 384.0,
+            "height": 128.0,
+            "type": "Text Display",
+            "properties": {
+              "topic": "Robot/m_robotContainer/reefAlign/robotPose",
+              "period": 0.06,
+              "data_type": "string",
+              "show_submit_button": false
+            }
+          },
+          {
+            "title": "Station Robot Pose",
+            "x": 384.0,
+            "y": 384.0,
+            "width": 384.0,
+            "height": 128.0,
+            "type": "Text Display",
+            "properties": {
+              "topic": "Robot/m_robotContainer/stationAlign/robotPose",
+              "period": 0.06,
+              "data_type": "string",
+              "show_submit_button": false
+            }
+          },
+          {
+            "title": "Station Target Pose",
+            "x": 384.0,
+            "y": 256.0,
+            "width": 384.0,
+            "height": 128.0,
+            "type": "Text Display",
+            "properties": {
+              "topic": "Robot/m_robotContainer/stationAlign/stationPose",
+              "period": 0.06,
+              "data_type": "string",
+              "show_submit_button": false
+            }
+          },
+          {
+            "title": "getDumbXDiff",
+            "x": 768.0,
+            "y": 0.0,
+            "width": 256.0,
+            "height": 128.0,
+            "type": "Text Display",
+            "properties": {
+              "topic": "Robot/m_robotContainer/stationAlign/getDumbXDiff",
+              "period": 0.06,
+              "data_type": "double",
+              "show_submit_button": false
+            }
+          },
+          {
+            "title": "limelight-reef",
+            "x": 768.0,
+            "y": 128.0,
+            "width": 256.0,
+            "height": 256.0,
+            "type": "Camera Stream",
+            "properties": {
+              "topic": "/CameraPublisher/limelight-reef",
+              "period": 0.06,
+              "rotation_turns": 0
+            }
+          },
+          {
+            "title": "limelight-station",
+            "x": 1024.0,
+            "y": 128.0,
+            "width": 256.0,
+            "height": 256.0,
+            "type": "Camera Stream",
+            "properties": {
+              "topic": "/CameraPublisher/limelight-station",
+              "period": 0.06,
+              "rotation_turns": 0
+            }
+          }
+        ]
+      }
+    }
+  ]
+}

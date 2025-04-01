@@ -14,7 +14,7 @@ import frc.robot.subsystems.Drive.DriveSubsystem;
 
 public class Sequencing {
 
-    // gets robot ready to intake from coral station
+    // gets robot ready to intake from coral stationff
     public static Command intake(ElevatorSubsystem elevator, WristSubsystem wrist, IntakeSubsystem intake){
         return elevator.toIntake()
         .alongWith(wrist.toIntake())
@@ -32,7 +32,7 @@ public class Sequencing {
 
     public static Command L1(ElevatorSubsystem elevator, WristSubsystem wrist, IntakeSubsystem intake){
         return elevator.toL1()
-        .alongWith(new WaitCommand(SequencingConstants.L1_WRIST_DELAY).andThen(wrist.toL1()))
+        .alongWith(wrist.toStow().andThen(new WaitUntilCommand(() -> elevator.atSetpoint()).andThen(wrist.toL1())))
         .alongWith(intake.stopIntakeCommand())
         .andThen(new WaitUntilCommand(()-> wrist.atSetpoint() && elevator.atSetpoint()));
     }
@@ -82,10 +82,12 @@ public class Sequencing {
 
     public static Command deepStow(ElevatorSubsystem elevator, WristSubsystem wrist, IntakeSubsystem intake){
         return elevator.toStow()
-        .alongWith(Commands.runOnce(
-            () -> { if (elevator.getTargetSetpoint() == ElevatorConstants.POSITION_GROUND) 
-                    wrist.toDeepStow(); 
-                })
+        .alongWith(
+            wrist.toStow()
+            .andThen(
+                new WaitUntilCommand(() -> elevator.atSetpoint() && elevator.getTargetSetpoint() == ElevatorConstants.POSITION_GROUND)
+                .andThen(wrist.toDeepStow())
+            )
         )
         .alongWith(intake.stopIntakeCommand());
     }
@@ -109,7 +111,7 @@ public class Sequencing {
         .andThen(wrist.toStow()
         .alongWith(elevator.toLowRemove(ElevatorConstants.REMOVAL_INCREMENT))
         .alongWith(Commands.run(() -> drive.drive(-0.35, 0, 0, false, 0)))
-        .withTimeout(0.25));
+        .withTimeout(0.4));
     }
 
     public static Command removeHigh(ElevatorSubsystem elevator, WristSubsystem wrist, DriveSubsystem drive){
@@ -123,6 +125,6 @@ public class Sequencing {
         .andThen(wrist.toStow()
         .alongWith(elevator.toHighRemove(ElevatorConstants.REMOVAL_INCREMENT))
         .alongWith(Commands.run(() -> drive.driveBasic(-0.35, 0, 0, false, 0)))
-        .withTimeout(0.25));
+        .withTimeout(0.4));
     }
 }
