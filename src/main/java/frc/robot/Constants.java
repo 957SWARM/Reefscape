@@ -178,7 +178,7 @@ public final class Constants {
     // angle setpoints for scoring, intake, stowing
     public static final double L1_ANGLE = 0; 
     public static final double L2_ANGLE = 0.91;
-    public static final double L3_ANGLE = 0.92;
+    public static final double L3_ANGLE = 0.93; //.92
     public static final double L4_ANGLE = 0.905;
     public static final double STOW_ANGLE = 0.152;
     public static final double INTAKE_ANGLE = 0.05;
@@ -244,7 +244,7 @@ public final class Constants {
 
   public static final class ClimberConstants {
 
-    public static final double CLIMB_PULL_STRENGTH_VOLTS = 10;
+    public static final double CLIMB_PULL_STRENGTH_VOLTS = 12;
     public static final int MOTOR_CAN_ID = 11;
 
     public static final int CURRENT_LIMIT = 30;

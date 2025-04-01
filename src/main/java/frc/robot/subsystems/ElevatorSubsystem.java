@@ -51,7 +51,7 @@ public class ElevatorSubsystem extends SubsystemBase{
 
         // Current Limit to 30 A
         var limitConfigs = new CurrentLimitsConfigs();
-        limitConfigs.SupplyCurrentLimit = ElevatorConstants.CURRENT_LIMIT;
+        limitConfigs.SupplyCurrentLimit =  ElevatorConstants.CURRENT_LIMIT;
         kraken.getConfigurator().apply(limitConfigs);
 
         request = new MotionMagicVoltage(ElevatorConstants.kG);
@@ -60,7 +60,7 @@ public class ElevatorSubsystem extends SubsystemBase{
     public void periodic(){
         if (bottomLimitSwitch.get() && !isReset) {
             kraken.setPosition(0);
-            targetSetpoint = ElevatorConstants.POSITION_GROUND;
+            //targetSetpoint = ElevatorConstants.POSITION_GROUND;
             isReset = !isReset;
         }
 

@@ -149,8 +149,9 @@ public class RobotContainer {
     // stow elevator if starting to tip
     @SuppressWarnings("unused")
     Trigger tipping = new Trigger(() -> 
-      m_robotDrive.pitchTipping()
-      || m_robotDrive.rollPitching())
+      (m_robotDrive.pitchTipping()
+      || m_robotDrive.rollPitching()) 
+      && m_wrist.getTargetSetpoint() != WristConstants.DEEP_STOW_ANGLE)
       .onTrue(Sequencing.stow(m_elevator, m_wrist, m_intake));
 
     // Configure default commands
