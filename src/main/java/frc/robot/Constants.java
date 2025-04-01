@@ -134,11 +134,14 @@ public final class Constants {
     public static final double POSITION_L2 = 0.242;
     public static final double POSITION_L3 = 0.432;
     public static final double POSITION_L4 = 0.775;
-    public static final double POSITION_INTAKE = 0.13;
-    public static final double POSITION_LOW_REMOVE = 0.03;
-    public static final double POSITION_HIGH_REMOVE = 0.24;
+    public static final double POSITION_INTAKE = 0.145;
+    public static final double POSITION_LOW_REMOVE = 0.00;
+    public static final double POSITION_HIGH_REMOVE = 0.22;
 
-    public static final double REMOVAL_INCREMENT = 0.05;
+    public static final double UPPER_WRIST_START_TOLERANCE = 0.20;
+    public static final double LOWER_WRIST_START_TOLERANCE = -0.30;
+
+    public static final double REMOVAL_INCREMENT = 0.08;
 
     // SLOW RISE/FALL
     public static final double SETPOINT_INCREMENT = .01; // how much the setpoint changes per robot loop in manual control
@@ -178,7 +181,7 @@ public final class Constants {
     public static final double L3_ANGLE = 0.92;
     public static final double L4_ANGLE = 0.905;
     public static final double STOW_ANGLE = 0.152;
-    public static final double INTAKE_ANGLE = 0.09;
+    public static final double INTAKE_ANGLE = 0.05;
     public static final double DEEP_STOW_ANGLE = 0.2;
 
     // PID + Feedforward
@@ -262,7 +265,7 @@ public final class Constants {
   public static final class VisionConstants {
     public static final Pose3d LEFT_REEF = new Pose3d(new Translation3d(-.185, 0, -.62), new Rotation3d()); //-.185 at clack
     // -.203 at hive
-    public static final Pose3d RIGHT_REEF = new Pose3d(new Translation3d(.155, 0, -.62), new Rotation3d()); //.155 at clack
+    public static final Pose3d RIGHT_REEF = new Pose3d(new Translation3d(.137, 0, -.62), new Rotation3d()); //.155 at wilsonville
     //.137 at hive
     public static final double REEF_CENTER_OFFSET = -0.09;
     public static final List<Pose3d> REEF_POSES = Arrays.asList(LEFT_REEF, RIGHT_REEF);
@@ -282,8 +285,8 @@ public final class Constants {
     );
   
 
-    public static final Pose3d LEFT_STATION = new Pose3d(new Translation3d(-.6, 0, -.615), new Rotation3d());
-    public static final Pose3d MID_STATION = new Pose3d(new Translation3d(0, 0, -.615), new Rotation3d());
+    public static final Pose3d LEFT_STATION = new Pose3d(new Translation3d(-.6, 0, -.642), new Rotation3d());
+    public static final Pose3d MID_STATION = new Pose3d(new Translation3d(0, 0, -.642), new Rotation3d());
     public static final List<Pose3d> STATION_POSES = Arrays.asList(LEFT_STATION, MID_STATION);
     public static final List<Double> STATION_TAG_IDS = Arrays.asList(
       (double)1, 
@@ -311,7 +314,7 @@ public final class Constants {
     public static final double DUMB_STATION_TRANSLATION_I = 0;
     public static final double DUMB_STATION_TRANSLATION_D = 0;
 
-    public static final double DUMB_STATION_DISTANCE = 0.35;
+    public static final double DUMB_STATION_DISTANCE = 0.425;
 
     public static final double REEF_HORIZONTAL_TRANSLATION_P = 0.75;  // 1.4
     public static final double REEF_HORIZONTAL_TRANSLATION_I = 0; // 0

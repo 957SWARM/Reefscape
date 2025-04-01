@@ -154,6 +154,25 @@ public class DriveSubsystem extends SubsystemBase {
     m_rearRight.setDesiredState(swerveModuleStates[3]);
   }
 
+  public void driveBasic(double xSpeed, double ySpeed, double rot, boolean fieldRelative, double elevatorHeight) {
+
+    // Convert the commanded speeds into the correct units for the drivetrain
+    double xSpeedDelivered = adjustSpeed(xSpeed * DriveConstants.kMaxSpeedMetersPerSecond, elevatorHeight);
+    double ySpeedDelivered = adjustSpeed(ySpeed * DriveConstants.kMaxSpeedMetersPerSecond, elevatorHeight);
+    double rotDelivered = adjustSpeed(rot * DriveConstants.kMaxAngularSpeed, elevatorHeight);
+
+    var swerveModuleStates = DriveConstants.kDriveKinematics.toSwerveModuleStates(
+        fieldRelative
+            ? ChassisSpeeds.fromFieldRelativeSpeeds(xSpeedDelivered, ySpeedDelivered, rotDelivered,
+                m_gyro.getRotation2d())
+            : new ChassisSpeeds(xSpeedDelivered, ySpeedDelivered, rotDelivered));
+            
+    m_frontLeft.setDesiredState(swerveModuleStates[0]);
+    m_frontRight.setDesiredState(swerveModuleStates[1]);
+    m_rearLeft.setDesiredState(swerveModuleStates[2]);
+    m_rearRight.setDesiredState(swerveModuleStates[3]);
+  }
+
   // the solution
   public ChassisSpeeds getRobotRelativeSpeeds(){
     SwerveModuleState[] swerveStates = {m_frontLeft.getState(), m_frontRight.getState(), m_rearLeft.getState(), m_rearRight.getState()};

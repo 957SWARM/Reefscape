@@ -53,36 +53,44 @@ public class StationAlign {
     boolean timerReset = false;
 
     boolean biasCenter = false;
+    boolean biasLeft = false;
     public static TimeOfFlight tof = new TimeOfFlight(2);
 
     double shuffleOutput = 0;
     double shuffleRotOutput = 0;
 
-    public StationAlign(){
+    DriveSubsystem drive;
+
+    public StationAlign(DriveSubsystem drive){
         tof.setRangingMode(RangingMode.Long, 24);
+        this.drive = drive;
     }
     
-    public Command alignNearestStation(DriveSubsystem drive){
+    public Command alignLeftStation(){
 
-        biasCenter = false;
+        
         updatePoses();
 
         return Commands.run(() -> {
+            biasLeft = true;
+            biasCenter = false;
             if(checkStationTag()){
                 drive.drive(getXOutput(), getYOutput(), getRotOutput(), false, 0);
             }
             else{
                 drive.drive(0, 0, 0, false, 0);
             }
-        }, drive).until(() -> checkAligned(drive));
+        }, drive).until(() -> checkAligned());
     }
 
-    public Command alignCenterStation(DriveSubsystem drive){
+    public Command alignCenterStation(){
 
-        biasCenter = true;
+        
         updatePoses();
 
         return Commands.run(() -> {
+            biasCenter = true;
+            biasLeft = false;
             if(checkStationTag()){
                 drive.drive(getXOutput(), getYOutput(), getRotOutput(), false, 0);
             }
@@ -92,14 +100,14 @@ public class StationAlign {
             else{
                 drive.drive(0, 0, 0, false, 0);
             }
-        }, drive).until(() -> checkAligned(drive))
-        .andThen(Commands.run(() -> drive.drive(0, 0, shuffleRotOutput(drive), false, 0)));
+        }, drive).until(() -> checkAligned())
+        .andThen(Commands.run(() -> drive.drive(0, 0, getShuffleRotOutput(), false, 0)));
     }
 
-    public Command dumbStationAlign(DriveSubsystem drive){
+    public Command dumbStationAlign(){
         return Commands.run(() -> {
-            drive.drive(getDumbXOutput(), 0, getDumbRotOutput(drive), false, 0);
-        }).until(() -> dumbCheckAligned(drive)).andThen(Commands.run(() -> {
+            drive.drive(getDumbXOutput(), 0, getDumbRotOutput(), false, 0);
+        }).until(() -> dumbCheckAligned()).andThen(Commands.run(() -> {
             drive.setX();
         }));
     }
@@ -117,13 +125,13 @@ public class StationAlign {
         return tof.getRange()/1000 - VisionConstants.DUMB_STATION_DISTANCE;
     }
 
-    public double getDumbRotDiff(DriveSubsystem drive){
+    public double getDumbRotDiff(){
         double difference = 0;
         double modifiedHeading = MathUtil.inputModulus(drive.getHeading(), -180, 180);
         if(modifiedHeading < 0){
-            difference = -120 - modifiedHeading;
+            difference = -126 - modifiedHeading;
         }else{
-            difference = 120 - modifiedHeading;
+            difference = 126 - modifiedHeading;
         }
         return difference;
     }
@@ -138,18 +146,17 @@ public class StationAlign {
         return clampedOutput;
     }
 
-    public double getDumbRotOutput(DriveSubsystem drive){
-
-        return -dumbRotPID.calculate(getDumbRotDiff(drive));
+    public double getDumbRotOutput(){
+        return -dumbRotPID.calculate(getDumbRotDiff());
     }
 
-    public double shuffleRotOutput(DriveSubsystem drive){
+    public double getShuffleRotOutput(){
         shuffleRotOutput += .01;
         shuffleRotOutput = MathUtil.inputModulus(shuffleRotOutput, -0.16, 0.16);
         return MathUtil.clamp(shuffleRotOutput, -0.16, 0.16);
     }
 
-    public double shuffleYOutput(DriveSubsystem drive){
+    public double getShuffleYOutput(){
         shuffleOutput += .01;
         shuffleOutput = MathUtil.inputModulus(shuffleOutput, -0.1, 0.1);
         return MathUtil.clamp(shuffleOutput, -0.1, 0.1);
@@ -223,9 +230,14 @@ public class StationAlign {
         // }
         currentPose = getCurrentPose();
         if(biasCenter){
+            biasLeft = false;
             nearestStationPose = VisionConstants.MID_STATION;
-        }else{
-            nearestStationPose = getNearestPose();
+        }else if(biasLeft){
+            biasCenter = false;
+            nearestStationPose = VisionConstants.LEFT_STATION;
+        }
+        else{
+            nearestStationPose = new Pose3d();
         }
         
     }
@@ -268,7 +280,7 @@ public class StationAlign {
     }
 
     // end condition for command. Finishes when close to target position and speed is low
-    public boolean checkAligned(DriveSubsystem drive){
+    public boolean checkAligned(){
         boolean aligned = Math.abs(getXDiff()) <= VisionConstants.STATION_TRANSLATION_TOLERANCE
         && Math.abs(getYDiff()) <= VisionConstants.STATION_TRANSLATION_TOLERANCE
         && Math.abs(getRotDiff()) <= VisionConstants.ROTATION_TOLERANCE
@@ -277,9 +289,9 @@ public class StationAlign {
         return aligned;
     }
 
-    public boolean dumbCheckAligned(DriveSubsystem drive){
+    public boolean dumbCheckAligned(){
         boolean aligned = Math.abs(getDumbXDiff()) <= VisionConstants.STATION_TRANSLATION_TOLERANCE
-        && Math.abs(getDumbRotDiff(drive)) <= VisionConstants.ROTATION_TOLERANCE * 2;
+        && Math.abs(getDumbRotDiff()) <= VisionConstants.ROTATION_TOLERANCE * 2;
 
         return aligned;
     }
@@ -296,6 +308,10 @@ public class StationAlign {
 
     public String robotPose(){
         return currentPose.toString();
+    }
+
+    public double getTOFRange(){
+        return tof.getRange()/1000;
     }
 
 }
