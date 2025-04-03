@@ -265,7 +265,7 @@ public final class Constants {
   public static final class VisionConstants {
     public static final Pose3d LEFT_REEF = new Pose3d(new Translation3d(-.185, 0, -.62), new Rotation3d()); //-.185 at clack
     // -.203 at hive
-    public static final Pose3d RIGHT_REEF = new Pose3d(new Translation3d(.137, 0, -.62), new Rotation3d()); //.155 at wilsonville
+    public static final Pose3d RIGHT_REEF = new Pose3d(new Translation3d(.155, 0, -.62), new Rotation3d()); //.155 at wilsonville
     //.137 at hive
     public static final double REEF_CENTER_OFFSET = -0.09;
     public static final List<Pose3d> REEF_POSES = Arrays.asList(LEFT_REEF, RIGHT_REEF);
