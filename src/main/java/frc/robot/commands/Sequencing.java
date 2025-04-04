@@ -111,7 +111,7 @@ public class Sequencing {
         .andThen(wrist.toStow()
         .alongWith(elevator.toLowRemove(ElevatorConstants.REMOVAL_INCREMENT))
         .alongWith(Commands.run(() -> drive.drive(-0.35, 0, 0, false, 0)))
-        .withTimeout(0.4));
+        .withTimeout(0.55));
     }
 
     public static Command removeHigh(ElevatorSubsystem elevator, WristSubsystem wrist, DriveSubsystem drive){
@@ -125,6 +125,6 @@ public class Sequencing {
         .andThen(wrist.toStow()
         .alongWith(elevator.toHighRemove(ElevatorConstants.REMOVAL_INCREMENT))
         .alongWith(Commands.run(() -> drive.driveBasic(-0.35, 0, 0, false, 0)))
-        .withTimeout(0.4));
+        .withTimeout(0.55));
     }
 }
