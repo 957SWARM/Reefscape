@@ -74,7 +74,7 @@ public final class Constants {
     public static final int BACK_LEFT = 0;
     public static final int BACK_RIGHT = 0;
 
-    public static final double MAXIMUM_TIP_DEGREES = 5;
+    public static final double MAXIMUM_TIP_DEGREES = 8.5;
   }
 
   public static final class ModuleConstants {
@@ -128,12 +128,15 @@ public final class Constants {
     public static final int MOTIONMAGIC_JERK = 2400; // Target jerk of 1600 rps/s/s (0.1 seconds) Robin H.
 
     // measurements in meters the carriage rises. (end effector raises twice these values)
-    public static final double POSITION_GROUND = 0;
-    public static final double POSITION_HIGH_STOW = 0.34;
     public static final double POSITION_L1 = 0.02; 
     public static final double POSITION_L2 = 0.242;
     public static final double POSITION_L3 = 0.432;
     public static final double POSITION_L4 = 0.775;
+
+    public static final double POSITION_GROUND = 0;
+    public static final double POSITION_STOW = POSITION_L2;
+    public static final double POSITION_HIGH_STOW = 0.34;
+   
     public static final double POSITION_INTAKE = 0.145;
     public static final double POSITION_LOW_REMOVE = 0.00;
     public static final double POSITION_HIGH_REMOVE = 0.22;

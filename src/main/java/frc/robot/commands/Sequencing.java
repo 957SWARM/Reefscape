@@ -74,6 +74,13 @@ public class Sequencing {
         .andThen(new WaitUntilCommand(() -> elevator.atSetpoint() && wrist.atSetpoint()));
     }
 
+    public static Command ground(ElevatorSubsystem elevator, WristSubsystem wrist, IntakeSubsystem intake){
+        return elevator.toGround()
+        .alongWith(wrist.toStow())
+        .alongWith(intake.stopIntakeCommand())
+        .andThen(new WaitUntilCommand(() -> elevator.atSetpoint() && wrist.atSetpoint()));
+    }
+
     public static Command highStow(ElevatorSubsystem elevator, WristSubsystem wrist, IntakeSubsystem intake){
         return elevator.toHighStow()
         .alongWith(wrist.toStow())

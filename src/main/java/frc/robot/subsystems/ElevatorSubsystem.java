@@ -24,7 +24,7 @@ public class ElevatorSubsystem extends SubsystemBase{
     private DigitalInput bottomLimitSwitch = new DigitalInput(0);
 
     private final MotionMagicVoltage request;
-    private double targetSetpoint = ElevatorConstants.POSITION_GROUND;
+    private double targetSetpoint = ElevatorConstants.POSITION_STOW;
 
     boolean isReset = false;
 
@@ -124,6 +124,12 @@ public class ElevatorSubsystem extends SubsystemBase{
     }
 
     public Command toStow(){
+        return Commands.runOnce(() -> {
+            assignSetpoint(ElevatorConstants.POSITION_STOW);
+        });
+    }
+
+    public Command toGround(){
         return Commands.runOnce(() -> {
             assignSetpoint(ElevatorConstants.POSITION_GROUND);
         });
