@@ -205,12 +205,12 @@ public class RobotContainer {
       .onTrue(Sequencing.L2(m_elevator, m_wrist, m_intake));
 
     // sends elevator and wrist to L3 position
-    new Trigger(() -> m_driver.L3())
-      .onTrue(Sequencing.L3(m_elevator, m_wrist, m_intake));
+    // new Trigger(() -> m_driver.L3())
+    //   .onTrue(Sequencing.L3(m_elevator, m_wrist, m_intake));
 
     // sends elevator and wrist to L4 position
-    new Trigger(() -> m_driver.L4())
-      .onTrue(Sequencing.L4(m_elevator, m_wrist, m_intake));
+    // new Trigger(() -> m_driver.L4())
+    //   .onTrue(Sequencing.L4(m_elevator, m_wrist, m_intake));
 
     // while holding trigger, runs intake backwards for scoring
     new Trigger(() -> m_driver.score() && m_wrist.getTargetSetpoint() == WristConstants.L1_ANGLE)
@@ -267,13 +267,13 @@ public class RobotContainer {
     new Trigger(() -> m_driver.visionLeftAlign() && m_wrist.getTargetSetpoint() == WristConstants.INTAKE_ANGLE)
     .whileTrue(stationAlign.dumbStationAlign());
 
-    new Trigger(() -> m_driver.lowRemove() && !m_driver.visionLeftAlign() && !m_driver.visionRightAlign())
-      .whileTrue(Sequencing.removeLow(m_elevator, m_wrist, m_robotDrive).withInterruptBehavior(Command.InterruptionBehavior.kCancelIncoming))
-      .onFalse(Sequencing.stow(m_elevator, m_wrist, m_intake));
+    // new Trigger(() -> m_driver.lowRemove() && !m_driver.visionLeftAlign() && !m_driver.visionRightAlign())
+    //   .whileTrue(Sequencing.removeLow(m_elevator, m_wrist, m_robotDrive).withInterruptBehavior(Command.InterruptionBehavior.kCancelIncoming))
+    //   .onFalse(Sequencing.stow(m_elevator, m_wrist, m_intake));
 
-      new Trigger(() -> m_driver.highRemove() && !m_driver.visionLeftAlign() && !m_driver.visionRightAlign())
-      .whileTrue(Sequencing.removeHigh(m_elevator, m_wrist, m_robotDrive).withInterruptBehavior(Command.InterruptionBehavior.kCancelIncoming))
-      .onFalse(Sequencing.stow(m_elevator, m_wrist, m_intake));
+    // new Trigger(() -> m_driver.highRemove() && !m_driver.visionLeftAlign() && !m_driver.visionRightAlign())
+    //   .whileTrue(Sequencing.removeHigh(m_elevator, m_wrist, m_robotDrive).withInterruptBehavior(Command.InterruptionBehavior.kCancelIncoming))
+    //   .onFalse(Sequencing.stow(m_elevator, m_wrist, m_intake));
 
       // OPERATOR CONTROLS
       new Trigger(() -> m_operator.fall())
