@@ -285,7 +285,7 @@ public class DriveSubsystem extends SubsystemBase {
   // returns new speed based on elevator height (higher elevator = slower speed)
   public double adjustSpeed(double speed, double elevatorHeight){
     // elevator max height multiplied by 2 because of 2nd stage
-    double carriageHeight = elevatorHeight / 2;
+    double carriageHeight = Math.abs(elevatorHeight / 2);
     double fractionOfHeight = Math.abs(
       (carriageHeight - ElevatorConstants.POSITION_STOW) / (ElevatorConstants.MAX_HEIGHT - ElevatorConstants.POSITION_STOW)
     );

@@ -134,7 +134,7 @@ public final class Constants {
     public static final double POSITION_L4 = 0.775;
 
     public static final double POSITION_GROUND = 0;
-    public static final double POSITION_STOW = POSITION_L2;
+    public static final double POSITION_STOW = 0.146;
     public static final double POSITION_HIGH_STOW = 0.34;
    
     public static final double POSITION_INTAKE = 0.145;
@@ -317,13 +317,13 @@ public final class Constants {
     public static final double DUMB_STATION_TRANSLATION_I = 0;
     public static final double DUMB_STATION_TRANSLATION_D = 0;
 
-    public static final double DUMB_STATION_DISTANCE = 0.685;
+    public static final double DUMB_STATION_DISTANCE = 0.635;
 
-    public static final double REEF_HORIZONTAL_TRANSLATION_P = 0.75;  // 1.4
+    public static final double REEF_HORIZONTAL_TRANSLATION_P = 0.87;  // 0.75
     public static final double REEF_HORIZONTAL_TRANSLATION_I = 0; // 0
     public static final double REEF_HORIZONTAL_TRANSLATION_D = 0;  //.11
 
-    public static final double REEF_TOWARD_TRANSLATION_P = 0.9; // 0.9
+    public static final double REEF_TOWARD_TRANSLATION_P = 1; // 0.9
     public static final double REEF_TOWARD_TRANSLATION_I = 0.005; // 0.005
     public static final double REEF_TOWARD_TRANSLATION_D = 0.06; // 0.06
 
@@ -334,7 +334,7 @@ public final class Constants {
     public static final double MAX_VISION_SPEED = 0.6; //JOYSTICK
     public static final double MAX_STATION_ALIGN_SPEED = 0.45;
 
-    public static final double REEF_TRANSLATION_TOLERANCE = 0.025; //METERS
+    public static final double REEF_TRANSLATION_TOLERANCE = 0.028; //METERS
     public static final double ROTATION_TOLERANCE = 1.5; //DEGREES
     public static final double REEF_SPEED_TOLERANCE = 0.4; //METERS PER SECOND
     public static final double STATION_SPEED_TOLERANCE = 0.2;

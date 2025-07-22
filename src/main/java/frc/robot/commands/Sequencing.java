@@ -88,7 +88,7 @@ public class Sequencing {
     }
 
     public static Command deepStow(ElevatorSubsystem elevator, WristSubsystem wrist, IntakeSubsystem intake){
-        return elevator.toStow()
+        return elevator.toGround()
         .alongWith(
             wrist.toStow()
             .andThen(
